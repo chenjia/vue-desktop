@@ -1,0 +1,70 @@
+<template>
+  <div>
+    <router-view></router-view>
+    <div v-show="$store.state.common.ui.loading" style="position:absolute;top:0px;left:0px;width:100%;height:100%;z-index:999999;" class="loading">
+      <div :style="{width:$store.state.common.ui.loadend?'100%':0}" class="mask mask-top" style="position:absolute;top:0px;left:0px;width:0;height:42%;background:#FBEC88;"></div>
+      <div :style="{width:$store.state.common.ui.loadend?'100%':0}" class="mask mask-bottom" style="position:absolute;top:58%;right:0px;width:0;height:42%;background:#FBEC88;"></div>
+      <div :style="{height:$store.state.common.ui.loadend?'100%':0}" class="mask mask-left" style="position:absolute;bottom:0px;left:0px;width:42%;height:0;background:#FBEC88;"></div>
+      <div :style="{height:$store.state.common.ui.loadend?'100%':0}" class="mask mask-right" style="position:absolute;top:0px;left:58%;width:42%;height:0;background:black;background:#FBEC88;"></div>
+      
+      <table v-show="$store.state.common.ui.loading" :style="{opacity:$store.state.common.ui.loadend?1:0}" style="position:absolute;top:0px;left:0px;width:100%;height:100%;z-index:999999" class="loading-content">
+        <tr>
+          <td>
+            <div style="width:16%;height:16%;top:42%;left:42%;position:absolute;text-align:center;border:2px solid #95B8E7;background:white;display:table;">
+              <div style="display:table-cell;vertical-align: middle;">
+                <img src="../../static/img/loading.gif">
+                <br>
+                <span class="loading-msg" style="font-size:14px;">页面加载中...</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</template>
+
+<script>
+import Vue from 'vue'
+import store from '../vuex/store'
+
+export default {
+  name: 'app',
+  data(){
+    return {
+      transitionName: 'animate-in',
+      
+    }
+  },
+  methods:{
+    
+  },
+  watch:{
+    
+  },
+  mounted(){
+    setTimeout(()=>{
+      require('../lazyLibs')
+    }, Config.preload)
+  }
+}
+</script>
+
+<style type="text/css">
+.slide-y-enter {
+  opacity: 0;
+  transform: translate(0, 50px);
+}
+.slide-y-enter-to{
+  transition:all .4s ease-out;
+}
+.slide-y-leave {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+.slide-y-leave-to{
+  transition:all .4s ease-out;
+  opacity: 0;
+  transform: translate(0, 50px);
+}
+</style>
