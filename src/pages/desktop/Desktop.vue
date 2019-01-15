@@ -2,21 +2,35 @@
   <div style="position:absolute;width:100%;height:100%;">
     <Layout style="background:url(../../../static/img/desktop/1.jpg)">
       <LayoutPanel region="center" @contextmenu.prevent.native="$refs.desktopMenu.showContextMenu($event.pageX,$event.pageY)" :border="false" :bodyStyle="{background:'none'}" :style="{height:(screenHeight-42)+'px'}">
-        <a v-Draggable v-for="(menu, index) in desktopMenus" class="desktop-menu">
+        <a v-Draggable="{cursor:'default', dragStart: onDragStart, drag: onDrag, dragEnd: onDragEnd}" v-for="(menu, index) in desktopMenus" @dblclick="open(menu)" class="desktop-menu">
           <img :src="menu.icon" />
           <span>{{menu.text}}</span>
         </a>
 
         <div ref="calendar" class="easyui-calendar" style="display:none;position:absolute;right:0;bottom:0;"></div>
         <img ref="recycle" style="display:none;opacity:0.6;position:absolute;right:0;bottom:0;" src="../../../static/img/icon64/recycle_64.png"/>
+        <Calendar v-show="taskbar.showCalendar" style="position:absolute;right:0;bottom:0;width:250px;height:250px"></Calendar>
+
 
         <Menu ref="desktopMenu" style="width:150px;" @itemClick="">
-          <MenuItem v-for="(item, index) in contextMenus" :key="index" :value="item.value" :text="item.text">
+          <MenuItem v-for="(item, index) in contextMenus" :key="index" :value="item.value" :text="item.text" :iconCls="item.iconCls">
             <SubMenu v-if="item.children">
-              <MenuItem v-for="(sub, subIndex) in item.children" :value="sub.value" :text="sub.text"></MenuItem>
+              <MenuItem v-for="(sub, subIndex) in item.children" :key="subIndex" :value="sub.value" :text="sub.text" :iconCls="sub.iconCls"></MenuItem>
             </SubMenu>
           </MenuItem>
         </Menu>
+
+        <Dialog v-for="(task,key,index) in taskbar.tasks"
+          :key="key"
+          :ref="task.name"
+          :title="task.text"
+          :dialogStyle="{width:(screenHeight-100)*1.8+'px',height:(screenHeight-100)+'px'}"
+          :modal="true"
+          :draggable="true"
+          :resizable="true"
+          @close="closeTask(task)">
+          <dynamic :component="task.name" />
+        </Dialog>
 
         <Dialog ref="startDialog" :title="'管理员'" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="start-dialog">
           <table cellspacing="0" cellpadding="0">
@@ -24,7 +38,7 @@
               <td>
                 <div style="width:158px;padding:10px;height:340px;">
                   <div style="height:320px;text-align:left;">
-                    <SplitButton v-for="(menu, menuIndex) in startDialog.menus" :key="menuIndex" :text="menu.group" :plain="true" iconCls="fa fa-book">
+                    <SplitButton v-for="(menu, menuIndex) in startDialog.startMenus" :key="menuIndex" :text="menu.group" :plain="true" iconCls="fa fa-book">
                       <Menu>
                         <MenuItem v-for="(item, itemIndex) in menu.items" :key="itemIndex" :text="item.name"></MenuItem>
                       </Menu>
@@ -65,13 +79,13 @@
                 <td width="20px">
                 </td>
                 <td>
-                  <button class="task-icon" :class="{}">
-                    <img src="../../../static/img/icon32/browser_32.png"/>
+                  <button v-for="(task,key,index) in taskbar.tasks" :key="key" @click="openTask(task)" class="task-icon">
+                    <img :src="task.icon"/>
                   </button>
                 </td>
-                <td class="time-box">
-                  <span class="time-box-hour">18:00</span><span class="time-box-week">周一</span><br/>
-                  <span class="time-box-date">2019-01-14</span>
+                <td class="time-box" @click="taskbar.showCalendar = !taskbar.showCalendar">
+                  <span class="time-box-hour">{{taskbar.time}}</span><span class="time-box-week">{{taskbar.week}}</span><br/>
+                  <span class="time-box-date">{{taskbar.date}}</span>
                 </td>
                 <td class="desktop-show" style="border:0">
                   <span class="seq"></span>
@@ -88,175 +102,59 @@
 
 <script>
 import Vue from 'vue'
+import Dynamic from '../../components/Dynamic'
+import './desktop.css'
+import {desktopMenus, contextMenus, startMenus, funcs} from './json.js'
 import {
   mapGetters,
   mapMutations
 } from 'vuex'
 
+var range = 80;
+function repair(v){
+  let r = parseInt(v/range,10)*range;
+  if (Math.abs(v % range) > range/2){
+    r += (v > 0 ? range : -1*range)
+  }
+  return r;
+}
+function repairPosition(d){
+  let s = d.target.$el
+  let p = d.target.$el.parentNode
+  if (d.left < 0){
+    d.left = 0;
+  }else if (d.left + s.offsetWidth > p.offsetWidth){
+    d.left = p.offsetWidth - s.offsetWidth;
+  }
+
+  if (d.top < 0){
+    d.top = 0;
+  }else if (d.top + s.offsetHeight > p.offsetHeight){
+    d.top = parseInt(p.offsetHeight/range, 10)*range - s.offsetHeight;
+  }
+  return d
+}
+
 export default {
   name: 'desktop',
   components: {
-    
+    dynamic:Dynamic
   },
   data() {
     return {
-      desktopMenus:[{
-        text:'我的任务',
-        icon:'../../../static/img/icon32/task_32.png',
-        url:'',
-        top:'',
-        left:''
-      }],
-      contextMenus:[{
-        text:'主题风格',
-        children:[{
-          value:'sunny',
-          text:'sunny'
-        },{
-          value:'pepper-grinder',
-          text:'pepper-grinder'
-        },{
-          value:'dark-hive',
-          text:'dark-hive'
-        },{
-          value:'cupertino',
-          text:'cupertino'
-        },{
-          value:'metro-red',
-          text:'metro-red'
-        },{
-          value:'metro-orange',
-          text:'metro-orange'
-        },{
-          value:'metro-green',
-          text:'metro-green'
-        },{
-          value:'metro-gray',
-          text:'metro-gray'
-        },{
-          value:'metro-blue',
-          text:'metro-blue'
-        }]
-      },{
-        text:'自动排序',
-        children:[{
-          value:'按名称升序',
-          text:'按名称升序'
-        },{
-          value:'按名称降序',
-          text:'按名称降序'
-        },{
-          value:'按时间升序',
-          text:'按时间升序'
-        },{
-          value:'按时间降序',
-          text:'按时间降序'
-        }]
-      },{
-        value:'显示桌面',
-        text:'显示桌面'
-      },{
-        value:'锁定屏幕',
-        text:'锁定屏幕'
-      },{
-        value:'个人设置',
-        text:'个人设置'
-      },{
-        value:'办公模式',
-        text:'办公模式'
-      },{
-        value:'全屏显示',
-        text:'全屏显示'
-      }],
+      desktopMenus:desktopMenus,
+      contextMenus:contextMenus,
       startDialog:{
         closed:true,
-        menus:[{
-          group:'我的工作区',
-          items:[{
-            name:'我的门户',
-            icon:'',
-            url:''
-          },{
-            name:'我的任务',
-            icon:'',
-            url:''
-          },{
-            name:'已办任务',
-            icon:'',
-            url:''
-          },{
-            name:'消息提醒',
-            icon:'',
-            url:''
-          },{
-            name:'个人设置',
-            icon:'',
-            url:''
-          },{
-            name:'日程计划',
-            icon:'',
-            url:''
-          },{
-            name:'意见箱',
-            icon:'',
-            url:''
-          },{
-            name:'系统公告',
-            icon:'',
-            url:''
-          }]
-        },{
-          group:'系统设置',
-          items:[{
-            name:'流程列表',
-            icon:'',
-            url:''
-          },{
-            name:'表单列表',
-            icon:'',
-            url:''
-          },{
-            name:'校验规则列表',
-            icon:'',
-            url:''
-          },{
-            name:'用户列表',
-            icon:'',
-            url:''
-          },{
-            name:'角色列表',
-            icon:'',
-            url:''
-          },{
-            name:'菜单列表',
-            icon:'',
-            url:''
-          },]
-        },{
-          group:'其他',
-          items:[{
-            name:'使用帮助',
-            icon:'',
-            url:''
-          }]
-        }],
-        funcs:[{
-          name:'全屏',
-          icon:'fa-user',
-          url:''
-        },{
-          name:'办公模式',
-          icon:'fa-user',
-          url:''
-        },{
-          name:'个人设置',
-          icon:'fa-user',
-          url:''
-        },{
-          name:'注销',
-          icon:'fa-user',
-          url:''
-        }]
+        startMenus:startMenus,
+        funcs:funcs
+      },
+      taskbar:{
+        date:'',
+        time:'',
+        week:'',
+        tasks:{},
+        showCalendar:false
       }
     }
   },
@@ -264,19 +162,66 @@ export default {
     
   },
   methods: {
+    onDragStart(d){
+      d = repairPosition(d)
+    },
+    onDrag(d){
+      d = repairPosition(d)
+      d.target.applyDrag()
+    },
+    onDragEnd(d){
+      d.left = repair(d.left)
+      d.top = repair(d.top)
+      d = repairPosition(d)
+      d.target.$el.style.transition = 'all .1s'
+      d.target.applyDrag()
+      setTimeout(()=>{
+        d.target.$el.style.transition = ''
+      },200)
+    },
+    open(menu){
+      this.$set(this.taskbar.tasks, menu.name, menu)
+    },
+    openTask(task){
+      console.log(this.$refs[task.name])
+      this.$refs[task.name].open()
+    },
+    closeTask(task){
+      this.$nextTick(()=>{
+        this.$delete(this.taskbar.tasks, task.name)
+      })
+    },
     startDialogOpen(a){
       setTimeout(()=>{
         this.$refs.startDialog.$el.style.left = 0
       })
-      
-      //$(this).parent().css({top:'',bottom:0});
+    },
+    initTime(sysTime){
+      if(sysTime != undefined){
+        var date = new Date(sysTime+1000);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        var d = date.getDate();
+        var h = date.getHours();
+        var mi = date.getMinutes();
+        var s = date.getSeconds();
+        var day = date.getDay();
+        var array = [y,(m<10?('0'+m):m),(d<10?('0'+d):d),(h<10?('0'+h):h),(mi<10?('0'+mi):mi),(s<10?('0'+s):s),day]
+        var week = ['日','一','二','三','四','五','六'];
+        this.taskbar.date = array[0] + '-' + array[1] + '-' + array[2];
+        this.taskbar.time = array[3] + ':' + array[4]
+        this.taskbar.week = '周' + week[array[6]];
+      }
+    },
+    init(){
+      this.initTime(new Date().getTime())
     }
   },
   watch:{
     
   },
   mounted(){
-    
+    this.init()
   }
 }
 </script>
@@ -321,7 +266,7 @@ export default {
   cursor:default;
 }
 .time-box-week{
-  margin-left:10px;
+  margin-left:8px;
 }
 .desktop-show{
   width:10px;
@@ -333,8 +278,9 @@ export default {
     height:44px;
 }
 .desktop-menu{
-  width:60px;
-  height:60px;
+  padding:10px;
+  width:80px;
+  height:80px;
   display:inline-block;
   text-align:center;
 }
@@ -352,12 +298,5 @@ export default {
 }
 .desktop-menu-shadow{
   z-index:10;
-}
-</style>
-<style type="text/css">
-.start-dialog{
-  top:''!important;
-  left:0!important;
-  bottom:42px!important;
 }
 </style>

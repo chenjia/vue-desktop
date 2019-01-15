@@ -11,12 +11,13 @@ import router from './router'
 import store from './vuex/store'
 import { mapMutations } from 'vuex'
 import utils from './utils'
-import 'vx-easyui/dist/themes/default/easyui.css';
-import 'vx-easyui/dist/themes/icon.css';
-import 'vx-easyui/dist/themes/vue.css';
-import EasyUI from 'vx-easyui';
+import 'vx-easyui/dist/themes/default/easyui.css'
+import 'vx-easyui/dist/themes/icon.css'
+import 'vx-easyui/dist/themes/vue.css'
+import locale from 'vx-easyui/dist/locale/easyui-lang-zh_CN.js'
+import EasyUI from 'vx-easyui'
 import '../static/css/main.css'
-Vue.use(EasyUI);
+Vue.use(EasyUI,{locale: locale})
 Vue.config.productionTip = false
 window.utils = utils
 window.Vue = Vue

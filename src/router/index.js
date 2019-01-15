@@ -11,7 +11,6 @@ Router.prototype.goBack = function() {
   this.isBack = true
   window.history.go(-1)
 }
-
 const router = new Router({
   routes:[{
     path:'/',

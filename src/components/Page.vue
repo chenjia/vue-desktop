@@ -9,7 +9,6 @@
 <script>
 import router from '../router'
 import store from '../vuex/store'
-import {menus, messages} from './json.js'
 import {
   mapGetters,mapMutations
 } from 'vuex'
@@ -36,10 +35,7 @@ export default {
       searchKey:'',
       keepAlive:['login','desktop'],
       urlArray:urlArray,
-      transitionName: 'animate-in',
-      breadcrumb:[],
-      menus:menus,
-      messages:messages
+      transitionName: 'animate-in'
     }
   },
   computed: {
