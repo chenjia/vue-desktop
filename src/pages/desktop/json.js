@@ -1,21 +1,21 @@
 export const desktopMenus = [{
   name:'login',
   text:'浏览器',
-  icon:'../../../static/img/icon32/browser_32.png',
+  icon:'../static/img/icon32/browser_32.png',
   top:0,
   left:0,
   insertTime:'2019-01-01 11:22:00'
 },{
   name:'home',
   text:'我的任务',
-  icon:'../../../static/img/icon32/task_32.png',
+  icon:'../static/img/icon32/task_32.png',
   top:80,
   left:0,
   insertTime:'2019-01-02 11:22:00'
 },{
   name:'portal',
   text:'系统门户',
-  icon:'../../../static/img/icon32/portal_32.png',
+  icon:'../static/img/icon32/portal_32.png',
   top:160,
   left:0,
   insertTime:'2019-01-16 11:22:00'
