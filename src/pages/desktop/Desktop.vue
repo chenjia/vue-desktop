@@ -1,8 +1,9 @@
 <template>
   <div style="position:absolute;width:100%;height:100%;">
-    <Layout style="background:url(../../../static/img/desktop/1.jpg)">
-      <LayoutPanel region="center" @contextmenu.prevent.native="$refs.desktopMenu.showContextMenu($event.pageX,$event.pageY)" :border="false" :bodyStyle="{background:'none'}" :style="{height:(screenHeight-42)+'px'}">
-        <a v-Draggable="{cursor:'default', dragStart: onDragStart, drag: onDrag, dragEnd: onDragEnd}" v-for="(menu, index) in desktopMenus" @dblclick="open(menu)" class="desktop-menu">
+    <link rel="stylesheet" href="../../../static/css/icon.css">
+    <Layout :style="{background:'url(../../../static/img/desktop/'+$store.state.common.ui.bg+')'}">
+      <LayoutPanel region="center" @contextmenu.prevent.native="$refs.desktopMenu.showContextMenu($event.pageX,$event.pageY)" :border="false" :bodyStyle="{background:'none'}" :style="{width:'100%',height:(screenHeight-42)+'px'}">
+        <a v-Draggable="{cursor:'default', dragStart: (d)=>{onDragStart(d, menu)}, drag: onDrag, dragEnd: (d)=>{onDragEnd(d, menu)}}" v-for="(menu, index) in desktopMenus" @dblclick="open(menu)" class="desktop-menu" :style="{opacity:dragMenu==menu.name?.5:1,left:menu.left+'px', top:menu.top+'px', transition:sorting?'all .5s':''}">
           <img :src="menu.icon" />
           <span>{{menu.text}}</span>
         </a>
@@ -12,7 +13,7 @@
         <Calendar v-show="taskbar.showCalendar" style="position:absolute;right:0;bottom:0;width:250px;height:250px"></Calendar>
 
 
-        <Menu ref="desktopMenu" style="width:150px;" @itemClick="">
+        <Menu ref="desktopMenu" style="width:150px;" @itemClick="onContextMenu">
           <MenuItem v-for="(item, index) in contextMenus" :key="index" :value="item.value" :text="item.text" :iconCls="item.iconCls">
             <SubMenu v-if="item.children">
               <MenuItem v-for="(sub, subIndex) in item.children" :key="subIndex" :value="sub.value" :text="sub.text" :iconCls="sub.iconCls"></MenuItem>
@@ -24,15 +25,17 @@
           :key="key"
           :ref="task.name"
           :title="task.text"
-          :dialogStyle="{width:(screenHeight-100)*1.8+'px',height:(screenHeight-100)+'px'}"
+          :dialogStyle="{width:(screenHeight-100)*2+'px',height:(screenHeight-100)+'px'}"
           :modal="true"
           :draggable="true"
           :resizable="true"
+          :minimizable="true"
+          :maximizable="true"
           @close="closeTask(task)">
           <dynamic :component="task.name" />
         </Dialog>
 
-        <Dialog ref="startDialog" :title="'管理员'" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="start-dialog">
+        <Dialog ref="startDialog" :title="'管理员'" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
           <table cellspacing="0" cellpadding="0">
             <tr>
               <td>
@@ -105,12 +108,9 @@ import Vue from 'vue'
 import Dynamic from '../../components/Dynamic'
 import './desktop.css'
 import {desktopMenus, contextMenus, startMenus, funcs} from './json.js'
-import {
-  mapGetters,
-  mapMutations
-} from 'vuex'
+import store from '../../vuex/store'
 
-var range = 80;
+let range = 80;
 function repair(v){
   let r = parseInt(v/range,10)*range;
   if (Math.abs(v % range) > range/2){
@@ -142,6 +142,8 @@ export default {
   },
   data() {
     return {
+      dragMenu:null,
+      sorting:false,
       desktopMenus:desktopMenus,
       contextMenus:contextMenus,
       startDialog:{
@@ -162,22 +164,35 @@ export default {
     
   },
   methods: {
-    onDragStart(d){
+    onDragStart(d, menu){
       d = repairPosition(d)
+      this.dragMenu = menu.name
     },
     onDrag(d){
       d = repairPosition(d)
       d.target.applyDrag()
     },
-    onDragEnd(d){
+    onDragEnd(d, menu){
       d.left = repair(d.left)
       d.top = repair(d.top)
       d = repairPosition(d)
       d.target.$el.style.transition = 'all .1s'
+      let item = null
+      for(let i=0;i<this.desktopMenus.length;i++){
+        item = this.desktopMenus[i]
+        console.log(item,menu)
+        if(item.left == d.left && item.top == d.top){
+          d.left = menu.left
+          d.top = menu.top
+        }
+      }
+      menu.left = d.left
+      menu.top = d.top
       d.target.applyDrag()
       setTimeout(()=>{
         d.target.$el.style.transition = ''
-      },200)
+      },110)
+      this.dragMenu = null
     },
     open(menu){
       this.$set(this.taskbar.tasks, menu.name, menu)
@@ -195,6 +210,93 @@ export default {
       setTimeout(()=>{
         this.$refs.startDialog.$el.style.left = 0
       })
+    },
+    onContextMenu(value){
+      if(value.indexOf('theme-') != -1){
+        store.commit('THEME', value.substr(6))
+      }else if(value.indexOf('bg-') != -1){
+        store.commit('BG', value.substr(3))
+      }else if(value.indexOf('sort-') != -1){
+        const sortArray = value.substr(5).split('-')
+        this.sortDesktopMenu(sortArray[0], sortArray[1])
+      }else if(value.indexOf('fullscreen') != -1){
+        this.fullscreen()
+      }
+    },
+    sortDesktopMenu(field, orderType){
+      this.sorting = true
+      let menus = [].concat(this.desktopMenus)
+      menus.sort((prev, next) => {
+        if(field == 'time'){
+          if(orderType == 'asc'){
+            return prev.insertTime>next.insertTime?1:-1
+          }else{
+            return prev.insertTime<next.insertTime?1:-1
+          }
+        }else if(field == 'name'){
+          if(orderType == 'asc'){
+            return prev.text.localeCompare(next.text)
+          }else{
+            return next.text.localeCompare(prev.text)
+          }
+        }
+      })
+      
+      let desktopHeight = this.screenHeight-42
+      let rows = parseInt(desktopHeight / range, 10)
+
+      setTimeout(()=>{
+        for(let i=0;i<this.desktopMenus.length;i++){
+          for(let j=0;j<menus.length;j++){
+            if(this.desktopMenus[i].name == menus[j].name){
+              let menu = this.desktopMenus[i]
+              menu.left = parseInt(j/rows,10)*range
+              menu.top = parseInt(j%rows,10)*range
+              break;
+            }
+          }
+        }
+      },100)
+      
+      
+      setTimeout(()=>{
+        this.sorting = false
+      },600)
+    },
+    fullscreen(){
+      var isFull = false;
+      if(document.fullScreen||document.mozFullScreen||document.webkitIsFullScreen||document.fullscreen){
+        isFull = true;
+      }else if(screen.width-document.body.scrollWidth<=1 && screen.height-document.body.scrollHeight<=1){
+        isFull = true;
+      }
+      
+      if(isFull){
+        var c = document.exitFullscreen || document.cancelFullScreen || document.webkitCancelFullScreen || document.mozCancelFullScreen;
+        if (typeof c != "undefined" && c) {
+          c.call(document);
+        } else if (typeof window.ActiveXObject != "undefined") {
+          var wscript = new ActiveXObject("WScript.Shell");
+          if (wscript != null) {
+            wscript.SendKeys("{F11}");
+          }
+        }
+      }else{
+        var el = document.documentElement;
+        var f = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
+        if (typeof f != "undefined" && f) {
+          f.call(el);
+        } else if (typeof window.ActiveXObject != "undefined") {
+          try{
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript != null) {
+              wscript.SendKeys("{F11}");
+            }
+          }catch(e){
+            alert('安全设置','此功能需要开启【对未标记为可安全执行脚本的AciveX控件初始化并执行脚本】！');
+          }
+        }
+      }
     },
     initTime(sysTime){
       if(sysTime != undefined){
@@ -225,78 +327,11 @@ export default {
   }
 }
 </script>
-<style type="text/css" scoped>
-.menu-seq {
-    font-size: 1px;
-    margin: 3px 0;
-    border-top: 1px solid #CCCCCC;
-    border-bottom: 1px solid #FFFFFF;
-}
-.start{
-  background:url('../../../static/img/win_gray.png') -4px 0 no-repeat;
-  display:inline-block;
-  width:40px;
-  height:40px;
-  position:relative;
-  top:-1px;
-  cursor: pointer;
-}
-.start-hover{
-  background:url('../../../static/img/win_blue.png') -4px 0 no-repeat;
-}
-.start-box{
-  width:50px;
-  text-align:center;
-}
-.task-icon{
-  display:inline-block;
-  padding:4px 3px;
-  background:none;
-  border:none;
-}
-.task-icon:active,.task-icon:focus,.task-icon:visited{
-  border:none!important;
-  box-shadow: none!important;
-}
-.time-box{
-  width:80px;
-  font-size:12px;
-  font-family:'微软雅黑';
-  text-align:center;
-  cursor:default;
-}
-.time-box-week{
-  margin-left:8px;
-}
-.desktop-show{
-  width:10px;
-}
-.seq{
-  border-left: 1px solid #AAAAAA;
-    border-right: 1px solid #FFFFFF;
-    float:left;
-    height:44px;
-}
-.desktop-menu{
-  padding:10px;
-  width:80px;
-  height:80px;
-  display:inline-block;
-  text-align:center;
-}
-.desktop-menu img{
-  margin-top:6px;
-  display:inline-block;
-}
-.desktop-menu span{
-  color:white;
-  font-size:12px;
-  font-weight:bold;
-  font-family:'微软雅黑';
-  text-align:center;
-  display:inline-block;
-}
-.desktop-menu-shadow{
-  z-index:10;
+<style src="./desktop.css" scoped></style>
+<style type="text/css">
+.startDialog{
+  top:auto!important;
+  left:0!important;
+  bottom:42px!important;
 }
 </style>

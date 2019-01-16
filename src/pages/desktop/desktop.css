@@ -1,44 +1,75 @@
-.start-dialog{
-  top:''!important;
-  left:0!important;
-  bottom:42px!important;
+.menu-seq {
+    font-size: 1px;
+    margin: 3px 0;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #FFFFFF;
 }
-.icon-color{
-  background:url("../../../static/img/icons/color.png") no-repeat center center;
+.start{
+  background:url('../../../static/img/win_gray.png') -4px 0 no-repeat;
+  display:inline-block;
+  width:40px;
+  height:40px;
+  position:relative;
+  top:-1px;
+  cursor: pointer;
 }
-.icon-sort{
-  background:url("../../../static/img/icons/sort.png") no-repeat center center;
+.start-hover{
+  background:url('../../../static/img/win_blue.png') -4px 0 no-repeat;
 }
-.icon-sort-time-asc{
-  background:url("../../../static/img/icons/sort_time_asc.png") no-repeat center center;
+.start-box{
+  width:50px;
+  text-align:center;
 }
-.icon-sort-time-desc{
-  background:url("../../../static/img/icons/sort_time_desc.png") no-repeat center center;
+.task-icon{
+  display:inline-block;
+  padding:4px 3px;
+  background:none;
+  border:none;
 }
-.icon-sort-name-asc{
-  background:url("../../../static/img/icons/sort_name_asc.png") no-repeat center center;
+.task-icon:active,.task-icon:focus,.task-icon:visited{
+  border:none!important;
+  box-shadow: none!important;
 }
-.icon-sort-name-desc{
-  background:url("../../../static/img/icons/sort_name_desc.png") no-repeat center center;
+.time-box{
+  width:80px;
+  font-size:12px;
+  font-family:'微软雅黑';
+  text-align:center;
+  cursor:default;
 }
-.icon-other{
-  background:url("../../../static/img/icons/other.png") no-repeat center center;
+.time-box-week{
+  margin-left:8px;
 }
-.icon-desktop{
-  background:url('../../../static/img/icons/desktop.png') no-repeat center center;
+.desktop-show{
+  width:10px;
 }
-.icon-lock{
-  background:url('../../../static/img/icons/lock.png') no-repeat center center;
+.seq{
+  border-left: 1px solid #AAAAAA;
+    border-right: 1px solid #FFFFFF;
+    float:left;
+    height:44px;
 }
-.icon-unlock{
-  background:url('../../../static/img/icons/unlock.png') no-repeat center center;
+.desktop-menu{
+  position:absolute;
+  padding:10px;
+  width:80px;
+  height:80px;
+  display:inline-block;
+  text-align:center;
+  z-index: 99999;
 }
-.icon-config{
-  background:url('../../../static/img/icons/config.png') no-repeat center center;
+.desktop-menu img{
+  margin-top:6px;
+  display:inline-block;
 }
-.icon-work{
-  background:url("../../../static/img/icons/work.png") no-repeat center center;
+.desktop-menu span{
+  color:white;
+  font-size:12px;
+  font-weight:bold;
+  font-family:'微软雅黑';
+  text-align:center;
+  display:inline-block;
 }
-.icon-fullscreen{
-  background:url("../../../static/img/icons/fullscreen.png") no-repeat center center;
+.desktop-menu-shadow{
+  z-index:10;
 }

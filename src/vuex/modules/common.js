@@ -4,7 +4,9 @@ import Vue from 'vue'
 const typeArrays = [
   'LOGIN',
   'LOGOUT',
-  'TOGGLE_LOADING'
+  'TOGGLE_LOADING',
+  'THEME',
+  'BG'
 ]
 
 const types = {}
@@ -18,6 +20,8 @@ const state = {
     
   },
   ui: {
+    theme:'default',
+    bg:'1.jpg',
     loading: false,
     loadend: false
   },
@@ -41,6 +45,14 @@ const actions = {
 }
 
 const mutations = {
+  [types.THEME](state, theme) {
+    cache.set('theme', theme)
+    state.ui.theme = theme
+  },
+  [types.BG](state, bg) {
+    cache.set('bg', bg)
+    state.ui.bg = bg
+  },
   [types.LOGIN](state, data) {
     cache.set('user', data.user)
     cache.set('userSetting', data.userSetting)

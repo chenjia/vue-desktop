@@ -1,5 +1,7 @@
 <template>
   <div>
+    <link rel="stylesheet" :href="'../../../static/css/themes/'+$store.state.common.ui.theme+'/easyui.css'">
+    <link rel="stylesheet" href="../../../static/css/vue.css">
     <router-view></router-view>
     <div v-show="$store.state.common.ui.loading" style="position:absolute;top:0px;left:0px;width:100%;height:100%;z-index:999999;" class="loading">
       <div :style="{width:$store.state.common.ui.loadend?'100%':0}" class="mask mask-top" style="position:absolute;top:0px;left:0px;width:0;height:42%;background:#FBEC88;"></div>
@@ -33,14 +35,19 @@ export default {
   data(){
     return {
       transitionName: 'animate-in',
-      
+      vuecss:require('vx-easyui/dist/themes/vue.css')
     }
+  },
+  computed:{
+
   },
   methods:{
     
   },
   watch:{
-    
+    // '$store.state.common.ui.theme'(val){
+    //   require('vx-easyui/dist/themes/vue.css')
+    // }
   },
   mounted(){
     setTimeout(()=>{

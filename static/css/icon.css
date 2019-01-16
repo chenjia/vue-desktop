@@ -1,0 +1,39 @@
+.icon-color{
+  background:url("../../../static/img/icons/color.png") no-repeat center center;
+}
+.icon-sort{
+  background:url("../../../static/img/icons/sort.png") no-repeat center center;
+}
+.icon-sort-time-asc{
+  background:url("../../../static/img/icons/sort_time_asc.png") no-repeat center center;
+}
+.icon-sort-time-desc{
+  background:url("../../../static/img/icons/sort_time_desc.png") no-repeat center center;
+}
+.icon-sort-name-asc{
+  background:url("../../../static/img/icons/sort_name_asc.png") no-repeat center center;
+}
+.icon-sort-name-desc{
+  background:url("../../../static/img/icons/sort_name_desc.png") no-repeat center center;
+}
+.icon-other{
+  background:url("../../../static/img/icons/other.png") no-repeat center center;
+}
+.icon-desktop{
+  background:url('../../../static/img/icons/desktop.png') no-repeat center center;
+}
+.icon-lock{
+  background:url('../../../static/img/icons/lock.png') no-repeat center center;
+}
+.icon-unlock{
+  background:url('../../../static/img/icons/unlock.png') no-repeat center center;
+}
+.icon-config{
+  background:url('../../../static/img/icons/config.png') no-repeat center center;
+}
+.icon-work{
+  background:url("../../../static/img/icons/work.png") no-repeat center center;
+}
+.icon-fullscreen{
+  background:url("../../../static/img/icons/fullscreen.png") no-repeat center center;
+}

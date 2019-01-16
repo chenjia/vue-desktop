@@ -2,80 +2,151 @@ export const desktopMenus = [{
   name:'login',
   text:'浏览器',
   icon:'../../../static/img/icon32/browser_32.png',
-  top:'',
-  left:''
+  top:0,
+  left:0,
+  insertTime:'2019-01-01 11:22:00'
 },{
   name:'home',
   text:'我的任务',
   icon:'../../../static/img/icon32/task_32.png',
-  top:'',
-  left:''
+  top:80,
+  left:0,
+  insertTime:'2019-01-02 11:22:00'
+},{
+  name:'portal',
+  text:'系统门户',
+  icon:'../../../static/img/icon32/portal_32.png',
+  top:160,
+  left:0,
+  insertTime:'2019-01-16 11:22:00'
 }]
 
 export const contextMenus = [{
   text:'主题风格',
+  value:'',
   iconCls:'icon-color',
   children:[{
-    value:'sunny',
-    text:'sunny',
+    value:'theme-black',
+    text:'black',
     iconCls:'icon-color'
   },{
-    value:'pepper-grinder',
-    text:'pepper-grinder',
+    value:'theme-bootstrap',
+    text:'bootstrap',
     iconCls:'icon-color'
   },{
-    value:'dark-hive',
-    text:'dark-hive',
+    value:'theme-gray',
+    text:'gray',
     iconCls:'icon-color'
   },{
-    value:'cupertino',
-    text:'cupertino',
+    value:'theme-material',
+    text:'material',
     iconCls:'icon-color'
   },{
-    value:'metro-red',
+    value:'theme-material-teal',
+    text:'material-teal',
+    iconCls:'icon-color'
+  },{
+    value:'theme-ui-sunny',
+    text:'ui-sunny',
+    iconCls:'icon-color'
+  },{
+    value:'theme-ui-pepper-grinder',
+    text:'ui-pepper-grinder',
+    iconCls:'icon-color'
+  },{
+    value:'theme-ui-dark-hive',
+    text:'ui-dark-hive',
+    iconCls:'icon-color'
+  },{
+    value:'theme-ui-cupertino',
+    text:'ui-cupertino',
+    iconCls:'icon-color'
+  },{
+    value:'theme-metro-red',
     text:'metro-red',
     iconCls:'icon-color'
   },{
-    value:'metro-orange',
+    value:'theme-metro-orange',
     text:'metro-orange',
     iconCls:'icon-color'
   },{
-    value:'metro-green',
+    value:'theme-metro-green',
     text:'metro-green',
     iconCls:'icon-color'
   },{
-    value:'metro-gray',
+    value:'theme-metro-gray',
     text:'metro-gray',
     iconCls:'icon-color'
   },{
-    value:'metro-blue',
+    value:'theme-metro-blue',
     text:'metro-blue',
     iconCls:'icon-color'
   }]
 },{
+  value:'背景图片',
+  text:'背景图片',
+  iconCls:'icon-desktop',
+  children:[{
+    value:'bg-1.jpg',
+    text:'1.jpg',
+    iconCls:'icon-desktop'
+  },{
+    value:'bg-2.jpg',
+    text:'2.jpg',
+    iconCls:'icon-desktop'
+  },{
+    value:'bg-3.jpg',
+    text:'3.jpg',
+    iconCls:'icon-desktop'
+  },{
+    value:'bg-4.jpg',
+    text:'4.jpg',
+    iconCls:'icon-desktop'
+  },{
+    value:'bg-5.jpg',
+    text:'5.jpg',
+    iconCls:'icon-desktop'
+  },{
+    value:'bg-6.jpg',
+    text:'6.jpg',
+    iconCls:'icon-desktop'
+  },{
+    value:'bg-7.jpg',
+    text:'7.jpg',
+    iconCls:'icon-desktop'
+  },{
+    value:'bg-8.jpg',
+    text:'8.jpg',
+    iconCls:'icon-desktop'
+  },{
+    value:'bg-9.jpg',
+    text:'9.jpg',
+    iconCls:'icon-desktop'
+  },{
+    value:'bg-10.jpg',
+    text:'10.jpg',
+    iconCls:'icon-desktop'
+  },]
+},{
   text:'自动排序',
   iconCls:'icon-sort',
   children:[{
-    value:'按名称升序',
+    value:'sort-name-asc',
     text:'按名称升序',
     iconCls:'icon-sort-name-asc'
   },{
-    value:'按名称降序',
+    value:'sort-name-desc',
     text:'按名称降序',
     iconCls:'icon-sort-name-desc'
   },{
-    value:'按时间升序',
+    value:'sort-time-asc',
     text:'按时间升序',
     iconCls:'icon-sort-time-asc'
   },{
-    value:'按时间降序',
+    value:'sort-time-desc',
     text:'按时间降序',
     iconCls:'icon-sort-time-desc'
   }]
-},{
-  value:'显示桌面',
-  text:'显示桌面',
-  iconCls:'icon-desktop'
 },{
   value:'锁定屏幕',
   text:'锁定屏幕',
@@ -89,7 +160,7 @@ export const contextMenus = [{
   text:'办公模式',
   iconCls:'icon-work',
 },{
-  value:'全屏显示',
+  value:'fullscreen',
   text:'全屏显示',
   iconCls:'icon-fullscreen',
 }]
