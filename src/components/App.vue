@@ -23,36 +23,103 @@
         </tr>
       </table>
     </div>
+
+    <div id="particles-js" v-show="$store.state.common.ui.lock" style="position:absolute;top:0px;left:0px;width:100%;height:100%;" :style="{background:'url(../static/img/desktop/'+$store.state.common.ui.bg+')'}">
+      <Dialog ref="loginDialog"
+        :title="title" 
+        :dialogStyle="{width:'400px',height:'300px'}"
+        :modal="true"
+        :closable="false"
+        :draggable="true"
+        :resizable="true">
+        
+        <Form :model="user" class="pd-lg center">
+          <div style="margin-bottom:20px">
+            <Label for="username">账　号：</Label>
+            <TextBox inputId="username" v-model="user.username"></TextBox>
+          </div>
+          <div style="margin-bottom:20px">
+            <Label for="password">密　码：</Label>
+            <TextBox inputId="password" v-model="user.password"></TextBox>
+          </div>
+          <div style="margin-bottom:20px">
+            <Label for="captcha">验证码：</Label>
+            <TextBox inputId="captcha" style="width:80px;" v-model="user.captcha"></TextBox>
+            <img :src="base64Img" style="width:85px;height:30px;border:1px solid #eee;vertical-align: middle;"/>
+          </div>
+          <div>
+            <CheckBox inputId="remember" v-model="user.remember"></CheckBox>
+            <Label for="remember">记住密码</Label>
+            
+            <LinkButton :plain="true"><i class="fa fa-fw fa-question-circle-o"></i> 忘记密码</LinkButton>
+            <!-- <a href=""><i class="fa fa-fw fa-qrcode"></i> 二维码登录</a> -->
+          </div>
+        </Form>
+        
+        <div class="dialog-button center">
+          <LinkButton style="width:80px" iconCls="fa fa-fw fa-user" :disabled="isLogin" @click="login()">登录</LinkButton>
+          <LinkButton style="width:80px" iconCls="fa fa-fw fa-refresh" @click="reset()">重置</LinkButton>
+        </div>
+      </Dialog>
+
+    </div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
+import { mapGetters, mapMutations } from 'vuex'
 import store from '../vuex/store'
+import 'particles.js/particles'
 
 export default {
   name: 'app',
   data(){
     return {
       transitionName: 'animate-in',
-      vuecss:require('vx-easyui/dist/themes/vue.css')
+      user:{
+        username:'',
+        password:''
+      },
+      title:'账号登录',
+      base64Img:'',
+      isLogin: false
     }
   },
   computed:{
 
   },
   methods:{
-    
+    ...mapMutations({
+      lock:'LOCK',
+      loading:'TOGGLE_LOADING'
+    }),
+    getCaptcha(){
+      utils.http.post('/lxt-manage/api/user/captcha').then(response => {
+        this.user.captchaToken = response.data.body.data.captchaToken
+        this.base64Img = 'data:image/png;base64, '+response.data.body.data.base64Img
+      })
+    },
+    login(){
+      this.loading(true)
+      this.$refs.loginDialog.close()
+      this.lock(false)
+      setTimeout(()=>{
+        this.loading(false)
+      },1000+(Math.random()*3000))
+    }
   },
   watch:{
-    // '$store.state.common.ui.theme'(val){
-    //   require('vx-easyui/dist/themes/vue.css')
-    // }
+    
   },
   mounted(){
     setTimeout(()=>{
       require('../lazyLibs')
     }, Config.preload)
+    this.getCaptcha()
+    particlesJS.load('particles-js', './static/lib/particles/particles.json', function() {
+      
+    });
   }
 }
 </script>

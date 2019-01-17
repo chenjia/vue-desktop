@@ -6,7 +6,8 @@ const typeArrays = [
   'LOGOUT',
   'TOGGLE_LOADING',
   'THEME',
-  'BG'
+  'BG',
+  'LOCK'
 ]
 
 const types = {}
@@ -23,7 +24,8 @@ const state = {
     theme:'default',
     bg:'1.jpg',
     loading: false,
-    loadend: false
+    loadend: false,
+    lock:true
   },
   user: cache.get('user'),
   userSetting: cache.get('userSetting')
@@ -48,6 +50,9 @@ const mutations = {
   [types.THEME](state, theme) {
     cache.set('theme', theme)
     state.ui.theme = theme
+  },
+  [types.LOCK](state, lock) {
+    state.ui.lock = lock
   },
   [types.BG](state, bg) {
     cache.set('bg', bg)
