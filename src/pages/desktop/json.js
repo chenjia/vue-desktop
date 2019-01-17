@@ -1,5 +1,5 @@
 export const desktopMenus = [{
-  name:'login',
+  name:'browser',
   text:'浏览器',
   icon:'../static/img/icon32/browser_32.png',
   top:0,
@@ -148,7 +148,7 @@ export const contextMenus = [{
     iconCls:'icon-sort-time-desc'
   }]
 },{
-  value:'锁定屏幕',
+  value:'lock-screen',
   text:'锁定屏幕',
   iconCls:'icon-lock',
 },{

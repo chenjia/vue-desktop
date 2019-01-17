@@ -26,7 +26,8 @@
           :ref="task.name"
           :title="task.text"
           :dialogStyle="{width:(screenHeight-100)*2+'px',height:(screenHeight-100)+'px'}"
-          :modal="true"
+          :bodyStyle="{display:'flex'}"
+          :modal="false"
           :draggable="true"
           :resizable="true"
           :minimizable="true"
@@ -108,6 +109,7 @@ import Vue from 'vue'
 import Dynamic from '../../components/Dynamic'
 import './desktop.css'
 import {desktopMenus, contextMenus, startMenus, funcs} from './json.js'
+import { mapGetters, mapMutations } from 'vuex'
 import store from '../../vuex/store'
 
 let range = 80;
@@ -164,6 +166,9 @@ export default {
     
   },
   methods: {
+    ...mapMutations({
+      lock:'LOCK'
+    }),
     onDragStart(d, menu){
       d = repairPosition(d)
       this.dragMenu = menu.name
@@ -221,6 +226,8 @@ export default {
         this.sortDesktopMenu(sortArray[0], sortArray[1])
       }else if(value.indexOf('fullscreen') != -1){
         this.fullscreen()
+      }else if(value.indexOf('lock-') != -1){
+        this.lock(true)
       }
     },
     sortDesktopMenu(field, orderType){

@@ -25,8 +25,9 @@
     </div>
 
     <div id="particles-js" v-show="$store.state.common.ui.lock" style="position:absolute;top:0px;left:0px;width:100%;height:100%;" :style="{background:'url(../static/img/desktop/'+$store.state.common.ui.bg+')'}">
-      <Dialog ref="loginDialog"
-        :title="title" 
+      <Dialog
+        ref="loginDialog"
+        :title="title"
         :dialogStyle="{width:'400px',height:'300px'}"
         :modal="true"
         :closable="false"
@@ -102,24 +103,28 @@ export default {
     },
     login(){
       this.loading(true)
-      this.$refs.loginDialog.close()
-      this.lock(false)
       setTimeout(()=>{
+        this.lock(false)
         this.loading(false)
-      },1000+(Math.random()*3000))
+      },1000+(Math.random()*1000))
     }
   },
   watch:{
-    
+    '$store.state.common.ui.lock'(val){
+      if(val){
+        this.$refs.loginDialog.open()
+      }else{
+        this.$refs.loginDialog.close()
+      }
+    }
   },
   mounted(){
+    particlesJS.load('particles-js', './static/lib/particles/particles.json', function() {});
     setTimeout(()=>{
       require('../lazyLibs')
     }, Config.preload)
     this.getCaptcha()
-    particlesJS.load('particles-js', './static/lib/particles/particles.json', function() {
-      
-    });
+    // this.login()
   }
 }
 </script>
