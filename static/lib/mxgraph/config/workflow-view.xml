@@ -1,0 +1,64 @@
+<mxEditor defaultGroup="group" defaultEdge="edge"
+	helpWindowImage="images/help.gif"
+	tasksWindowImage="images/tasks.gif"
+	forcedInserting="0"
+	swimlaneRequired="0">
+	
+	<mxDefaultPopupMenu as="popupHandler">
+		<add as="cut" action="cut" icon="images/cut.gif"/>
+		<add as="copy" action="copy" icon="images/copy.gif"/>
+		<add as="paste" action="paste" icon="images/paste.gif"/>
+		<separator/>
+		<add as="delete" action="delete" icon="images/delete.gif" if="cell"/>
+		<separator/>
+		<add as="exitGroup" action="exitGroup" icon="images/up.gif" if="notRoot"/>
+		<add as="enterGroup" action="enterGroup" icon="images/down.gif" if="validRoot"/>
+		<separator/>
+		<add as="shape" if="cell">
+			<add as="group" action="group" icon="images/group.gif" if="ncells"/>
+			<add as="ungroup" action="ungroup" icon="images/ungroup.gif" if="cell"/>
+			<separator/>
+			<add as="removeFromParent" action="removeFromParent" if="cell"/>
+			<separator/>
+			<add as="collapse" action="collapse" icon="images/collapse.gif" if="expandable"/>
+			<add as="expand" action="expand" icon="images/expand.gif" if="collapsable"/>
+			<separator/>
+			<add as="toFront" action="toFront" icon="images/tofront.gif" if="cell"/>
+			<add as="toBack" action="toBack" icon="images/toback.gif" if="cell"/>
+			<separator/>
+			<add as="editStyle" action="editStyle" if="cell"/>
+		</add>
+		<add as="format" if="cell">
+			<add as="fillColor" action="fillColor" icon="images/fillcolor.gif" if="cell"/>
+			<add as="gradientColor" action="gradientColor" if="cell"/>
+			<add as="strokeColor" action="strokeColor" icon="images/linecolor.gif" if="cell"/>
+			<separator/>
+			<add as="toggleRounded" action="toggleRounded" if="cell"/>
+			<add as="toggleShadow" action="toggleShadow" if="cell"/>
+		</add>
+		<add as="font" if="cell">
+			<add as="fontColor" action="fontColor" icon="images/fontcolor.gif" if="cell"/>
+			<add as="fontFamily" action="fontFamily" if="cell"/>
+			<add as="fontSize" action="fontSize" if="cell"/>
+			<separator/>
+			<add as="bold" action="bold" icon="images/bold.gif" if="cell"/>
+			<add as="italic" action="italic" icon="images/italic.gif" if="cell"/>
+		</add>
+		<separator/>
+		<add as="properties" action="showProperties" icon="images/properties.gif"/>
+		<separator/>
+		<add as="openHref" action="openHref" icon="images/link.gif"/>
+	</mxDefaultPopupMenu>
+	
+	<include name="../../../ext/mxgraph/config/keyhandler-commons.xml"/>
+	<include name="../../../ext/mxgraph/config/graph-commons.xml"/>
+	<include name="../../../ext/mxgraph/config/wfeditor-commons.xml"/>
+	
+	<ui>
+		<add as="graph" element="graph"/>
+	</ui>
+	
+	<mxGraph as="graph">
+		<include name="../../../ext/mxgraph/config/wfgraph-commons.xml"/>
+	</mxGraph>
+</mxEditor>

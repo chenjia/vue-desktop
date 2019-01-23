@@ -58,7 +58,7 @@
           </LayoutPanel>
 
           <LayoutPanel region="center" :border="false" style="width:100%;height:100%;" :bodyStyle="{position:'relative'}">
-            <div class="graph-container" v-Droppable="dropOpts" @dragEnter="isover=true" @dragLeave="isover=false" @drop="isover=false;onDrop()"></div>
+            <div class="graph-container" v-Droppable="dropOpts" @dragEnter="isover=true" @dragLeave="isover=false" @drop="isover=false;drop()"></div>
           </LayoutPanel>
         </Layout>
       </LayoutPanel>
@@ -86,10 +86,15 @@
 
 <script>
 import {workflowProperties, } from './json.js'
+var mxgraph = require("mxgraph")({
+  mxBasePath: "../../../static/lib/mxgraph"
+})
 export default {
   name: 'workflowEditor',
   data() {
     return {
+      editor:null,
+      graph:null,
       isover:false,
       dragItem:null,
       dropped:false,
@@ -100,6 +105,9 @@ export default {
         },
         dragLeave: () => {
           this.isover = false;
+        },
+        drop: (state) =>{
+          console.log(state)
         }
       }
     }
@@ -113,15 +121,20 @@ export default {
         this.dragItem = null
       },300)
     },
-    onDrop() {
-      
+    onDrop(state) {
+      console.log(state)
+    },
+    initMxgraph(){
+      var node = mxgraph.mxUtils.load('../../../static/lib/mxgraph/config/workflow-editor.xml').getDocumentElement();
+      this.editor = new mxgraph.mxEditor(node);
+      this.graph = this.editor.graph;
     }
   },
   watch:{
     
   },
   mounted(){
-    
+    this.initMxgraph()
   }
 }
 </script>
