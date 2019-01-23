@@ -25,8 +25,8 @@
           :key="key"
           :ref="task.name"
           :title="task.text"
-          :dialogStyle="{width:(screenHeight-100)*2+'px',height:(screenHeight-100)+'px'}"
-          :bodyStyle="{display:'flex'}"
+          :dialogStyle="{width:(screenWidth-100)+'px',height:(screenHeight-100)+'px'}"
+          :bodyStyle="{display:'flex',position:'relative'}"
           :modal="false"
           :draggable="true"
           :resizable="true"
@@ -167,7 +167,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      lock:'LOCK'
+      lock:'LOCK',
+      loading:'TOGGLE_LOADING'
     }),
     onDragStart(d, menu){
       d = repairPosition(d)
@@ -227,7 +228,11 @@ export default {
       }else if(value.indexOf('fullscreen') != -1){
         this.fullscreen()
       }else if(value.indexOf('lock-') != -1){
-        this.lock(true)
+        this.loading(true)
+        setTimeout(()=>{
+          this.lock(true)
+          this.loading(false)
+        },1000)
       }
     },
     sortDesktopMenu(field, orderType){

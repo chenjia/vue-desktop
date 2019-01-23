@@ -124,7 +124,7 @@ export default {
       require('../lazyLibs')
     }, Config.preload)
     this.getCaptcha()
-    // this.login()
+    this.login()
   }
 }
 </script>

@@ -4,21 +4,35 @@ export const desktopMenus = [{
   icon:'../static/img/icon32/browser_32.png',
   top:0,
   left:0,
-  insertTime:'2019-01-01 11:22:00'
+  insertTime:'2019-01-01 00:00:00'
 },{
   name:'home',
   text:'我的任务',
   icon:'../static/img/icon32/task_32.png',
   top:80,
   left:0,
-  insertTime:'2019-01-02 11:22:00'
+  insertTime:'2019-01-02 00:00:00'
 },{
   name:'portal',
   text:'系统门户',
   icon:'../static/img/icon32/portal_32.png',
   top:160,
   left:0,
-  insertTime:'2019-01-16 11:22:00'
+  insertTime:'2019-01-16 00:00:00'
+},{
+  name:'workflowEditor',
+  text:'流程设计',
+  icon:'../static/img/icon32/workflow_32.png',
+  top:80,
+  left:80,
+  insertTime:'2019-01-22 00:00:00'
+},{
+  name:'workflow',
+  text:'流程管理',
+  icon:'../static/img/icon32/list_32.png',
+  top:0,
+  left:80,
+  insertTime:'2019-01-23 00:00:00'
 }]
 
 export const contextMenus = [{

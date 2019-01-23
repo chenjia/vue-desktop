@@ -1,0 +1,311 @@
+.icon-upload{
+  background:url("../../../static/img/icons/upload.png") no-repeat center center;
+}
+.icon-download{
+  background:url("../../../static/img/icons/download.png") no-repeat center center;
+}
+.icon-color{
+  background:url("../../../static/img/icons/color.png") no-repeat center center;
+}
+.icon-sort{
+  background:url("../../../static/img/icons/sort.png") no-repeat center center;
+}
+.icon-sort-time-asc{
+  background:url("../../../static/img/icons/sort_time_asc.png") no-repeat center center;
+}
+.icon-sort-time-desc{
+  background:url("../../../static/img/icons/sort_time_desc.png") no-repeat center center;
+}
+.icon-sort-name-asc{
+  background:url("../../../static/img/icons/sort_name_asc.png") no-repeat center center;
+}
+.icon-sort-name-desc{
+  background:url("../../../static/img/icons/sort_name_desc.png") no-repeat center center;
+}
+.icon-other{
+  background:url("../../../static/img/icons/other.png") no-repeat center center;
+}
+.icon-fullscreen{
+  background:url("../../../static/img/icons/fullscreen.png") no-repeat center center;
+}
+.icon-cancelfullscreen{
+  background:url("../../../static/img/icons/normalscreen.png") no-repeat center center;
+}
+.icon-work{
+  background:url("../../../static/img/icons/work.png") no-repeat center center;
+}
+.icon-sendback{
+  background:url("../../../static/img/icons/sendback.png") no-repeat center center;
+}
+.icon-refresh{
+  background:url("../../../static/img/icons/refresh.png") no-repeat center center;
+}
+.icon-portal{
+  background:url("../../../static/img/icons/portal.png") no-repeat center center;
+}
+.icon-layout{
+  background:url("../../../static/img/icons/layout.png") no-repeat center center;
+}
+.icon-menu{
+  background:url("../../../static/img/icons/menu.png") no-repeat center center;
+}
+.icon-news{
+  background:url("../../../static/img/icons/news.png") no-repeat center center;
+}
+.icon-notice{
+  background:url("../../../static/img/icons/notice.png") no-repeat center center;
+}
+.icon-system-config{
+  background:url("../../../static/img/icons/system_config.png") no-repeat center center;
+}
+.icon-schedule{
+  background:url("../../../static/img/icons/schedule.png") no-repeat center center;
+}
+.icon-history-task{
+  background:url("../../../static/img/icons/history_task.png") no-repeat center center;
+}
+.icon-date{
+  background:url("../../../static/img/icons/date.png") no-repeat center center;
+}
+.icon-letters{
+  background:url("../../../static/img/icons/letters.png") no-repeat center center;
+}
+.icon-numbers{
+  background:url("../../../static/img/icons/numbers.png") no-repeat center center;
+}
+.icon-spellcheck{
+  background:url("../../../static/img/icons/spellcheck.png") no-repeat center center;
+}
+.icon-validate-rule{
+  background:url("../../../static/img/icons/validaterule.png") no-repeat center center;
+}
+.icon-getback{
+  background:url("../../../static/img/icons/getback.png") no-repeat center center;
+}
+.icon-text-edit{
+  background:url("../../../static/img/icons/text_edit.png") no-repeat center center;
+}
+.icon-key{
+  background:url("../../../static/img/icons/key.png") no-repeat center center;
+}
+.icon-basicinfo{
+  background:url("../../../static/img/icons/basicinfo.png") no-repeat center center;
+}
+.icon-submit{
+  background:url("../../../static/img/icons/submit.png") no-repeat center center;
+}
+.icon-coffee{
+  background:url("../../../static/img/icons/coffee.png") no-repeat center center;
+}
+.icon-view{
+  background:url("../../../static/img/icons/view.png") no-repeat center center;
+}
+.icon-attach{
+  background:url("../../../static/img/icons/attach.png") no-repeat center center;
+}
+.icon-form{
+  background:url("../../../static/img/icons/form.png") no-repeat center center;
+}
+.icon-do{
+  background:url("../../../static/img/icons/do.png") no-repeat center center;
+}
+.icon-delegate{
+  background:url("../../../static/img/icons/delegate.png") no-repeat center center;
+}
+.icon-start{
+  background:url("../../../static/img/icons/start.png") no-repeat center center;
+}
+.icon-task{
+  background:url("../../../static/img/icons/task.png") no-repeat center center;
+}
+.icon-remindrule{
+  background:url("../../../static/img/icons/remindrule.png") no-repeat center center;
+}
+.icon-department{
+  background:url("../../../static/img/icons/department.png") no-repeat center center;
+}
+.icon-organization{
+  background:url("../../../static/img/icons/organization.png") no-repeat center center;
+}
+.icon-navigation{
+  background:url('../../../static/img/icons/navigation.png') no-repeat center center;
+}
+.icon-clear{
+  background:url('../../../static/img/icons/clear.png') no-repeat center center;
+}
+.icon-eye{
+  background:url('../../../static/img/icons/eye.png') no-repeat center center;
+}
+.icon-male{
+  background:url('../../../static/img/icons/male.png') no-repeat center center;
+}
+.icon-female{
+  background:url('../../../static/img/icons/female.png') no-repeat center center;
+}
+.icon-user{
+  background:url('../../../static/img/icons/user.png') no-repeat center center;
+}
+.icon-user-add{
+  background:url('../../../static/img/icons/user_add.png') no-repeat center center;
+}
+.icon-user-remove{
+  background:url('../../../static/img/icons/user_delete.png') no-repeat center center;
+}
+.icon-user-modify{
+  background:url('../../../static/img/icons/user_edit.png') no-repeat center center;
+}
+.icon-role{
+  background:url('../../../static/img/icons/role.png') no-repeat center center;
+}
+.icon-clear{
+  background:url('../../../static/img/icons/clear.png') no-repeat center center;
+}
+.icon-message{
+  background:url('../../../static/img/icons/message.png') no-repeat center center;
+}
+.icon-box{
+  background:url('../../../static/img/icons/box.png') no-repeat center center;
+}
+.icon-favorite{
+  background:url('../../../static/img/icons/favorite.png') no-repeat center center;
+}
+.icon-property{
+  background:url('../../../static/img/icons/property.png') no-repeat center center;
+}
+.icon-search{
+  background:url('../../../static/img/icons/searchbox.png') no-repeat center center;
+}
+.icon-advance-search{
+  background:url('../../../static/img/icons/advance_search.png') no-repeat center center;
+}
+.icon-workflow-draw{
+  background:url('../../../static/img/icons/workflow_panel.png') no-repeat center center;
+}
+.icon-workflow{
+  background:url('../../../static/img/icons/workflow.png') no-repeat center center;
+}
+.icon-briefcase{
+  background:url('../../../static/img/icons/briefcase.png') no-repeat center center;
+}
+.icon-tool{
+  background:url('../../../static/img/icons/tool.png') no-repeat center center;
+}
+.icon-node{
+  background:url('../../../static/img/icons/node.png') no-repeat center center;
+}
+.icon-connect{
+  background:url('../../../static/img/icons/connect.png') no-repeat center center;
+}
+.icon-add{
+  background:url('../../../static/img/icons/add.png') no-repeat center center;
+}
+.icon-create{
+  background:url('../../../static/img/icons/add.png') no-repeat center center;
+}
+.icon-edit{
+  background:url('../../../static/img/icons/edit.png') no-repeat center center;
+}
+.icon-modify{
+  background:url('../../../static/img/icons/edit.png') no-repeat center center;
+}
+.icon-remove{
+  background:url('../../../static/img/icons/remove.png') no-repeat center center;
+}
+.icon-save{
+  background:url('../../../static/img/icons/save.png') no-repeat center center;
+}
+.icon-print{
+  background:url('../../../static/img/icons/print.png') no-repeat center center;
+}
+.icon-copy{
+  background:url('../../../static/img/icons/copy.png') no-repeat center center;
+}
+.icon-paste{
+  background:url('../../../static/img/icons/paste.png') no-repeat center center;
+}
+.icon-cut{
+  background:url('../../../static/img/icons/cut.png') no-repeat center center;
+}
+.icon-delete{
+  background:url('../../../static/img/icons/delete.png') no-repeat center center;
+}
+.icon-undo{
+  background:url('../../../static/img/icons/undo.png') no-repeat center center;
+}
+.icon-redo{
+  background:url('../../../static/img/icons/redo.png') no-repeat center center;
+}
+.icon-reset{
+  background:url('../../../static/img/icons/reset.png') no-repeat center center;
+}
+.icon-zoom-in{
+  background:url('../../../static/img/icons/zoom_in.png') no-repeat center center;
+}
+.icon-zoom-out{
+  background:url('../../../static/img/icons/zoom_out.png') no-repeat center center;
+}
+.icon-zoom-original{
+  background:url('../../../static/img/icons/zoom_original.png') no-repeat center center;
+}
+.icon-curve{
+  background:url('../../../static/img/icons/curve.png') no-repeat center center;
+}
+.icon-straight{
+  background:url('../../../static/img/icons/straight.png') no-repeat center center;
+}
+.icon-grid{
+  background:url('../../../static/img/icons/grid.png') no-repeat center center;
+}
+.icon-help{
+  background:url('../../../static/img/icons/help.png') no-repeat center center;
+}
+.icon-logout{
+  background:url('../../../static/img/icons/logout.png') no-repeat center center;
+}
+.icon-home{
+  background:url('../../../static/img/icons/home.png') no-repeat center center;
+}
+.icon-desktop{
+  background:url('../../../static/img/icons/desktop.png') no-repeat center center;
+}
+.icon-config{
+  background:url('../../../static/img/icons/config.png') no-repeat center center;
+}
+.icon-lock{
+  background:url('../../../static/img/icons/lock.png') no-repeat center center;
+}
+.icon-unlock{
+  background:url('../../../static/img/icons/unlock.png') no-repeat center center;
+}
+.icon-yes{
+  background:url('../../../static/img/icons/yes.png') no-repeat center center;
+}
+.icon-no{
+  background:url('../../../static/img/icons/no.png') no-repeat center center;
+}
+.icon-hidden{
+  background:url('../../../static/img/icons/hidden.png') no-repeat center center;
+}
+.icon-publish{
+  background:url('../../../static/img/icons/publish.png') no-repeat center center;
+}
+.icon-required{
+  padding:0 6px 0 0;
+  color:red;
+}
+.icon-drop-yes{
+  width:16px;
+  height:16px;
+  background:url('../../../static/img/icons/yes.png') no-repeat center center;
+  position:relative;
+  top:-16px;
+  float:right;
+}
+.icon-drop-no{
+  width:16px;
+  height:16px;
+  background:url('../../../static/img/icons/no.png') no-repeat center center;
+  position:relative;
+  top:-16px;
+  float:right;
+}
