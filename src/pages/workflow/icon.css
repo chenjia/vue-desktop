@@ -293,19 +293,29 @@
   padding:0 6px 0 0;
   color:red;
 }
-.icon-drop-yes{
+.drop-yes{
+  padding:2px 4px;
+  z-index:999999!important;
+  border:2px dashed green;
+}
+.drop-yes .icon-drop{
   width:16px;
   height:16px;
   background:url('../../../static/img/icons/yes.png') no-repeat center center;
-  position:relative;
-  top:-16px;
-  float:right;
+  position:absolute;
+  right:0;
+  bottom:0;
 }
-.icon-drop-no{
+.drop-no{
+  padding:2px 4px;
+  z-index:999999!important;
+  border:2px dashed red;
+}
+.drop-no .icon-drop{
   width:16px;
   height:16px;
   background:url('../../../static/img/icons/no.png') no-repeat center center;
-  position:relative;
-  top:-16px;
-  float:right;
+  position:absolute;
+  right:0;
+  bottom:0;
 }
