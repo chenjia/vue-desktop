@@ -210,3 +210,41 @@ export const initToolbar = function(){
     installDrag(i);
   }
 }
+
+export const handler = {
+  save(){
+    var enc = new mxCodec();
+    var node = enc.encode(editor.graph.model);
+    var graphXml = mxUtils.getXml(node, editor.linefeed);
+    console.log(graphXml);
+    utils.http.post('/workflow/workflow/save', {
+      graphXml: graphXml
+    }).then(response => {
+      console.log(response)
+    })
+
+    // $.ajax({
+    //   url:contextPath+'/workflow!save.action',
+    //   data:{'param.graphXml':graphXml},
+    //   success:function(json){
+    //     var status = json.status;
+    //     if(status==0){
+    //       var workflow = editor.graph.model.getCell(0);
+    //     var cells = editor.graph.model.cells;
+    //     workflow.setAttribute("workflowId",json.data.workflowId);
+    //     for(var i in cells){
+    //       if(graph.model.isVertex(cells[i])){
+    //         var nodeId = json.data[cells[i].id];
+    //         cells[i].setAttribute("nodeId",nodeId);
+    //       }
+    //     }
+    //     Lxt.MessageUtils.success('保存流程', '流程保存成功！');
+    //     }else if(status==2){
+    //       Lxt.MessageUtils.fail('保存流程','对不起，您没有权限执行此操作，请联系管理员！');
+    //     }else if(status==3){
+    //       Lxt.MessageUtils.fail('保存流程','流程保存失败！失败原因：'+json.msg);
+    //     }
+    //   }
+    // });
+  }
+}

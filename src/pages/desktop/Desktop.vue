@@ -336,6 +336,8 @@ export default {
   },
   mounted(){
     this.init()
+    let menu = this.desktopMenus[4]
+    // this.$set(this.taskbar.tasks, menu.name, menu)
   }
 }
 </script>

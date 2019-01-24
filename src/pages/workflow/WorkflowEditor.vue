@@ -5,7 +5,7 @@
         <Accordion style="position:absolute;width:100%;height:100%;" :animate="true" :border="false">
           <AccordionPanel :title="'流程节点'">
             <div class="graph-node" v-for="(item, index) in graphNodes">
-              <div><img class="graphElement" :src="'../../../static/img/mxgraph/'+item.type+'.png'"/></div>
+              <div><img class="graphElement" :src="'static/img/mxgraph/'+item.type+'.png'"/></div>
               <div>{{item.label}}</div>
             </div>
           </AccordionPanel>
@@ -21,7 +21,7 @@
         <Layout style="position:absolute;width:100%;height:100%;">
           <LayoutPanel region="north" :border="false">
             <div class="dialog-toolbar graph-toolbar">
-              <LinkButton iconCls="icon-save" :plain="true"></LinkButton>
+              <LinkButton iconCls="icon-save" :plain="true" @click="save()"></LinkButton>
               <LinkButton iconCls="icon-print" :plain="true"></LinkButton>
               <div class="datagrid-btn-separator"></div>
               <LinkButton iconCls="icon-copy" :plain="true"></LinkButton>
@@ -68,7 +68,7 @@
 
 <script>
 import RemoteScript from '../../components/RemoteScript'
-import {workflowProperties, graphNodes, initGraph, initToolbar} from './json.js'
+import {handler, workflowProperties, graphNodes, initGraph, initToolbar} from './json.js'
 export default {
   name: 'workflowEditor',
   components:{
@@ -81,6 +81,7 @@ export default {
     }
   },
   methods: {
+    ...handler,
     initMxgraph(){
       window.mxBasePath = '../../../static/lib/mxgraph';
       window.mxLoadResources = false;
@@ -100,7 +101,6 @@ export default {
   }
 }
 </script>
-<style src="./icon.css"></style>
 <style type="text/css">
 .proxyCls{
   z-index: 999999!important;
