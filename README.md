@@ -2,6 +2,8 @@
 
 > A Vue.js project
 
+https://chenjia.github.io/vue-desktop/dist/index.html
+
 ## Build Setup
 
 ``` bash
