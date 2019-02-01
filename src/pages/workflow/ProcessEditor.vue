@@ -21,32 +21,34 @@
         <Layout style="position:absolute;width:100%;height:100%;">
           <LayoutPanel region="north" :border="false">
             <div class="dialog-toolbar graph-toolbar">
-              <LinkButton iconCls="icon-save" :plain="true" @click="save()"></LinkButton>
-              <LinkButton iconCls="icon-print" :plain="true"></LinkButton>
+              <LinkButton @click="save()" iconCls="icon-save" :plain="true" title="保存"></LinkButton>
+              <LinkButton @click="editorExecute('exportImage')" iconCls="icon-graph" :plain="true" title="预览"></LinkButton>
+              <LinkButton @click="editorExecute('print')" iconCls="icon-print" :plain="true" title="打印"></LinkButton>
               <div class="datagrid-btn-separator"></div>
-              <LinkButton iconCls="icon-copy" :plain="true"></LinkButton>
-              <LinkButton iconCls="icon-paste" :plain="true"></LinkButton>
-              <LinkButton iconCls="icon-cut" :plain="true"></LinkButton>
-              <LinkButton iconCls="icon-delete" :plain="true"></LinkButton>
+              <LinkButton @click="editorExecute('copy')" iconCls="icon-copy" :plain="true" title="复制"></LinkButton>
+              <LinkButton @click="editorExecute('paste')" iconCls="icon-paste" :plain="true" title="粘贴"></LinkButton>
+              <LinkButton @click="editorExecute('cut')" iconCls="icon-cut" :plain="true" title="剪切"></LinkButton>
+              <LinkButton @click="editorExecute('delete')" iconCls="icon-delete" :plain="true" title="删除"></LinkButton>
               <div class="datagrid-btn-separator"></div>
-              <LinkButton iconCls="icon-undo" :plain="true"></LinkButton>
-              <LinkButton iconCls="icon-redo" :plain="true"></LinkButton>
-              <LinkButton iconCls="icon-reset" :plain="true"></LinkButton>
+              <LinkButton @click="editorExecute('undo')" iconCls="icon-undo" :plain="true" title="后退"></LinkButton>
+              <LinkButton @click="editorExecute('redo')" iconCls="icon-redo" :plain="true" title="前进"></LinkButton>
+              <LinkButton @click="editorExecute('save')" iconCls="icon-reset" :plain="true" title="重置"></LinkButton>
               <div class="datagrid-btn-separator"></div>
-              <LinkButton iconCls="icon-zoom-in" :plain="true"></LinkButton>
-              <LinkButton iconCls="icon-zoom-out" :plain="true"></LinkButton>
-              <LinkButton iconCls="icon-zoom-original" :plain="true"></LinkButton>
+              <LinkButton @click="editorExecute('zoomIn')" iconCls="icon-zoom-in" :plain="true" title="放大"></LinkButton>
+              <LinkButton @click="editorExecute('zoomOut')" iconCls="icon-zoom-out" :plain="true" title="缩小"></LinkButton>
+              <LinkButton @click="editorExecute('actualSize')" iconCls="icon-zoom-original" :plain="true" title="还原"></LinkButton>
               <div class="datagrid-btn-separator"></div>
-              <LinkButton iconCls="icon-straight" :plain="true"></LinkButton>
-              <LinkButton iconCls="icon-curve" :plain="true"></LinkButton>
-              <LinkButton iconCls="icon-grid" :plain="true"></LinkButton>
+              <LinkButton @click="setEdgeStyle('')" iconCls="icon-straight" :plain="true" title="直线"></LinkButton>
+              <LinkButton @click="setEdgeStyle('elbowEdge')" iconCls="icon-curve" :plain="true" title="折线"></LinkButton>
+              <LinkButton @click="toolbar.grid=!toolbar.grid" iconCls="icon-grid" :plain="true" title="网格线"></LinkButton>
               <div class="datagrid-btn-separator"></div>
-              <LinkButton iconCls="icon-help" :plain="true"></LinkButton>
+              <LinkButton @click="editorExecute('toggleHelp')" iconCls="icon-help" :plain="true" title="帮助"></LinkButton>
             </div>
           </LayoutPanel>
 
           <LayoutPanel region="center" :border="false" style="width:100%;height:100%;" :bodyStyle="{position:'relative'}">
-            <div id="graph" class="graph-container"></div>
+            <div id="graph" class="graph-container" :style="toolbar.grid?{}:{background:'none'}"></div>
+            <div id="outline" style="z-index:1;position:absolute;right:0px;bottom:0px;overflow:hidden;width:180px;height:135px;background:white;border:1px solid #91A1AE;"></div>
           </LayoutPanel>
         </Layout>
       </LayoutPanel>
@@ -70,27 +72,52 @@
 import RemoteScript from '../../components/RemoteScript'
 import {handler, workflowProperties, graphNodes, initGraph, initToolbar} from './json.js'
 export default {
-  name: 'workflowEditor',
+  name: 'processEditor',
   components:{
     remotescript: RemoteScript
   },
+  props:['processId'],
   data() {
     return {
       configProperties:workflowProperties,
       graphNodes:graphNodes,
+      curCell:null,
+      toolbar:{
+        grid:true
+      }
     }
   },
   methods: {
     ...handler,
+    editorExecute(cmd){
+      if(cmd=='save'){
+        window.editor.execute(cmd, 'test.html')
+      }else{
+        window.editor.execute(cmd)
+      }
+    },
+    setEdgeStyle(style){
+      var model = window.graph.getModel();
+      model.beginUpdate();
+      try{
+        if(curCell.isEdge()){
+          curCell.setStyle(style);
+          window.graph.refresh();
+        }
+      }catch(e){
+        alert(e);
+      }finally{
+        model.endUpdate();
+      }
+    },
     initMxgraph(){
-      window.mxBasePath = '../../../static/lib/mxgraph';
-      window.mxLoadResources = false;
+      window.mxBasePath = 'static/lib/mxgraph';
       window.mxObjectCodec.allowEval = true
-      const node = window.mxUtils.load('../../../static/lib/mxgraph/config/workflow-editor.xml').getDocumentElement()
+      const node = window.mxUtils.load('static/lib/mxgraph/config/workflow-editor.xml').getDocumentElement()
       window.editor = new window.mxEditor(node)
       window.graph = editor.graph
-      initGraph()
-      initToolbar()
+      initGraph.call(this)
+      initToolbar.call(this)
     }
   },
   watch:{

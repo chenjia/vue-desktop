@@ -8,6 +8,7 @@ window.Config = {
 import Vue from 'vue'
 import App from './components/App'
 import router from './router'
+import './filters'
 import store from './vuex/store'
 import { mapMutations } from 'vuex'
 import utils from './utils'

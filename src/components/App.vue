@@ -41,12 +41,12 @@
           </div>
           <div style="margin-bottom:20px">
             <Label for="password">密　码：</Label>
-            <TextBox inputId="password" v-model="user.password"></TextBox>
+            <PasswordBox inputId="password" v-model="user.password"></PasswordBox>
           </div>
           <div style="margin-bottom:20px">
             <Label for="captcha">验证码：</Label>
-            <TextBox inputId="captcha" style="width:80px;" v-model="user.captcha"></TextBox>
-            <img :src="base64Img" style="width:85px;height:30px;border:1px solid #eee;vertical-align: middle;"/>
+            <TextBox inputId="captcha" style="width:80px;" v-model="user.captcha" @keyup.enter.native="login()"></TextBox>
+            <img :src="base64Img" @click="getCaptcha()" style="width:85px;height:30px;border:1px solid #eee;vertical-align: middle;"/>
           </div>
           <div>
             <CheckBox inputId="remember" v-model="user.remember"></CheckBox>
@@ -79,8 +79,8 @@ export default {
     return {
       transitionName: 'animate-in',
       user:{
-        username:'',
-        password:''
+        username:'chenjia',
+        password:'chenjia'
       },
       title:'账号登录',
       base64Img:'',
@@ -92,21 +92,39 @@ export default {
   },
   methods:{
     ...mapMutations({
+      doLogin:'LOGIN',
       lock:'LOCK',
       loading:'TOGGLE_LOADING'
     }),
     getCaptcha(){
-      utils.http.post('/lxt-manage/api/user/captcha').then(response => {
+      utils.http.post('/manage/user/captcha').then(response => {
         this.user.captchaToken = response.data.body.data.captchaToken
         this.base64Img = 'data:image/png;base64, '+response.data.body.data.base64Img
       })
     },
     login(){
       this.loading(true)
-      setTimeout(()=>{
-        this.lock(false)
+
+      utils.http.post('/manage/user/login', this.user).then(response => {
+        if(response.data.head.status == 200) {
+          this.doLogin({
+            user:response.data.body.data.user,
+            userSetting:response.data.body.data.userSetting
+          })
+          setTimeout(()=>{
+            this.lock(false)
+            this.loading(false)
+          },1000+(Math.random()*1000))
+        }else{
+          store.commit('TOGGLE_ERROR', {visible: true, text: response.data.head.msg, duration: 3000})
+          this.getCaptcha()
+        }
+        setTimeout(()=>{
+          store.commit('TOGGLE_LOADING', false)
+        },1000)
+      }, error => {
         this.loading(false)
-      },1000+(Math.random()*1000))
+      })
     }
   },
   watch:{
@@ -116,6 +134,15 @@ export default {
       }else{
         this.$refs.loginDialog.close()
       }
+    },
+    '$store.state.common.ui.error'(val){
+      if(store.state.common.ui.error.visible){
+        this.$messager.alert({
+          title: "Error",
+          icon: "error",
+          msg: store.state.common.ui.error.text
+        });
+      }
     }
   },
   mounted(){
@@ -124,7 +151,10 @@ export default {
       require('../lazyLibs')
     }, Config.preload)
     this.getCaptcha()
-    this.login()
+    if(store.state.common.user){
+      this.lock(false)
+      this.loading(false)
+    }
   }
 }
 </script>

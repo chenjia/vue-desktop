@@ -5,6 +5,7 @@ const typeArrays = [
   'LOGIN',
   'LOGOUT',
   'TOGGLE_LOADING',
+  'TOGGLE_ERROR',
   'THEME',
   'BG',
   'LOCK'
@@ -25,7 +26,11 @@ const state = {
     bg:'1.jpg',
     loading: false,
     loadend: false,
-    lock:true
+    lock:true,
+    error:{
+      show:false,
+      msg:''
+    }
   },
   user: cache.get('user'),
   userSetting: cache.get('userSetting')
@@ -81,6 +86,9 @@ const mutations = {
         state.ui.loading = flag
       },1000)
     }
+  },
+  [types.TOGGLE_ERROR](state, error) {
+    state.ui.error = error
   }
 }
 

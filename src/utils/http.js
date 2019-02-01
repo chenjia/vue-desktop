@@ -52,7 +52,7 @@ instance.interceptors.response.use(function(response) {
   response.data = JSON.parse(resp)
   console.log('【response:'+response.config.url+'】',response)
   if(response.data.head.status != 200){
-    store.commit('TOGGLE_POPUP', {visible: true, text: response.data.head.msg, duration: 3000})
+    store.commit('TOGGLE_ERROR', {visible: true, text: response.data.head.msg, duration: 3000})
   }
   let token = response.data.head.token
   cache.set('token', token || cache.get('token'))

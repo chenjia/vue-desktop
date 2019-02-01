@@ -70,7 +70,7 @@
 			}
 		]]></add>
 		<root>
-			<Workflow label="新建流程" propertyTitle="流程配置" nodeType="workflow" workflowKey="流程标识"
+			<Workflow label="新建流程" propertyTitle="流程配置" nodeType="workflow" workflowId="" workflowKey="流程标识"
 				version="1.0" status="1" memo="" id="0"/>
 			<Layer label="Default Layer">
 				<mxCell parent="0"/>

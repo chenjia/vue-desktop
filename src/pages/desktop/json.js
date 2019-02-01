@@ -6,7 +6,7 @@ export const desktopMenus = [{
   left:0,
   insertTime:'2019-01-01 00:00:00'
 },{
-  name:'home',
+  name:'taskList',
   text:'我的任务',
   icon:'../static/img/icon32/task_32.png',
   top:80,
@@ -20,14 +20,14 @@ export const desktopMenus = [{
   left:0,
   insertTime:'2019-01-16 00:00:00'
 },{
-  name:'workflowEditor',
+  name:'processEditor',
   text:'流程设计',
   icon:'../static/img/icon32/workflow_32.png',
   top:80,
   left:80,
   insertTime:'2019-01-22 00:00:00'
 },{
-  name:'workflow',
+  name:'processList',
   text:'流程管理',
   icon:'../static/img/icon32/list_32.png',
   top:0,

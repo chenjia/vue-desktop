@@ -60,9 +60,9 @@ export const initGraph = function(){
     return result;
   };
   
-  graph.addListener(mxEvent.LABEL_CHANGED, function(sender, evt){
+  graph.addListener(mxEvent.LABEL_CHANGED, (sender, evt)=>{
     var cell = evt.getProperty('cell');
-    showProperties(cell);
+    this.curCell = cell;
     var isVertex = graph.model.isVertex(cell);
     if(isVertex){
       if(!cell.getAttribute('isSymbol')){
@@ -90,58 +90,43 @@ export const initGraph = function(){
       edge.setAttribute('label','to '+terminal.getAttribute('label'));
     }
   });
-  graph.selectionModel.addListener(mxEvent.CHANGE, function(sender, evt){
-    // var added = evt.getProperty('added');
-    // var removed = evt.getProperty('removed');
-    // var propertyPanel = $('#eastPanel');
-    // var model = graph.getModel();
-    // model.beginUpdate();
-    // try{
-    //   var workflow = editor.graph.model.getCell(0);
-    //   if($('#wc_workflowKey')[0]){
-    //     workflowPropertyUpdate(workflow);
-    //   }
-    //   if(added.length==1){
-    //     eval(added[0].getAttribute('nodeType')+'PropertyUpdate(added[0])');
-    //   }
-    //   if(removed && removed.length==1){
-    //     propertyPanel.panel('options').onLoad = function(){showProperties(removed[0]);};
-    //     var nodeType = removed[0].getAttribute('nodeType');
-    //     if(nodeType){
-    //       propertyPanel.panel('setTitle',removed[0].getAttribute('propertyTitle'));
-    //       propertyPanel.panel('refresh','../../../ext/mxgraph/pages/'+nodeType+'.jsp');
-    //     }
-    //   }else{
-    //     propertyPanel.panel('options').onLoad = function(){showProperties(workflow);};
-    //     propertyPanel.panel('setTitle',workflow.getAttribute('propertyTitle'));
-    //     propertyPanel.panel('refresh','../../../ext/mxgraph/pages/workflow.jsp');
-    //     curCell = workflow;
-    //   }
-    //   graph.refresh();
-    // }catch(e){
-    //   alert(e);
-    // }finally{
-    //   model.endUpdate();
-    // }
+  graph.selectionModel.addListener(mxEvent.CHANGE, (sender, evt)=>{
+    var added = evt.getProperty('added');
+    var removed = evt.getProperty('removed');
+    var model = graph.getModel();
+    model.beginUpdate();
+    try{
+      var workflow = editor.graph.model.getCell(0);
+      if(added.length==1){
+        this.curCell = added[0]
+      }
+      if(removed && removed.length==1){
+        this.curCell = removed[0]
+      }else{
+        this.curCell = workflow;
+      }
+      graph.refresh();
+    }catch(e){
+      alert(e);
+    }finally{
+      model.endUpdate();
+    }
   });
   
-  // new mxOutline(graph, $('#outline')[0]);
-  
-  // workflowId = $.getParam('workflowId');
-  // if(workflowId){
-  //   $.ajax({
-  //     dataType:'xml',
-  //     url:contextPath+'/workflow!getGraphXml.action',
-  //     data:{'param.workflowId':workflowId},
-  //     success:function(data){
-  //       editor.readGraphModel(data.documentElement);
-  //       showProperties(editor.graph.model.getCell(0));
-  //     },
-  //     error:function(){
-  //       alert('流程数据加载失败！');
-  //     }
-  //   });
-  // }
+  new mxOutline(graph, document.getElementById('outline'));
+  if(this.processId){
+    utils.http.post('/workflow/process/details', {pid:this.processId}).then(response => {
+      let graphXml = response.data.body.data.graphXml.replace(/[\r\n]/g, '')
+      console.log(graphXml)
+      let doc = mxUtils.parseXml(graphXml);
+      let node = doc.documentElement;
+      editor.readGraphModel(node);
+      this.curCell = editor.graph.model.getCell(0)
+    }, error => {
+      console.log(error)
+      alert('流程图形化xml加载失败！');
+    })
+  }
 }
 
 export const initToolbar = function(){
@@ -213,14 +198,23 @@ export const initToolbar = function(){
 
 export const handler = {
   save(){
-    var enc = new mxCodec();
-    var node = enc.encode(editor.graph.model);
-    var graphXml = mxUtils.getXml(node, editor.linefeed);
+    let enc = new mxCodec();
+    let node = enc.encode(editor.graph.model);
+    let graphXml = mxUtils.getXml(node, editor.linefeed);
     console.log(graphXml);
-    utils.http.post('/workflow/workflow/save', {
+    utils.http.post('/workflow/process/save', {
       graphXml: graphXml
     }).then(response => {
-      console.log(response)
+      let idMap = response.data.body.data
+      let workflow = editor.graph.model.getCell(0);
+      let cells = editor.graph.model.cells;
+      workflow.setAttribute("workflowId",idMap.workflowId);
+      for(let i in cells){
+        if(graph.model.isVertex(cells[i])){
+          let nodeId = idMap[cells[i].id];
+          cells[i].setAttribute("nodeId",nodeId);
+        }
+      }
     })
 
     // $.ajax({

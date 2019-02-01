@@ -37,7 +37,7 @@ export default {
       doLogout:'LOGOUT'
     }),
     getCaptcha(){
-      utils.http.post('/lxt-manage/api/user/captcha').then(response => {
+      utils.http.post('/manage/user/captcha').then(response => {
         this.model.captchaToken = response.data.body.data.captchaToken
         this.base64Img = 'data:image/png;base64, '+response.data.body.data.base64Img
       })
@@ -54,7 +54,7 @@ export default {
       store.commit('TOGGLE_LOADING', true)
 
       setTimeout(()=>{
-        utils.http.post('/lxt-manage/api/user/login', this.model).then(response => {
+        utils.http.post('/manage/user/login', this.model).then(response => {
           if(response.data.body.data) {
             this.doLogin({
               user:response.data.body.data.user,

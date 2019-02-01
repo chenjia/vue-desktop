@@ -85,10 +85,12 @@
 .icon-getback{
   background:url("../img/icons/getback.png") no-repeat center center;
 }
+.icon-graph{
+  background:url('../img/icons/searchbox.png') no-repeat center center;
+}
 .icon-grid{
   background:url('../img/icons/grid.png') no-repeat center center;
 }
-
 .icon-help{
   background:url('../img/icons/help.png') no-repeat center center;
 }

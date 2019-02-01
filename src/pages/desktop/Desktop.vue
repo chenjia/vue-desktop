@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="../static/css/icon.css">
     <Layout :style="{background:'url(../static/img/desktop/'+$store.state.common.ui.bg+')'}">
       <LayoutPanel region="center" @contextmenu.prevent.native="$refs.desktopMenu.showContextMenu($event.pageX,$event.pageY)" :border="false" :bodyStyle="{background:'none'}" :style="{width:'100%',height:(screenHeight-42)+'px'}">
-        <a v-Draggable="{cursor:'default', dragStart: (d)=>{onDragStart(d, menu)}, drag: onDrag, dragEnd: (d)=>{onDragEnd(d, menu)}}" v-for="(menu, index) in desktopMenus" @dblclick="open(menu)" class="desktop-menu" :style="{opacity:dragMenu==menu.name?.5:1,left:menu.left+'px', top:menu.top+'px', transition:sorting?'all .5s':''}">
+        <a v-Draggable="{cursor:'default', dragStart: (d)=>{onDragStart(d, menu)}, drag: onDrag, dragEnd: (d)=>{onDragEnd(d, menu)}}" v-for="(menu, index) in desktopMenus" @dblclick="open(menu, {})" class="desktop-menu" :style="{opacity:dragMenu==menu.name?.5:1,left:menu.left+'px', top:menu.top+'px', transition:sorting?'all .5s':''}">
           <img :src="menu.icon" />
           <span>{{menu.text}}</span>
         </a>
@@ -11,7 +11,6 @@
         <div ref="calendar" class="easyui-calendar" style="display:none;position:absolute;right:0;bottom:0;"></div>
         <img ref="recycle" style="display:none;opacity:0.6;position:absolute;right:0;bottom:0;" src="../../../static/img/icon64/recycle_64.png"/>
         <Calendar v-show="taskbar.showCalendar" style="position:absolute;right:0;bottom:0;width:250px;height:250px"></Calendar>
-
 
         <Menu ref="desktopMenu" style="width:150px;" @itemClick="onContextMenu">
           <MenuItem v-for="(item, index) in contextMenus" :key="index" :value="item.value" :text="item.text" :iconCls="item.iconCls">
@@ -32,8 +31,9 @@
           :resizable="true"
           :minimizable="true"
           :maximizable="true"
+          :draggableOptions="{dragStart:(d)=>{moveToTop(task)}, drag: (d)=>{windowDrag(d)}}"
           @close="closeTask(task)">
-          <dynamic :component="task.name" />
+          <dynamic :component="task.name" :open="open" :params="task.params"/>
         </Dialog>
 
         <Dialog ref="startDialog" :title="'管理员'" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
@@ -84,7 +84,7 @@
                 </td>
                 <td>
                   <button v-for="(task,key,index) in taskbar.tasks" :key="key" @click="openTask(task)" class="task-icon">
-                    <img :src="task.icon"/>
+                    <img :src="task.icon" :style="{opacity:taskbar.currentTask.name==task.name?1:.5}"/>
                   </button>
                 </td>
                 <td class="time-box" @click="taskbar.showCalendar = !taskbar.showCalendar">
@@ -158,6 +158,7 @@ export default {
         time:'',
         week:'',
         tasks:{},
+        currentTask:null,
         showCalendar:false
       }
     }
@@ -170,6 +171,27 @@ export default {
       lock:'LOCK',
       loading:'TOGGLE_LOADING'
     }),
+    moveToTop(task){
+      this.$refs[task.name][0].moveToTop()
+    },
+    windowDrag(d){
+      let s = d.target.$el
+      let p = d.target.$el.parentNode
+      
+      if (d.left + s.offsetWidth < 50){
+        d.left = 50 - s.offsetWidth;
+      }else if (p.offsetWidth - d.left  <50){
+        d.left = p.offsetWidth - 50;
+      }
+
+      let parentHeight = p.offsetHeight==0?this.screenHeight:p.offsetHeight
+      if (d.top < 0){
+        d.top = 0;
+      }else if (d.top > parentHeight-45){
+        d.top = parentHeight - 45;
+      }
+      d.target.applyDrag()
+    },
     onDragStart(d, menu){
       d = repairPosition(d)
       this.dragMenu = menu.name
@@ -200,11 +222,16 @@ export default {
       },110)
       this.dragMenu = null
     },
-    open(menu){
-      this.$set(this.taskbar.tasks, menu.name, menu)
+    open(menu, params){
+      if(this.taskbar.tasks[menu.name]){
+        this.$refs[menu.name][0].moveToTop()
+      }else{
+        menu.params = params
+        this.$set(this.taskbar.tasks, menu.name, menu)
+      }
+      this.taskbar.currentTask = menu
     },
     openTask(task){
-      console.log(this.$refs[task.name])
       this.$refs[task.name].open()
     },
     closeTask(task){
@@ -309,6 +336,11 @@ export default {
           }
         }
       }
+
+      setTimeout(()=>{
+        this.screenWidth = document.documentElement.clientWidth
+        this.screenHeight = document.documentElement.clientHeight
+      },100)
     },
     initTime(sysTime){
       if(sysTime != undefined){
