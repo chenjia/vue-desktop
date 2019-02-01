@@ -2,7 +2,7 @@
   <div style="width:100%;display:flex;flex-direction: column;">
     <Tabs ref="tabs" @tabSelect="tabSelect" @tabClose="tabClose" style="height:100%;" :border="false" :scrollable="true">
       <TabPanel title="+"></TabPanel>
-      <TabPanel v-for="(item,index) in tabs" :title="item.title" :closable="true" :bodyStyle="{display:'flex', flexDirection:'column'}">
+      <TabPanel v-for="(item,index) in tabs" :key="index" :title="item.title" :closable="true" :bodyStyle="{display:'flex', flexDirection:'column'}">
         <div class="dialog-toolbar">
           <TextBox placeholder="请输入url" v-model="item.url" @keyup.enter.native="formatUrl(index)" :inputStyle="{borderRadius:0}" style="width:100%;padding:0;border:none;background:none;box-shadow: none;">
             <Addon align="left" class="center">

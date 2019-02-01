@@ -53,15 +53,7 @@
         </Layout>
       </LayoutPanel>
       <LayoutPanel title="节点配置" region="east" style="width:240px;">
-        <DataGrid :data="configProperties" groupField="group" :border="false">
-          <GridColumn field="label" title="属性" width="100"></GridColumn>
-          <GridColumn field="value" title="值"></GridColumn>
-          <template slot="group" slot-scope="scope" >
-            <span style="font-weight:bold;">
-              {{scope.value}}
-            </span>
-          </template>
-        </DataGrid>
+        <component v-if="curCell != null" :is="configComponent" :attributes="configAttributes" :update="updateConfig"></component>
       </LayoutPanel>
     </Layout>
     <remotescript src="static/lib/mxgraph/js/mxClient.js" @callback="initMxgraph"></remotescript>
@@ -70,21 +62,43 @@
 
 <script>
 import RemoteScript from '../../components/RemoteScript'
-import {handler, workflowProperties, graphNodes, initGraph, initToolbar} from './json.js'
+import WorkflowConfig from './config/WorkflowConfig'
+import StartConfig from './config/StartConfig'
+import {handler, graphNodes, initGraph, initToolbar} from './json.js'
 export default {
   name: 'processEditor',
   components:{
-    remotescript: RemoteScript
+    remotescript: RemoteScript,
+    WorkflowConfig,
+    StartConfig
   },
   props:['processId'],
   data() {
     return {
-      configProperties:workflowProperties,
-      graphNodes:graphNodes,
       curCell:null,
+      graphNodes:graphNodes,
       toolbar:{
         grid:true
       }
+    }
+  },
+  computed:{
+    configComponent(){
+      let component = ''
+      if(typeof this.curCell.value == 'object'){
+        component = this.curCell.value.nodeName
+      }
+      return component + 'Config'
+    },
+    configAttributes(){
+      let result = {}
+      if(this.curCell.value){
+        let attributes = this.curCell.value.attributes
+        for(let i of attributes){
+          result[i.nodeName] = i.nodeValue
+        }
+      }
+      return result
     }
   },
   methods: {
@@ -109,6 +123,14 @@ export default {
       }finally{
         model.endUpdate();
       }
+    },
+    updateConfig(key, value){
+      console.log(key+":"+value)
+      let model = window.graph.getModel()
+      model.beginUpdate()
+      this.curCell.setAttribute(key, value)
+      graph.refresh()
+      model.endUpdate()
     },
     initMxgraph(){
       window.mxBasePath = 'static/lib/mxgraph';

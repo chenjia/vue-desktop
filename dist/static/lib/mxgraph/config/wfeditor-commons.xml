@@ -81,7 +81,7 @@
 		</add>
 		<add as="task">
 			<Task label="任务" propertyTitle="任务节点" nodeType="task" form="" formText="无表单"
-				remindRuleId="" remindRuleText="从不提醒" assignerType="0" assignerId="0" 
+				remindRuleId="" remindRuleText="从不提醒" assignerType="0" assignerValue="" 
 				handlerText="流程发起人" allowTakeback="1" allowDelegate="1" allowSendback="0" sendbackWay="1"
 				sendbackTargetId="" sendbackTargetText="" allowCheck="1" checkTargetId="" checkTargetText="" allowUpload="1"
 				needAdvice="0" memo="">
