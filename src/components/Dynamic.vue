@@ -2,9 +2,9 @@
   <Login v-if="component=='login'"/>
   <Home v-else-if="component=='home'" />
   <Portal v-else-if="component=='portal'" />
-  <Browser v-else-if="component=='browser'" />
+  <Browser v-else-if="component=='browser'" :close="close" :menu="menu"/>
   <ProcessList v-else-if="component=='processList'" :open="open"/>
-  <ProcessEditor v-else-if="component=='processEditor'" :processId="params.processId"/>
+  <ProcessEditor v-else-if="component=='processEditor'" :processId="menu.params.processId"/>
   <TaskList v-else-if="component=='taskList'" :open="open"/>
 </template>
 
@@ -19,7 +19,7 @@ import TaskList from '../pages/workflow/TaskList.vue'
 
 export default {
   name: 'Dynamic',
-  props:['component','open','params'],
+  props:['component','open','close','menu'],
   components:{
     Login,
     Home,

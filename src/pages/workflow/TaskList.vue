@@ -1,6 +1,7 @@
 <template>
   <div class="box-datagrid">
     <div class="dialog-toolbar">
+      <LinkButton @click="submit()" iconCls="icon-do" :plain="true">处理</LinkButton>
       <LinkButton @click="toSearch()" iconCls="icon-favorite" :plain="true" title="标记重点任务同时自定义描述内容">标记</LinkButton>
       <LinkButton @click="toSearch()" iconCls="icon-task" :plain="true" title="可在出差期间将任务交由指定人员代为处理">代理</LinkButton>
       <LinkButton @click="toSearch()" iconCls="icon-search" :plain="true" style="float:right;">搜索</LinkButton>
@@ -65,6 +66,18 @@ export default {
     selectionChange(row){
       console.log(123)
       this.selectedTaskId = [row.id]
+    },
+    submit(){
+      if(this.selectedTaskId.length == 0){
+        alert('请选择要操作的记录！')
+        return
+      }
+
+      utils.http.post('/workflow/task/submit', {taskId:this.selectedTaskId[0]}).then(response => {
+        this.list()
+      }, error => {
+        console.log(error)
+      })
     },
     toEditor(){
       this.open({

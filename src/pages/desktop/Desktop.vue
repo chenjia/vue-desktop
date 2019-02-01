@@ -24,7 +24,7 @@
           :key="key"
           :ref="task.name"
           :title="task.text"
-          :dialogStyle="{width:(screenWidth-100)+'px',height:(screenHeight-100)+'px'}"
+          :dialogStyle="{width:screenWidth+'px',height:(screenHeight-45)+'px'}"
           :bodyStyle="{display:'flex',position:'relative'}"
           :modal="false"
           :draggable="true"
@@ -33,7 +33,7 @@
           :maximizable="true"
           :draggableOptions="{dragStart:(d)=>{moveToTop(task)}, drag: (d)=>{windowDrag(d)}}"
           @close="closeTask(task)">
-          <dynamic :component="task.name" :open="open" :params="task.params"/>
+          <dynamic :component="task.name" :open="open" :close="close" :menu="task"/>
         </Dialog>
 
         <Dialog ref="startDialog" :title="'管理员'" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
@@ -230,6 +230,10 @@ export default {
         this.$set(this.taskbar.tasks, menu.name, menu)
       }
       this.taskbar.currentTask = menu
+    },
+    close(menu){
+      this.closeTask(menu)
+      this.$refs[menu.name][0].close()
     },
     openTask(task){
       this.$refs[task.name].open()
