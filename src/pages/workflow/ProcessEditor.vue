@@ -61,6 +61,7 @@
 </template>
 
 <script>
+window.mxBasePath = 'static/lib/mxgraph';
 import RemoteScript from '../../components/RemoteScript'
 import WorkflowConfig from './config/WorkflowConfig'
 import StartConfig from './config/StartConfig'
@@ -133,7 +134,6 @@ export default {
       model.endUpdate()
     },
     initMxgraph(){
-      window.mxBasePath = 'static/lib/mxgraph';
       window.mxObjectCodec.allowEval = true
       const node = window.mxUtils.load('static/lib/mxgraph/config/workflow-editor.xml').getDocumentElement()
       window.editor = new window.mxEditor(node)
