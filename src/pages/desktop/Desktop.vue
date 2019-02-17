@@ -1,9 +1,9 @@
 <template>
   <div style="position:absolute;width:100%;height:100%;">
-    <link rel="stylesheet" href="../static/css/icon.css">
-    <Layout :style="{background:'url(../static/img/desktop/'+$store.state.common.ui.bg+')'}">
+    <link rel="stylesheet" href="./static/css/icon.css">
+    <Layout :style="{background:'url(./static/img/desktop/'+$store.state.common.ui.bg+')'}">
       <LayoutPanel region="center" @contextmenu.prevent.native="$refs.desktopMenu.showContextMenu($event.pageX,$event.pageY)" :border="false" :bodyStyle="{background:'none'}" :style="{width:'100%',height:(screenHeight-42)+'px'}">
-        <a v-Draggable="{cursor:'default', dragStart: (d)=>{onDragStart(d, menu)}, drag: onDrag, dragEnd: (d)=>{onDragEnd(d, menu)}}" v-for="(menu, index) in desktopMenus" @dblclick="open(menu, {})" class="desktop-menu" :style="{opacity:dragMenu==menu.name?.5:1,left:menu.left+'px', top:menu.top+'px', transition:sorting?'all .5s':''}">
+        <a v-Draggable="{cursor:'default', dragStart: (d)=>{onDragStart(d, menu)}, drag: onDrag, dragEnd: (d)=>{onDragEnd(d, menu)}}" v-for="(menu, index) in desktopMenus" @dblclick="open(menu, {})" @tap="open(menu, {})" class="desktop-menu" :style="{opacity:dragMenu==menu.name?.5:1,left:menu.left+'px', top:menu.top+'px', transition:sorting?'all .5s':''}">
           <img :src="menu.icon" />
           <span>{{menu.text}}</span>
         </a>
@@ -24,7 +24,7 @@
           :key="key"
           :ref="task.name"
           :title="task.text"
-          :dialogStyle="{width:screenWidth+'px',height:(screenHeight-45)+'px'}"
+          :dialogStyle="{width:(task.width||screenWidth)+'px',height:(task.height||(screenHeight-45))+'px'}"
           :bodyStyle="{display:'flex',position:'relative'}"
           :modal="false"
           :draggable="true"

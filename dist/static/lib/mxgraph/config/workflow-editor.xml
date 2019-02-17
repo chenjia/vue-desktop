@@ -50,15 +50,15 @@
 		<add as="openHref" action="openHref" icon="images/link.gif"/>
 	</mxDefaultPopupMenu>
 	
-	<include name="../static/lib/mxgraph/config/keyhandler-commons.xml"/>
-	<include name="../static/lib/mxgraph/config/graph-commons.xml"/>
-	<include name="../static/lib/mxgraph/config/wfeditor-commons.xml"/>
+	<include name="./static/lib/mxgraph/config/keyhandler-commons.xml"/>
+	<include name="./static/lib/mxgraph/config/graph-commons.xml"/>
+	<include name="./static/lib/mxgraph/config/wfeditor-commons.xml"/>
 	
 	<ui>
 		<add as="graph" element="graph"/>
 	</ui>
 	
 	<mxGraph as="graph">
-		<include name="../static/lib/mxgraph/config/wfgraph-commons.xml"/>
+		<include name="./static/lib/mxgraph/config/wfgraph-commons.xml"/>
 	</mxGraph>
 </mxEditor>

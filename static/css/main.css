@@ -84,3 +84,6 @@ a{
   width:100%;
   padding-bottom:35px;
 }
+.overflow-hidden .f-full{
+  overflow-x: hidden!important;
+}

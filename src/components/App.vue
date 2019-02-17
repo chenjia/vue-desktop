@@ -1,7 +1,7 @@
 <template>
   <div>
-    <link rel="stylesheet" :href="'../static/css/themes/'+$store.state.common.ui.theme+'/easyui.css'">
-    <link rel="stylesheet" href="../static/css/vue.css">
+    <link rel="stylesheet" :href="'./static/css/themes/'+$store.state.common.ui.theme+'/easyui.css'">
+    <link rel="stylesheet" href="./static/css/vue.css">
     <router-view></router-view>
     <div v-show="$store.state.common.ui.loading" style="position:absolute;top:0px;left:0px;width:100%;height:100%;z-index:999999;" class="loading">
       <div :style="{width:$store.state.common.ui.loadend?'100%':0}" class="mask mask-top" style="position:absolute;top:0px;left:0px;width:0;height:42%;background:#FBEC88;"></div>
@@ -24,7 +24,7 @@
       </table>
     </div>
 
-    <div id="particles-js" v-show="$store.state.common.ui.lock" style="position:absolute;top:0px;left:0px;width:100%;height:100%;" :style="{background:'url(../static/img/desktop/'+$store.state.common.ui.bg+')'}">
+    <div id="particles-js" v-show="$store.state.common.ui.lock" style="position:absolute;top:0px;left:0px;width:100%;height:100%;" :style="{background:'url(./static/img/desktop/'+$store.state.common.ui.bg+')'}">
       <Dialog
         ref="loginDialog"
         :title="title"
@@ -79,8 +79,8 @@ export default {
     return {
       transitionName: 'animate-in',
       user:{
-        username:'chenjia',
-        password:'chenjia'
+        username:'admin',
+        password:'admin'
       },
       title:'账号登录',
       base64Img:'',

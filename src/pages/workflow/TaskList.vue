@@ -83,7 +83,7 @@ export default {
       this.open({
         name:'processEditor',
         text:'流程设计',
-        icon:'../static/img/icon32/workflow_32.png'
+        icon:'./static/img/icon32/workflow_32.png'
       },{
         processId:this.selectedTaskId[0]
       })

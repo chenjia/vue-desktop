@@ -6,6 +6,8 @@
   <ProcessList v-else-if="component=='processList'" :open="open"/>
   <ProcessEditor v-else-if="component=='processEditor'" :processId="menu.params.processId"/>
   <TaskList v-else-if="component=='taskList'" :open="open"/>
+  <Chat v-else-if="component=='chat'" :open="open"/>
+  <ChatDialog v-else-if="component=='chatDialog'" :open="open" :target="menu.params"/>
 </template>
 
 <script>
@@ -16,6 +18,9 @@ import Browser from '../pages/browser/Browser.vue'
 import ProcessList from '../pages/workflow/ProcessList.vue'
 import ProcessEditor from '../pages/workflow/ProcessEditor.vue'
 import TaskList from '../pages/workflow/TaskList.vue'
+import Chat from '../pages/chat/Chat.vue'
+import ChatDialog from '../pages/chat/ChatDialog.vue'
+
 
 export default {
   name: 'Dynamic',
@@ -27,7 +32,9 @@ export default {
     Browser,
     ProcessList,
     ProcessEditor,
-    TaskList
+    TaskList,
+    Chat,
+    ChatDialog
   },
   data(){
     return {

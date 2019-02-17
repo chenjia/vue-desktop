@@ -29,7 +29,7 @@
           <CheckBox v-model="selectedProcessId" :multiple="true" :value="scope.row.processId"></CheckBox>
         </template>
       </GridColumn>
-      <GridColumn field="name" title="Name"></GridColumn>
+      <GridColumn field="name" title="流程名称"></GridColumn>
       <GridColumn field="versionNo" title="版本号"></GridColumn>
       <GridColumn field="processKey" title="流程标识"></GridColumn>
       <GridColumn field="memo" title="描述"></GridColumn>
@@ -74,7 +74,7 @@ export default {
       this.open({
         name:'processEditor',
         text:'流程设计',
-        icon:'../static/img/icon32/workflow_32.png'
+        icon:'./static/img/icon32/molecule.png'
       },{
         processId:this.selectedProcessId[0]
       })

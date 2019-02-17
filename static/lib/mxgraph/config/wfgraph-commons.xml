@@ -168,7 +168,7 @@
 		<add as="start">
 			<add as="shape" value="image"/>
 			<add as="perimeter" value="rectanglePerimeter"/>
-			<add as="image" value="../static/lib/mxgraph/images/start.png"/>
+			<add as="image" value="./static/lib/mxgraph/images/start.png"/>
 			<add as="align" value="center"/>
 			<add as="fontSize" value="14"/>
 			<add as="fontWeight" value="bold"/>
@@ -183,7 +183,7 @@
 			<add as="fontSize" value="14"/>
 			<add as="fontWeight" value="bold"/>
 			<add as="fontStyle" value="1"/>
-			<add as="image" value="../static/lib/mxgraph/images/end.png"/>
+			<add as="image" value="./static/lib/mxgraph/images/end.png"/>
 			<add as="align" value="center"/>
 			<add as="verticalAlign" value="top"/>
 			<add as="verticalLabelPosition" value="bottom"/>
@@ -195,7 +195,7 @@
 			<add as="fontSize" value="14"/>
 			<add as="fontWeight" value="bold"/>
 			<add as="fontStyle" value="1"/>
-			<add as="image" value="../static/lib/mxgraph/images/error.png"/>
+			<add as="image" value="./static/lib/mxgraph/images/error.png"/>
 			<add as="align" value="center"/>
 			<add as="verticalAlign" value="top"/>
 			<add as="verticalLabelPosition" value="bottom"/>
@@ -210,7 +210,7 @@
 			<add as="align" value="left"/>
 			<add as="verticalAlign" value="middle"/>
 			<add as="spacing" value="2"/>
-			<add as="image" value="../static/lib/mxgraph/images/task_24.png"/>
+			<add as="image" value="./static/lib/mxgraph/images/task_24.png"/>
 			<add as="spacingLeft" value="32"/>
 			<add as="width" value="96"/>
 			<add as="height" value="48"/>
@@ -231,7 +231,7 @@
 			<add as="align" value="left"/>
 			<add as="verticalAlign" value="middle"/>
 			<add as="spacing" value="2"/>
-			<add as="image" value="../static/libs/mxgraph/images/task_24.png"/>
+			<add as="image" value="./static/libs/mxgraph/images/task_24.png"/>
 			<add as="spacingLeft" value="32"/>
 			<add as="width" value="96"/>
 			<add as="height" value="48"/>
@@ -252,7 +252,7 @@
 			<add as="align" value="left"/>
 			<add as="verticalAlign" value="middle"/>
 			<add as="spacing" value="2"/>
-			<add as="image" value="../static/lib/mxgraph/images/task_24.png"/>
+			<add as="image" value="./static/lib/mxgraph/images/task_24.png"/>
 			<add as="spacingLeft" value="32"/>
 			<add as="width" value="96"/>
 			<add as="height" value="48"/>
