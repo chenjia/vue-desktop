@@ -27,7 +27,7 @@ export default {
   methods:{
     initEditor(){
       this.editor = new UE.ui.Editor({
-        initialFrameWidth:'99.8%',
+        initialFrameWidth:'100%',
         initialFrameHeight:152,
         elementPathEnabled:false,
         enableContextMenu:false,
