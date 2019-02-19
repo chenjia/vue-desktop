@@ -17,7 +17,7 @@
           <div @click="openDialog(scope.row)" class="record">
             <div class="head" style="background-image: url(./static/img/head.jpg);"></div>
             <div class="content">
-              <p class="name">{{scope.row.name}}</p>
+              <p class="name">{{scope.row.realname}}</p>
               <div class="msg">{{scope.row.content}}</div>
             </div>
           </div>
@@ -113,10 +113,7 @@ export default {
         width:700,
         height:500,
         icon:'./static/img/icon32/comments.png'
-      },{
-        userId:'chenjia',
-        realname:'chenjia'
-      })
+      },row)
     }
   },
   watch:{

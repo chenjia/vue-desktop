@@ -336,5 +336,5 @@ export const funcs = [{
 },{
   name:'注销',
   icon:'fa-user',
-  url:''
+  url:'logout'
 }]

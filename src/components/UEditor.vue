@@ -12,7 +12,7 @@
 import RemoteScript from './RemoteScript'
 
 export default {
-  name: 'Dynamic',
+  name: 'UEditor',
   props:['target','sendMessage'],
   components:{
     RemoteScript
@@ -29,6 +29,7 @@ export default {
       this.editor = new UE.ui.Editor({
         initialFrameWidth:'100%',
         initialFrameHeight:152,
+        emotionLocalization:true,
         elementPathEnabled:false,
         enableContextMenu:false,
         autoHeightEnabled:false,

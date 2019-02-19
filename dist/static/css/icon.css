@@ -194,9 +194,6 @@
 .icon-straight{
   background:url('../img/icons/straight.png') no-repeat center center;
 }
-.icon-sendback{
-  background:url("..//img/icons/sendback.png") no-repeat center center;
-}
 .icon-save{
   background:url('../img/icons/save.png') no-repeat center center;
 }
@@ -205,6 +202,9 @@
 }
 .icon-search{
   background:url('../img/icons/searchbox.png') no-repeat center center;
+}
+.icon-send{
+  background:url("../img/icons/paper_airplane.png") no-repeat center center;
 }
 .icon-sendback{
   background:url("../img/icons/sendback.png") no-repeat center center;

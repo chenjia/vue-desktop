@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'remoteScript',
+  name: 'RemoteScript',
   props:['src','callback'],
   mounted(){
     const s = document.createElement('script');

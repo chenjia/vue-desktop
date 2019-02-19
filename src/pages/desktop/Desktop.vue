@@ -36,7 +36,7 @@
           <dynamic :component="task.name" :open="open" :close="close" :menu="task"/>
         </Dialog>
 
-        <Dialog ref="startDialog" :title="'管理员'" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
+        <Dialog ref="startDialog" :title="$store.state.common.user.username" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
           <table cellspacing="0" cellpadding="0">
             <tr>
               <td>
@@ -62,7 +62,7 @@
                   </div>
                   <div style="position:absolute;bottom:3px;width:100px;">
                     <template v-for="(item, index) in startDialog.funcs">
-                      <LinkButton :plain="true" :iconCls="'fa '+item.icon">{{item.name}}</LinkButton>
+                      <LinkButton @click="funcs(item.url)" :plain="true" :iconCls="'fa '+item.icon">{{item.name}}</LinkButton>
                       <div v-if="index != startDialog.funcs.length-1" class="menu-seq"></div>
                     </template>
                   </div>
@@ -362,6 +362,20 @@ export default {
         this.taskbar.time = array[3] + ':' + array[4]
         this.taskbar.week = '周' + week[array[6]];
       }
+    },
+    logout(){
+      this.startDialog.closed = true
+      setTimeout(()=>{
+        this.loading(true)
+        this.lock(true)
+        store.commit('LOGOUT')
+        setTimeout(()=>{
+          this.loading(false)
+        },1000)
+      },1)
+    },
+    funcs(code){
+      this[code]()
     },
     init(){
       this.initTime(new Date().getTime())
