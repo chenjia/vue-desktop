@@ -20,13 +20,6 @@ export const desktopMenus = [{
   left:80*0,
   insertTime:'2019-01-16 00:00:00'
 },{
-  name:'processEditor',
-  text:'流程设计',
-  icon:'./static/img/icon32/molecule.png',
-  top:80*1,
-  left:80*1,
-  insertTime:'2019-01-22 00:00:00'
-},{
   name:'processList',
   text:'流程管理',
   icon:'./static/img/icon32/table_gear.png',
@@ -34,75 +27,75 @@ export const desktopMenus = [{
   left:80*1,
   insertTime:'2019-01-23 00:00:00'
 },{
-  name:'ruleList',
-  text:'规则管理',
-  icon:'./static/img/icon32/rule_32.png',
-  top:80*0,
-  left:80*3,
-  insertTime:'2019-02-14 00:00:00'
-},{
-  name:'pageList',
-  text:'页面管理',
-  icon:'./static/img/icon32/page_32.png',
-  top:80*0,
-  left:80*4,
-  insertTime:'2019-02-14 00:00:00'
-},{
-  name:'pageEditor',
-  text:'页面设计',
-  icon:'./static/img/icon32/pageEditor_32.png',
-  top:80*0,
-  left:80*5,
-  insertTime:'2019-02-14 00:00:00'
-},{
-  name:'database',
-  text:'数据库',
-  icon:'./static/img/icon32/database_gear.png',
-  top:80*1,
-  left:80*4,
-  insertTime:'2019-02-14 00:00:00'
-},{
-  name:'monitor',
-  text:'流程监控',
-  icon:'./static/img/icon32/control_panel.png',
-  top:80*1,
-  left:80*3,
-  insertTime:'2019-02-14 00:00:00'
-},{
-  name:'date',
-  text:'日历',
-  icon:'./static/img/icon32/date.png',
-  top:80*1,
-  left:80*5,
-  insertTime:'2019-02-14 00:00:00'
-},{
-  name:'chat',
-  text:'聊天室',
-  icon:'./static/img/icon32/comments.png',
-  top:80*0,
-  left:80*6,
-  insertTime:'2019-02-14 00:00:00',
-  width:280
-},{
-  name:'userList',
-  text:'权限管理',
-  icon:'./static/img/icon32/group_gear.png',
-  top:80*1,
-  left:80*7,
-  insertTime:'2019-02-14 00:00:00'
-},{
-  name:'bugreport',
+  name:'feedback',
   text:'问题反馈',
   icon:'./static/img/icon32/ladybird.png',
   top:80*2,
   left:80*1,
   insertTime:'2019-02-14 00:00:00'
 },{
+  name:'ruleList',
+  text:'规则管理',
+  icon:'./static/img/icon32/rule_32.png',
+  top:80*0,
+  left:80*5,
+  insertTime:'2019-02-14 00:00:00'
+},{
+  name:'pageList',
+  text:'页面管理',
+  icon:'./static/img/icon32/page_32.png',
+  top:80*0,
+  left:80*6,
+  insertTime:'2019-02-14 00:00:00'
+},{
+  name:'pageEditor',
+  text:'页面设计',
+  icon:'./static/img/icon32/pageEditor_32.png',
+  top:80*0,
+  left:80*7,
+  insertTime:'2019-02-14 00:00:00'
+},{
+  name:'database',
+  text:'数据库',
+  icon:'./static/img/icon32/database_gear.png',
+  top:80*1,
+  left:80*6,
+  insertTime:'2019-02-14 00:00:00'
+},{
+  name:'monitor',
+  text:'流程监控',
+  icon:'./static/img/icon32/control_panel.png',
+  top:80*1,
+  left:80*5,
+  insertTime:'2019-02-14 00:00:00'
+},{
+  name:'date',
+  text:'日历',
+  icon:'./static/img/icon32/date.png',
+  top:80*1,
+  left:80*7,
+  insertTime:'2019-02-14 00:00:00'
+},{
+  name:'chat',
+  text:'聊天室',
+  icon:'./static/img/icon32/comments.png',
+  top:80*1,
+  left:80*1,
+  insertTime:'2019-02-14 00:00:00',
+  width:280
+},{
+  name:'permission',
+  text:'权限管理',
+  icon:'./static/img/icon32/group_gear.png',
+  top:80*1,
+  left:80*9,
+  insertTime:'2019-02-14 00:00:00'
+},{
   name:'theme',
   text:'主题风格',
   icon:'./static/img/icon32/palette.png',
   top:80*0,
-  left:80*7,
+  left:80*9,
   insertTime:'2019-02-15 00:00:00'
 }]
 
@@ -111,6 +104,10 @@ export const contextMenus = [{
   value:'',
   iconCls:'icon-color',
   children:[{
+    value:'theme-default',
+    text:'default',
+    iconCls:'icon-color'
+  },{
     value:'theme-black',
     text:'black',
     iconCls:'icon-color'

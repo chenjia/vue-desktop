@@ -8,6 +8,10 @@
   <TaskList v-else-if="component=='taskList'" :open="open"/>
   <Chat v-else-if="component=='chat'" :open="open"/>
   <ChatDialog v-else-if="component=='chatDialog'" :open="open" :target="menu.params"/>
+  <Permission v-else-if="component=='permission'" :open="open"/>
+  <UserEditor v-else-if="component=='userEditor'" :open="open" :userId="menu.params.userId"/>
+  <Theme v-else-if="component=='theme'"/>
+  <Feedback v-else-if="component=='feedback'"/>
 </template>
 
 <script>
@@ -20,6 +24,10 @@ import ProcessEditor from '../pages/workflow/ProcessEditor.vue'
 import TaskList from '../pages/workflow/TaskList.vue'
 import Chat from '../pages/chat/Chat.vue'
 import ChatDialog from '../pages/chat/ChatDialog.vue'
+import Permission from '../pages/permission/Permission.vue'
+import UserEditor from '../pages/permission/UserEditor.vue'
+import Theme from '../pages/theme/Theme.vue'
+import Feedback from '../pages/feedback/Feedback.vue'
 
 
 export default {
@@ -34,7 +42,11 @@ export default {
     ProcessEditor,
     TaskList,
     Chat,
-    ChatDialog
+    ChatDialog,
+    Permission,
+    UserEditor,
+    Theme,
+    Feedback
   },
   data(){
     return {

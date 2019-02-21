@@ -24,7 +24,7 @@
       :data="data"
       @pageChange="pageChange($event)"
       :border="false">
-      <GridColumn field="processId" width="130">
+      <GridColumn field="processId" width="30">
         <template slot="body" slot-scope="scope">
           <CheckBox v-model="selectedProcessId" :multiple="true" :value="scope.row.processId"></CheckBox>
         </template>
