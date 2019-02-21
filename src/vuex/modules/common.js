@@ -71,8 +71,8 @@ const mutations = {
   },
   [types.LOGOUT](state) {
     cache.clear()
-    state.user = null
-    state.userSetting = null
+    state.user = {}
+    state.userSetting = {}
   },
   [types.TOGGLE_LOADING](state, flag) {
     if(flag){

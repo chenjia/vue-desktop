@@ -12,6 +12,8 @@
   <UserEditor v-else-if="component=='userEditor'" :open="open" :userId="menu.params.userId"/>
   <Theme v-else-if="component=='theme'"/>
   <Feedback v-else-if="component=='feedback'"/>
+  <RuleList v-else-if="component=='ruleList'"/>
+
 </template>
 
 <script>
@@ -21,6 +23,7 @@ import Portal from '../pages/portal/Portal.vue'
 import Browser from '../pages/browser/Browser.vue'
 import ProcessList from '../pages/workflow/ProcessList.vue'
 import ProcessEditor from '../pages/workflow/ProcessEditor.vue'
+import RuleList from '../pages/workflow/RuleList.vue'
 import TaskList from '../pages/workflow/TaskList.vue'
 import Chat from '../pages/chat/Chat.vue'
 import ChatDialog from '../pages/chat/ChatDialog.vue'
@@ -46,7 +49,8 @@ export default {
     Permission,
     UserEditor,
     Theme,
-    Feedback
+    Feedback,
+    RuleList
   },
   data(){
     return {
