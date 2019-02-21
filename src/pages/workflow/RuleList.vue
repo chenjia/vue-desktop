@@ -57,22 +57,22 @@
       <Form :model="form" class="form-flex">
         <div style="margin-bottom:20px">
           <Label for="name">规则名称:</Label>
-          <TextBox inputId="name" v-model="form.name"></TextBox>
+          <TextBox v-model="form.name"></TextBox>
         </div>
         <div style="margin-bottom:20px">
           <Label for="name">所属分类:</Label>
-          <TextBox inputId="name" v-model="form.ruleCategory"></TextBox>
+          <TextBox v-model="form.ruleCategory"></TextBox>
         </div>
         <div style="margin-bottom:20px">
           <Label for="name">正则表达式:</Label>
-          <TextBox inputId="name" v-model="form.regex"></TextBox>
+          <TextBox v-model="form.regex"></TextBox>
         </div>
         <div style="margin-bottom:20px">
           <Label for="name">描述:</Label>
-          <TextBox inputId="name" v-model="form.memo"></TextBox>
+          <TextBox  v-model="form.memo"></TextBox>
         </div>
         <div style="margin-top:20px;text-align:center;">
-          <LinkButton :disabled="false" @click="submitForm()" style="width:80px;">提交</LinkButton>
+          <LinkButton @click="submitForm()" style="width:80px;">提交</LinkButton>
         </div>
       </Form>
     </Dialog>
@@ -155,6 +155,23 @@ export default {
     },
     pageChange(){
       this.list()
+    },
+    submitForm(){
+      let _this = this
+      utils.http.post('/workflow/rule/save', {rule:this.form}).then(response => {
+        this.$messager.alert({
+          title: '成功',
+          icon:'info',
+          msg: '规则添加成功!',
+          result(){
+            _this.form = {}
+            _this.closeEditor()
+            _this.list()
+          }
+        });
+      }, error => {
+
+      })
     }
   },
   watch:{
