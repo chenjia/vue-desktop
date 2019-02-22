@@ -2,7 +2,7 @@
   <div class="box-datagrid">
     <div class="dialog-toolbar">
       <LinkButton @click="toEditor()" iconCls="icon-add" :plain="true">新建</LinkButton>
-      <LinkButton @click="remove()" iconCls="icon-remove" :plain="true">删除</LinkButton>
+      <!-- <LinkButton @click="remove()" iconCls="icon-remove" :plain="true">删除</LinkButton> -->
       <LinkButton @click="toEditor(1)" iconCls="icon-edit" :plain="true">修改</LinkButton>
       <LinkButton @click="changeStatus(1)" iconCls="icon-yes" :plain="true">启用</LinkButton>
       <LinkButton @click="changeStatus(0)" iconCls="icon-no" :plain="true">禁用</LinkButton>
@@ -46,20 +46,41 @@
         </template>
       </GridColumn>
     </DataGrid>
+
+    <Dialog
+      v-if="editor.visible"
+      ref="userEditor"
+      :dialogStyle="{width: dialogWidth+'px', height: dialogHeight+'px'}"
+      :title="editor.title"
+      :modal="true"
+      :resizable="true"
+      @close="closeEditor()">
+
+      <UserEditor />
+    </Dialog>
   </div>
 </template>
 
 <script>
+import UserEditor from './UserEditor'
+
 export default {
   name: 'UserList',
   props:['open','params'],
+  components:{
+    UserEditor
+  },
   data() {
     return {
       total:0,
       pageNumber:1,
       pageSize:10,
       data:[],
-      selectedId:[]
+      selectedId:[],
+      editor:{
+        visible: false,
+        title:''
+      }
     }
   },
   methods: {
@@ -80,12 +101,13 @@ export default {
           userId:this.selectedId[0]
         })
       }else{
-        this.open({
-          name:'userEditor',
-          text:'新增用户',
-          icon:'./static/img/icon32/user_add.png'
-        },{})
+        this.editor.visible = true
+        this.editor.title = '新增用户'
+
       }
+    },
+    closeEditor(){
+      this.$refs.userEditor.close()
     },
     remove(){
       if(this.selectedId.length == 0){
@@ -141,6 +163,11 @@ export default {
   },
   mounted(){
     this.list()
+    // utils.http.post('/manage/user/grant', {userId:'admin', roleIds:['1']}).then(response => {
+      
+    // }, error => {
+
+    // })
   }
 }
 </script>

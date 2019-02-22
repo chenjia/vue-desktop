@@ -24,7 +24,7 @@
           :key="key"
           :ref="task.name"
           :title="task.text"
-          :dialogStyle="{width:(task.width||screenWidth)+'px',height:(task.height||(screenHeight-45))+'px'}"
+          :dialogStyle="{width:(task.width||screenWidth)+'px',height:(task.height||(screenHeight-43))+'px'}"
           :bodyStyle="{display:'flex',position:'relative'}"
           :modal="false"
           :draggable="true"

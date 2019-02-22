@@ -72,7 +72,7 @@ export default {
   justify-content: space-around;
 }
 .form-flex>div{
-  width:40%;
-  flex:0 1 40%;
+  width:50%;
+  flex:0 1 50%;
 }
 </style>
