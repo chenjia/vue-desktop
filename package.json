@@ -10,6 +10,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "fullcalendar": "^3.10.0",
+    "jquery": "^3.3.1",
+    "moment": "^2.24.0",
     "mxgraph": "^3.9.12",
     "particles.js": "^2.0.0",
     "vue": "^2.5.2",

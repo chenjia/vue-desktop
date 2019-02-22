@@ -69,11 +69,11 @@ export const desktopMenus = [{
   left:80*5,
   insertTime:'2019-02-14 00:00:00'
 },{
-  name:'date',
+  name:'calendar',
   text:'日历',
   icon:'./static/img/icon32/date.png',
-  top:80*1,
-  left:80*7,
+  top:80*3,
+  left:80*0,
   insertTime:'2019-02-14 00:00:00'
 },{
   name:'chat',
@@ -94,8 +94,8 @@ export const desktopMenus = [{
   name:'theme',
   text:'主题风格',
   icon:'./static/img/icon32/palette.png',
-  top:80*0,
-  left:80*9,
+  top:80*3,
+  left:80*1,
   insertTime:'2019-02-15 00:00:00'
 }]
 

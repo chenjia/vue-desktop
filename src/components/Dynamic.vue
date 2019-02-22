@@ -13,7 +13,8 @@
   <Theme v-else-if="component=='theme'"/>
   <Feedback v-else-if="component=='feedback'"/>
   <RuleList v-else-if="component=='ruleList'"/>
-
+  <Calendar v-else-if="component=='calendar'"/>
+  
 </template>
 
 <script>
@@ -31,6 +32,7 @@ import Permission from '../pages/permission/Permission.vue'
 import UserEditor from '../pages/permission/UserEditor.vue'
 import Theme from '../pages/theme/Theme.vue'
 import Feedback from '../pages/feedback/Feedback.vue'
+import Calendar from '../pages/calendar/Calendar.vue'
 
 
 export default {
@@ -50,7 +52,8 @@ export default {
     UserEditor,
     Theme,
     Feedback,
-    RuleList
+    RuleList,
+    Calendar
   },
   data(){
     return {
