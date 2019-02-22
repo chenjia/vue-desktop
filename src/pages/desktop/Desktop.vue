@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="./static/css/icon.css">
     <Layout :style="{background:'url(./static/img/desktop/'+$store.state.common.ui.bg+')'}">
       <LayoutPanel region="center" @contextmenu.prevent.native="$refs.desktopMenu.showContextMenu($event.pageX,$event.pageY)" :border="false" :bodyStyle="{background:'none'}" :style="{width:'100%',height:(screenHeight-42)+'px'}">
-        <a v-Draggable="{cursor:'default', dragStart: (d)=>{onDragStart(d, menu)}, drag: onDrag, dragEnd: (d)=>{onDragEnd(d, menu)}}" v-for="(menu, index) in desktopMenus" @dblclick="open(menu, {})" @tap="open(menu, {})" class="desktop-menu" :style="{opacity:dragMenu==menu.name?.5:1,left:menu.left+'px', top:menu.top+'px', transition:sorting?'all .5s':''}">
+        <a v-Draggable="{cursor:'default', dragStart: (d)=>{onDragStart(d, menu)}, drag: onDrag, dragEnd: (d)=>{onDragEnd(d, menu)}}" v-for="(menu, index) in desktopMenus" @click="clickMenu(menu)" class="desktop-menu" :style="{opacity:dragMenu==menu.name?.5:1,left:menu.left+'px', top:menu.top+'px', transition:sorting?'all .5s':''}">
           <img :src="menu.icon" />
           <span>{{menu.text}}</span>
         </a>
@@ -145,6 +145,7 @@ export default {
   data() {
     return {
       dragMenu:null,
+      dragStatus:0,
       sorting:false,
       desktopMenus:desktopMenus,
       contextMenus:contextMenus,
@@ -192,6 +193,11 @@ export default {
       }
       d.target.applyDrag()
     },
+    clickMenu(menu){
+      if(this.dragStatus == 0){
+        this.open(menu, {})
+      }
+    },
     onDragStart(d, menu){
       d = repairPosition(d)
       this.dragMenu = menu.name
@@ -201,6 +207,10 @@ export default {
       d.target.applyDrag()
     },
     onDragEnd(d, menu){
+      this.dragStatus = 1
+      setTimeout(()=>{
+        this.dragStatus = 0
+      },10)
       d.left = repair(d.left)
       d.top = repair(d.top)
       d = repairPosition(d)
@@ -208,7 +218,6 @@ export default {
       let item = null
       for(let i=0;i<this.desktopMenus.length;i++){
         item = this.desktopMenus[i]
-        console.log(item,menu)
         if(item.left == d.left && item.top == d.top){
           d.left = menu.left
           d.top = menu.top
