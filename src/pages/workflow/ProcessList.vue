@@ -84,12 +84,23 @@ export default {
         alert('请选择要操作的记录！')
         return
       }
-       
-      utils.http.post('/workflow/process/delete', {pid:this.selectedProcessId[0]}).then(response => {
-        this.list()
-      }, error => {
-        console.log(error)
+      
+      let _this = this
+      this.$messager.confirm({
+        title: "确认删除",
+        msg: "确定要删除此记录吗?",
+        result(r){
+          if(r) {
+            utils.http.post('/workflow/process/delete', {pid:_this.selectedProcessId[0]}).then(response => {
+              _this.selectedId = []
+              _this.list()
+            }, error => {
+              console.log(error)
+            })
+          }
+        }
       })
+      
     },
     removeAll(){
       utils.http.post('/workflow/process/deleteAll').then(response => {

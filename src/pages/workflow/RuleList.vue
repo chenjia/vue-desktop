@@ -13,12 +13,7 @@
       pagePosition="bottom"
       selectionMode="single"
       @selectionChange="selectionChange($event)"
-      :pagination="true"
-      :total="total"
-      :pageNumber="pageNumber"
-      :pageSize="pageSize"
       :data="data"
-      @pageChange="pageChange($event)"
       :border="false">
       <GridColumn field="ruleId" width="30">
         <template slot="body" slot-scope="scope">
@@ -86,9 +81,6 @@ export default {
   data() {
     return {
       title:'',
-      total:0,
-      pageNumber:1,
-      pageSize:10,
       data:[],
       selectedId:[],
       form:{},
@@ -112,8 +104,15 @@ export default {
           alert('请选择要操作的记录！')
           return
         }
+        this.title = '修改规则'
+        utils.http.post('/workflow/rule/details', {ruleId:this.selectedId[0]}).then(response => {
+          this.form = response.data.body.data
+        }, error => {
+          console.log(error)
+        })
+      }else{
+        this.title = '新增规则'
       }
-      this.title = (flag == 1?'修改规则':'新增规则')
       this.toggle.editor = true
       if(this.$refs.ruleEditor){
         this.$refs.ruleEditor.open()
@@ -128,13 +127,16 @@ export default {
         return
       }
 
+      let _this = this
+
       this.$messager.confirm({
         title: "确认删除",
         msg: "确定要删除此记录吗?",
         result(r){
           if(r) {
-            utils.http.post('/manage/user/delete', {pid:this.selectedId[0]}).then(response => {
-              this.list()
+            utils.http.post('/workflow/rule/delete', {ruleId:_this.selectedId[0]}).then(response => {
+              _this.selectedId = []
+              _this.list()
             }, error => {
               console.log(error)
             })
@@ -146,9 +148,8 @@ export default {
 
     },
     list(){
-      utils.http.post('/workflow/rule/list', {example:{}, pageData:{pageNum:this.pageNumber, pageSize: this.pageSize}}).then(response => {
-        this.data = response.data.body.data.data
-        this.total = response.data.body.data.total
+      utils.http.post('/workflow/rule/list', {example:{}}).then(response => {
+        this.data = response.data.body.data
       }, error => {
 
       })
@@ -158,7 +159,10 @@ export default {
     },
     submitForm(){
       let _this = this
-      utils.http.post('/workflow/rule/save', {rule:this.form}).then(response => {
+      let params = Object.assign({}, this.form)
+      delete params.insertTime
+      delete params.updateTime
+      utils.http.post('/workflow/rule/save', {rule:params}).then(response => {
         this.$messager.alert({
           title: '成功',
           icon:'info',

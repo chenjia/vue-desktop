@@ -93,19 +93,21 @@ export default {
         return
       }
 
+      let _this = this
       this.$messager.confirm({
         title: "确认删除",
         msg: "确定要删除此记录吗?",
         result(r){
           if(r) {
-            utils.http.post('/manage/user/delete', {pid:this.selectedId[0]}).then(response => {
-              this.list()
+            utils.http.post('/manage/user/delete', {pid:_this.selectedId[0]}).then(response => {
+              _this.selectedId = []
+              _this.list()
             }, error => {
               console.log(error)
             })
           }
         }
-      });
+      })
     },
     changeStatus(status){
       if(this.selectedId.length == 0){
