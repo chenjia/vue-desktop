@@ -4,7 +4,7 @@
       <LinkButton @click="toEditor()" iconCls="icon-add" :plain="true">新建</LinkButton>
       <LinkButton @click="remove()" iconCls="icon-remove" :plain="true">删除</LinkButton>
       <LinkButton @click="removeAll()" iconCls="icon-remove" :plain="true">全部删除</LinkButton>
-      <LinkButton @click="toEditor()" iconCls="icon-edit" :plain="true">修改</LinkButton>
+      <LinkButton @click="toEditor(1)" iconCls="icon-edit" :plain="true">修改</LinkButton>
       <LinkButton @click="publish(1)" iconCls="icon-yes" :plain="true">启用</LinkButton>
       <LinkButton @click="publish(0)" iconCls="icon-no" :plain="true">禁用</LinkButton>
       <LinkButton @click="start()" iconCls="icon-start" :plain="true">发起</LinkButton>
@@ -70,13 +70,22 @@ export default {
     selectionChange(row){
       this.selectedProcessId = [row.processId]
     },
-    toEditor(){
+    toEditor(flag){
+      let processId = null
+      if(flag == 1){
+        if(this.selectedProcessId.length == 0){
+          alert('请选择要操作的记录！')
+          return
+        }
+        processId = this.selectedProcessId[0]
+      }
+
       this.open({
         name:'processEditor',
         text:'流程设计',
         icon:'./static/img/icon32/molecule.png'
       },{
-        processId:this.selectedProcessId[0]
+        processId:processId
       })
     },
     remove(){

@@ -41,18 +41,11 @@ export const desktopMenus = [{
   left:80*5,
   insertTime:'2019-02-14 00:00:00'
 },{
-  name:'pageList',
+  name:'dynamicList',
   text:'页面管理',
   icon:'./static/img/icon32/page_32.png',
   top:80*0,
   left:80*6,
-  insertTime:'2019-02-14 00:00:00'
-},{
-  name:'pageEditor',
-  text:'页面设计',
-  icon:'./static/img/icon32/pageEditor_32.png',
-  top:80*0,
-  left:80*7,
   insertTime:'2019-02-14 00:00:00'
 },{
   name:'database',

@@ -83,9 +83,9 @@
                 <td width="20px">
                 </td>
                 <td>
-                  <button v-for="(task,key,index) in taskbar.tasks" :key="key" @click="openTask(task)" class="task-icon">
+                  <div v-for="(task,key,index) in taskbar.tasks" :key="key" @click="open(task)" class="task-icon">
                     <img :src="task.icon" :style="{opacity:taskbar.currentTask.name==task.name?1:.5}"/>
-                  </button>
+                  </div>
                 </td>
                 <td class="time-box" @click="taskbar.showCalendar = !taskbar.showCalendar">
                   <span class="time-box-hour">{{taskbar.time}}</span><span class="time-box-week">{{taskbar.week}}</span><br/>
@@ -243,9 +243,6 @@ export default {
     close(menu){
       this.closeTask(menu)
       this.$refs[menu.name][0].close()
-    },
-    openTask(task){
-      this.$refs[task.name].open()
     },
     closeTask(task){
       this.$nextTick(()=>{

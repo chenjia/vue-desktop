@@ -13,6 +13,8 @@
   <Feedback v-else-if="component=='feedback'"/>
   <RuleList v-else-if="component=='ruleList'"/>
   <Calendar v-else-if="component=='calendar'"/>
+  <DynamicList v-else-if="component=='dynamicList'" :open="open"/>
+  <DynamicEditor v-else-if="component=='dynamicEditor'" :processId="menu.params.id"/>
   
 </template>
 
@@ -31,6 +33,8 @@ import Permission from '../pages/permission/Permission.vue'
 import Theme from '../pages/theme/Theme.vue'
 import Feedback from '../pages/feedback/Feedback.vue'
 import Calendar from '../pages/calendar/Calendar.vue'
+import DynamicList from '../pages/dynamic/DynamicList.vue'
+import DynamicEditor from '../pages/dynamic/DynamicEditor.vue'
 
 
 export default {
@@ -50,7 +54,9 @@ export default {
     Theme,
     Feedback,
     RuleList,
-    Calendar
+    Calendar,
+    DynamicList,
+    DynamicEditor
   },
   data(){
     return {

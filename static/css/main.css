@@ -52,6 +52,15 @@ a{
 .pd-lg{
   padding:20px;
 }
+.text-sm{
+  font-size:16px!important;
+}
+.text-md{
+  font-size:20px!important;
+}
+.text-lg{
+  font-size:24px!important;
+}
 .relative{
   position:relative;
 }
