@@ -80,7 +80,7 @@
                 <td class="start-box">
                   <div ref="start" class="start" :class="{'start-hover': !startDialog.closed}" @click="startDialog.closed=!startDialog.closed"></div>
                 </td>
-                <td width="20px">
+                <td width="15px">
                 </td>
                 <td>
                   <div v-for="(task,key,index) in taskbar.tasks" :key="key" @click="open(task)" class="task-icon">
