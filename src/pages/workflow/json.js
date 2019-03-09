@@ -199,6 +199,10 @@ export const handler = {
           cells[i].setAttribute("nodeId",nodeId);
         }
       }
+      this.$messager.alert({
+        title: '保存成功',
+        msg: '流程【'+workflow.getAttribute('label')+'】保存成功！'
+      })
     })
 
     // $.ajax({

@@ -126,12 +126,15 @@ export default {
       }
     },
     updateConfig(key, value){
-      console.log(key+":"+value)
-      let model = window.graph.getModel()
-      model.beginUpdate()
-      this.curCell.setAttribute(key, value)
-      graph.refresh()
-      model.endUpdate()
+      if(key){
+        console.log(key+":"+value)
+        let model = window.graph.getModel()
+        model.beginUpdate()
+        this.curCell.setAttribute(key, value)
+        graph.refresh()
+        model.endUpdate()
+      }
+      
     },
     initMxgraph(){
       window.mxObjectCodec.allowEval = true

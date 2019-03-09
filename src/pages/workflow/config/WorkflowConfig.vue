@@ -6,7 +6,16 @@
       </span>
     </template>
     <GridColumn field="label" title="属性" width="100"></GridColumn>
-    <GridColumn field="value" title="值" :editable="true"></GridColumn>
+    <GridColumn field="value" title="值" :editable="true">
+      <template  slot="edit" slot-scope="scope">
+        <SwitchButton v-if="scope.row.code == 'status'" v-model="status" style="max-width:70px" onText="启用" offText="禁用"></SwitchButton>
+        <TextBox v-else v-model="scope.row.value"></TextBox>
+      </template>
+      <template slot="body" slot-scope="scope">
+        <SwitchButton v-if="scope.row.code == 'status'" v-model="status" style="max-width:70px" onText="启用" offText="禁用"></SwitchButton>
+        <TextBox v-else v-model="scope.row.value"></TextBox>
+      </template>
+    </GridColumn>
   </DataGrid>
 </template>
 
@@ -16,7 +25,7 @@ export default {
   props: ['attributes', 'update'],
   data() {
     return {
-      
+      status: true
     }
   },
   computed:{
@@ -34,11 +43,13 @@ export default {
       },{
         group:'权限配置',
         label:'权限配置',
+        code:'starter',
         value:''
       },{
         group:'权限配置',
         label:'状态',
-        value:'已发布'
+        code: 'status',
+        value: 1
       }]
     }
   },
@@ -48,7 +59,9 @@ export default {
     }
   },
   watch:{
-    
+    status(newVal){
+      this.update('status', newVal?1:0)
+    }
   },
   mounted(){
 
