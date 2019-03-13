@@ -1,6 +1,6 @@
 window.Config = {
-  server: 'http://localhost:8201/api',
-  // server: 'http://47.100.119.102/api',
+  // server: 'http://localhost:8201/api',
+  server: 'http://47.100.119.102/api',
   key:'ed26d4cd99aa11e5b8a4c89cdc776729',
   random:(''+Math.random()).substr(2),
   preload: 3000

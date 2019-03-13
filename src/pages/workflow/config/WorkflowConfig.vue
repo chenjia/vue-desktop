@@ -1,5 +1,5 @@
 <template>
-  <DataGrid :data="config" @editEnd="edit" groupField="group" :clickToEdit="true" selectionMode="cell" editMode="cell" :border="false">
+  <DataGrid class="datagrid-config" :data="config" @editEnd="edit" groupField="group" :clickToEdit="true" selectionMode="cell" editMode="cell" :border="false">
     <template slot="group" slot-scope="scope" >
       <span style="font-weight:bold;">
         {{scope.value}}
@@ -7,13 +7,13 @@
     </template>
     <GridColumn field="label" title="属性" width="100"></GridColumn>
     <GridColumn field="value" title="值" :editable="true">
-      <template  slot="edit" slot-scope="scope">
+      <template slot="edit" slot-scope="scope">
         <SwitchButton v-if="scope.row.code == 'status'" v-model="status" style="max-width:70px" onText="启用" offText="禁用"></SwitchButton>
         <TextBox v-else v-model="scope.row.value"></TextBox>
       </template>
       <template slot="body" slot-scope="scope">
         <SwitchButton v-if="scope.row.code == 'status'" v-model="status" style="max-width:70px" onText="启用" offText="禁用"></SwitchButton>
-        <TextBox v-else v-model="scope.row.value"></TextBox>
+        <TextBox v-else v-model="scope.row.value" style="border:none;"></TextBox>
       </template>
     </GridColumn>
   </DataGrid>
@@ -42,7 +42,7 @@ export default {
         value:this.attributes.workflowKey
       },{
         group:'权限配置',
-        label:'权限配置',
+        label:'发起人',
         code:'starter',
         value:''
       },{
@@ -68,3 +68,16 @@ export default {
   }
 }
 </script>
+<style type="text/css">
+.datagrid-config .datagrid-cell{
+  padding:0!important;
+}
+.datagrid-config .datagrid-cell .textbox{
+  border-radius: 0;
+  width: 100%;
+  height: 31px;
+}
+.datagrid-config .datagrid-cell .switchbutton{
+  height: 31px;
+}
+</style>
