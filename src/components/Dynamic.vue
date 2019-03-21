@@ -11,10 +11,11 @@
   <Permission v-else-if="component=='permission'" :open="open"/>
   <Theme v-else-if="component=='theme'"/>
   <Feedback v-else-if="component=='feedback'"/>
+  <RegexList v-else-if="component=='regexList'"/>
   <RuleList v-else-if="component=='ruleList'"/>
   <Calendar v-else-if="component=='calendar'"/>
-  <DynamicList v-else-if="component=='dynamicList'" :open="open"/>
-  <DynamicEditor v-else-if="component=='dynamicEditor'" :processId="menu.params.id"/>
+  <PageList v-else-if="component=='pageList'" :open="open"/>
+  <PageEditor v-else-if="component=='pageEditor'" :processId="menu.params.id"/>
   
 </template>
 
@@ -25,7 +26,8 @@ import Portal from '../pages/portal/Portal.vue'
 import Browser from '../pages/browser/Browser.vue'
 import ProcessList from '../pages/workflow/ProcessList.vue'
 import ProcessEditor from '../pages/workflow/ProcessEditor.vue'
-import RuleList from '../pages/workflow/RuleList.vue'
+import RegexList from '../pages/page/RegexList.vue'
+import RuleList from '../pages/rule/RuleList.vue'
 import TaskList from '../pages/workflow/TaskList.vue'
 import Chat from '../pages/chat/Chat.vue'
 import ChatDialog from '../pages/chat/ChatDialog.vue'
@@ -33,9 +35,8 @@ import Permission from '../pages/permission/Permission.vue'
 import Theme from '../pages/theme/Theme.vue'
 import Feedback from '../pages/feedback/Feedback.vue'
 import Calendar from '../pages/calendar/Calendar.vue'
-import DynamicList from '../pages/dynamic/DynamicList.vue'
-import DynamicEditor from '../pages/dynamic/DynamicEditor.vue'
-
+import PageList from '../pages/page/PageList.vue'
+import PageEditor from '../pages/page/PageEditor.vue'
 
 export default {
   name: 'Dynamic',
@@ -53,10 +54,11 @@ export default {
     Permission,
     Theme,
     Feedback,
+    RegexList,
     RuleList,
     Calendar,
-    DynamicList,
-    DynamicEditor
+    PageList,
+    PageEditor
   },
   data(){
     return {

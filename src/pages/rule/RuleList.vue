@@ -4,6 +4,7 @@
       <LinkButton @click="toEditor()" iconCls="icon-add" :plain="true">新建</LinkButton>
       <LinkButton @click="remove()" iconCls="icon-remove" :plain="true">删除</LinkButton>
       <LinkButton @click="toEditor(1)" iconCls="icon-edit" :plain="true">修改</LinkButton>
+      <LinkButton @click="toTest()" iconCls="icon-bug" :plain="true">测试</LinkButton>
       <LinkButton @click="toSearch()" iconCls="icon-search" :plain="true" style="float:right;">搜索</LinkButton>
     </div>
     <DataGrid
@@ -15,13 +16,13 @@
       @selectionChange="selectionChange($event)"
       :data="data"
       :border="false">
-      <GridColumn field="ruleId" width="30">
+      <GridColumn field="id" width="30">
         <template slot="body" slot-scope="scope">
-          <CheckBox v-model="selectedId" :multiple="true" :value="scope.row.ruleId"></CheckBox>
+          <CheckBox v-model="selectedId" :multiple="true" :value="scope.row.id"></CheckBox>
         </template>
       </GridColumn>
       <GridColumn field="name" title="规则名称"></GridColumn>
-      <GridColumn field="regex" title="正则表达式" width="250"></GridColumn>
+      <GridColumn field="category" title="分类"></GridColumn>
       <GridColumn field="memo" title="备注"></GridColumn>
       <GridColumn field="insertTime" title="创建时间">
         <template slot="body" slot-scope="scope">
@@ -96,7 +97,7 @@ export default {
   },
   methods: {
     selectionChange(row){
-      this.selectedId = [row.ruleId]
+      this.selectedId = [row.id]
     },
     toEditor(flag){
       if(flag==1){
@@ -105,7 +106,7 @@ export default {
           return
         }
         this.title = '修改规则'
-        utils.http.post('/workflow/rule/details', {ruleId:this.selectedId[0]}).then(response => {
+        utils.http.post('/workflow/rule/details', {id:this.selectedId[0]}).then(response => {
           this.form = response.data.body.data
         }, error => {
           console.log(error)
@@ -134,7 +135,7 @@ export default {
         msg: "确定要删除此记录吗?",
         result(r){
           if(r) {
-            utils.http.post('/workflow/rule/delete', {ruleId:_this.selectedId[0]}).then(response => {
+            utils.http.post('/workflow/rule/delete', {id:_this.selectedId[0]}).then(response => {
               _this.selectedId = []
               _this.list()
             }, error => {
@@ -143,6 +144,13 @@ export default {
           }
         }
       });
+    },
+    toTest(){
+      utils.http.post('/workflow/rule/test', {}).then(response => {
+        console.log(response)
+      }, error => {
+        console.log(error)
+      })
     },
     toSearch(){
 

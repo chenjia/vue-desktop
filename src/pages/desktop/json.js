@@ -34,14 +34,21 @@ export const desktopMenus = [{
   left:80*1,
   insertTime:'2019-02-14 00:00:00'
 },{
-  name:'ruleList',
-  text:'规则管理',
+  name:'regexList',
+  text:'校验规则',
   icon:'./static/img/icon32/rule_32.png',
   top:80*0,
   left:80*5,
   insertTime:'2019-02-14 00:00:00'
 },{
-  name:'dynamicList',
+  name:'ruleList',
+  text:'规则引擎',
+  icon:'./static/img/icon32/molecule.png',
+  top:80*2,
+  left:80*5,
+  insertTime:'2019-02-14 00:00:00'
+},{
+  name:'pageList',
   text:'页面管理',
   icon:'./static/img/icon32/page_32.png',
   top:80*0,

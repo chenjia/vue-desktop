@@ -1,0 +1,10 @@
+package com.rules
+
+import com.lxt.ms.workflow.model.User
+
+rule "name"
+    when
+        $user:User(username == "admin");
+    then
+    System.out.println("我是"+$user.getUsername()+"!");
+end

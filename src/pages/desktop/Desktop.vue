@@ -234,6 +234,10 @@ export default {
     open(menu, params){
       if(this.taskbar.tasks[menu.name]){
         this.$refs[menu.name][0].moveToTop()
+        if(menu.name=='chatDialog'){
+          menu.params = params
+          this.$set(this.taskbar.tasks, menu.name, menu)
+        }
       }else{
         menu.params = params
         this.$set(this.taskbar.tasks, menu.name, menu)

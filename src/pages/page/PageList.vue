@@ -7,7 +7,7 @@
       <LinkButton @click="toSearch()" iconCls="icon-search" :plain="true" style="float:right;">搜索</LinkButton>
     </div>
     <DataGrid
-      ref="dynamicDataGrid"
+      ref="pageDataGrid"
       style="height:100%;"
       groupField="category"
       pagePosition="bottom"
@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  name: 'DynamicList',
+  name: 'PageList',
   props:['open','params'],
   data() {
     return {
@@ -67,7 +67,7 @@ export default {
       }
 
       this.open({
-        name:'dynamicEditor',
+        name:'pageEditor',
         text:'页面设计',
         icon:'./static/img/icon32/pageEditor_32.png'
       },{
@@ -86,7 +86,7 @@ export default {
         msg: "确定要删除此记录吗?",
         result(r){
           if(r) {
-            utils.http.post('/workflow/dynamic/delete', {pid:_this.selectedId[0]}).then(response => {
+            utils.http.post('/workflow/page/delete', {pid:_this.selectedId[0]}).then(response => {
               _this.selectedId = []
               _this.list()
             }, error => {
@@ -101,7 +101,7 @@ export default {
 
     },
     list(){
-      utils.http.post('/workflow/dynamic/list', {example:{}, pageData:{pageNum:this.pageNumber, pageSize: this.pageSize}}).then(response => {
+      utils.http.post('/workflow/page/list', {example:{}, pageData:{pageNum:this.pageNumber, pageSize: this.pageSize}}).then(response => {
         this.data = response.data.body.data
       }, error => {
 

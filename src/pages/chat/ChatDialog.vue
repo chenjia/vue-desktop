@@ -1,14 +1,14 @@
 <template>
-  <Tabs tabPosition="left" class="tabs-chat" style="width:100%;">
-    <TabPanel :title="'张三'" :closable="true" :bodyStyle="{flexDirection:'column'}">
+  <Tabs ref="chatTab" @tabSelect="tabSelect" tabPosition="left" class="tabs-chat" style="width:100%;">
+    <TabPanel v-for="item in targets" :params="item" :title="item.realname" :closable="true" :bodyStyle="{flexDirection:'column'}">
       <template slot="header">
         <div>
           <img class="head" src="../../../static/img/head.jpg">
-          <span>张三</span>
+          <span>{{item.realname}}</span>
         </div>
       </template>
 
-      <Layout style="position:absolute;width:100%;height:100%;">
+      <Layout v-if="target.userId==item.userId" style="position:absolute;width:100%;height:100%;">
         <LayoutPanel region="center" :bodyStyle="{position:'relative'}" style="height:100%;" :border="false">
           <div class="chat-container pd-md">
             <div :id="item.recordId" v-for="(item,index) in records[target.userId]" class="chat-box" :class="{'chat-receive':user.userId==item.receiveId,'chat-send':user.userId==item.sendId}">
@@ -20,7 +20,7 @@
         <LayoutPanel region="south" style="height:180px;" :border="false">
           <UEditor :target="target" :sendMessage="sendMessage"></UEditor>
         </LayoutPanel>
-    </Layout>
+      </Layout>
     </TabPanel>
   </Tabs>
 </template>
@@ -36,8 +36,10 @@ export default {
   },
   data() {
     return {
+      now: new Date().getTime(),
       user:utils.cache.get('user')||{userId:'admin',realname:'admin'},
       msg: '',
+      pageNumber:1,
       heads:{
         admin:require('../../../static/img/head.jpg'),
         chenjia:require('../../../static/img/head.jpg'),
@@ -48,13 +50,55 @@ export default {
     }
   },
   methods: {
+    tabSelect(panel){
+      this.open({
+        name:'chatDialog',
+        text:'聊天室对话框',
+        width:700,
+        height:500,
+        icon:'./static/img/icon32/comments.png'
+      },panel.$attrs.params)
+    },
+    queryRecords(callback){
+      utils.http.post('/chat/record/list', {
+        example: {
+          sendId:this.user.userId,
+          receiveId:this.target.userId,
+          beforeDate: this.now
+        },
+        pageData: {
+          pageNumber:this.pageNumber,
+          pageSize: 10
+        }
+      }).then(response => {
+        const data = response.data.body.data.data
+        setTimeout(() => {
+          this.pageNumber++
+          let target = this.records[this.target.userId]
+          if(target && target.length > 0){
+            let recordId = this.records[this.target.userId][0].recordId
+            this.records[this.target.userId] = data.reverse().concat(this.records[this.target.userId])
+            this.records  = Object.assign({}, this.records)
+            setTimeout(function(){
+              document.querySelector('.chat-container').scrollTop = document.getElementById(recordId).offsetTop - 50
+            })
+          }else{
+            this.records[this.target.userId] = data.reverse()
+            this.records  = Object.assign({}, this.records)
+            setTimeout(function(){
+              document.querySelector('.chat-container').scrollTop = 99999
+            })
+          }
+        }, 500)
+      }).catch(()=>{
+        this.records = {}
+      })
+    },
     sendMessage(message){
-      console.log(message)
       let frame = document.getElementById('chatFrame')
       frame.contentWindow.postMessage(message, '*')
       this.records[message.receiveId].push(message)
       this.records  = Object.assign({}, this.records)
-      console.log(this.records)
       this.msg = ''
       setTimeout(function(){
         document.querySelector('.chat-container').scrollTop = 99999
@@ -62,7 +106,6 @@ export default {
       })
     },
     receiveMessage(message){
-      console.log(message)
       if(!this.records[message.sendId]){
         this.records[message.sendId] = []
       }
@@ -70,14 +113,40 @@ export default {
       this.records  = Object.assign({}, this.records)
       setTimeout(function(){
         document.querySelector('.chat-container').scrollTop = 99999
-        console.log(document.querySelector('.chat-container'))
       })
     }
   },
   watch:{
-    
+    target(newVal, oldVal){
+      if(!this.targets[newVal.userId]){
+        this.queryRecords()
+      }
+      this.targets[newVal.userId] = newVal
+      this.targets  = Object.assign({}, this.targets)
+      const tab = this.$refs.chatTab
+      setTimeout(()=>{
+        for(var i=0;i<Object.getOwnPropertyNames(this.targets).length-1;i++){
+          const panel = tab.getPanel(i)
+          if(panel && panel.$attrs.params.userId == newVal.userId){
+            tab.select(i)
+            break;
+          }
+        }
+      },1)
+      
+      // this.open({
+      //   name:'chatDialog',
+      //   text:'聊天室对话框',
+      //   width:700,
+      //   height:500,
+      //   icon:'./static/img/icon32/comments.png'
+      // },newVal)
+    }
   },
   mounted(){
+    this.targets[this.target.userId] = this.target
+    this.targets  = Object.assign({}, this.targets)
+    this.queryRecords()
     this.records[this.target.userId] = []
     window.addEventListener('message', event => {
       this.receiveMessage(event.data)
