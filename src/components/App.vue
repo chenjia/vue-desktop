@@ -113,8 +113,10 @@ export default {
           })
           setTimeout(()=>{
             this.lock(false)
+          }, 500)
+          setTimeout(()=>{
             this.loading(false)
-          },1000+(Math.random()*1000))
+          },1000)
         }else{
           store.commit('TOGGLE_ERROR', {visible: true, text: response.data.head.msg, duration: 3000})
           this.getCaptcha()
@@ -131,6 +133,8 @@ export default {
     '$store.state.common.ui.lock'(val){
       if(val){
         this.$refs.loginDialog.open()
+        particlesJS.load('particles-js', './static/lib/particles/particles.json', function() {})
+        this.getCaptcha()
       }else{
         this.$refs.loginDialog.close()
       }
@@ -146,7 +150,7 @@ export default {
     }
   },
   mounted(){
-    particlesJS.load('particles-js', './static/lib/particles/particles.json', function() {});
+    particlesJS.load('particles-js', './static/lib/particles/particles.json', function() {})
     setTimeout(()=>{
       require('../lazyLibs')
     }, Config.preload)

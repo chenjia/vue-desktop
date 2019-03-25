@@ -24,7 +24,7 @@
           :key="key"
           :ref="task.name"
           :title="task.text"
-          :dialogStyle="{width:(task.width||screenWidth)+'px',height:(task.height||(screenHeight-43))+'px'}"
+          :dialogStyle="{width:(task.width||screenWidth)+'px',height:(task.height||(screenHeight-43))+'px',left:task.name=='chat'?(screenWidth-290)+'px':'auto'}"
           :bodyStyle="{display:'flex',position:'relative'}"
           :modal="false"
           :draggable="true"
@@ -377,10 +377,10 @@ export default {
       this.startDialog.closed = true
       setTimeout(()=>{
         this.loading(true)
-        this.lock(true)
         store.commit('LOGOUT')
         setTimeout(()=>{
           this.loading(false)
+          this.lock(true)
         },1000)
       },1)
     },

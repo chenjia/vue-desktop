@@ -78,11 +78,12 @@ export const desktopMenus = [{
 },{
   name:'chat',
   text:'聊天室',
-  icon:'./static/img/icon32/comments.png',
+  icon:'./static/img/icon32/msn_messenger.png',
   top:80*1,
   left:80*1,
   insertTime:'2019-02-14 00:00:00',
-  width:280
+  width:280,
+  height:600
 },{
   name:'permission',
   text:'权限管理',

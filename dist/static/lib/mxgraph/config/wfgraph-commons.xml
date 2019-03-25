@@ -1,0 +1,283 @@
+<mxGraph alternateEdgeStyle="verticalEdge" dropEnabled="1">
+	<add as="isAutoSizeCell"><![CDATA[
+		function(cell)
+		{
+			return this.isSwimlane(cell);
+		}
+	]]></add>
+	<add as="isSwimlane"><![CDATA[
+		function (cell)
+		{
+			return mxUtils.isNode(this.model.getValue(cell), 'swimlane');
+		}
+	]]></add>
+	<add as="isAllowOverlapParent"><![CDATA[
+		function(cell)
+		{
+			return !this.isSwimlane(cell.parent);
+		}
+	]]></add>
+	<add as="getTooltipForCell"><![CDATA[
+		function(cell)
+		{
+			var href = cell.getAttribute('href');
+			href = (href != null && href.length > 0) ?
+				'<br>'+href : '';
+			var maxlen = 30;
+			var desc = cell.getAttribute('description');
+			if (desc == null || desc.length == 0)
+			{
+				desc = '';
+			}
+			else if (desc.length < maxlen)
+			{
+				desc = '<br>'+desc;
+			}
+			else
+			{
+				desc = '<br>'+desc.substring(0, maxlen)+'...';
+			}
+			return '<b>'+cell.getAttribute('label')+
+					'</b> ('+cell.getId()+')'+href+desc+
+					'<br>Edges: '+cell.getEdgeCount()+
+					'<br>Children: '+cell.getChildCount();
+		}
+	]]></add>
+	<add as="convertValueToString">
+		function(cell)
+		{
+			return cell.getAttribute('label');
+		}
+	</add>
+	<mxGraphModel as="model">
+		<add as="valueForCellChanged"><![CDATA[
+			function(cell, value)
+			{
+				var previous = null;
+				
+				if (isNaN(value.nodeType))
+				{
+					previous = cell.getAttribute('label');
+					cell.setAttribute('label', value);
+				}
+				else
+				{
+					previous = cell.value;
+					cell.value = value;
+				}
+				
+				return previous;
+			}
+		]]></add>
+		<root>
+			<Workflow label="新建流程" propertyTitle="流程配置" nodeType="workflow" workflowId="" workflowKey="流程标识"
+				version="1.0" status="1" memo="" id="0"/>
+			<Layer label="Default Layer">
+				<mxCell parent="0"/>
+			</Layer>
+		</root>
+	</mxGraphModel>
+	<mxStylesheet as="stylesheet">
+		<add as="defaultVertex">
+			<add as="shape" value="label"/>
+			<add as="perimeter" value="rectanglePerimeter"/>
+			<add as="fontSize" value="14"/>
+			<add as="fontWeight" value="bold"/>
+			<add as="fontStyle" value="1"/>
+			<add as="align" value="center"/>
+			<add as="verticalAlign" value="middle"/>
+			<add as="strokeColor" value="black"/>
+		</add>
+		<add as="defaultEdge">
+			<add as="shape" value="connector"/>
+			<add as="rounded" value="1"/>
+			<add as="labelBackgroundColor" value="white"/>
+			<add as="endArrow" value="classic"/>
+			<add as="fontSize" value="14"/>
+			<add as="fontWeight" value="bold"/>
+			<add as="fontStyle" value="1"/>
+			<add as="align" value="center"/>
+			<add as="verticalAlign" value="middle"/>
+			<add as="strokeColor" value="black"/>
+		</add>
+		<add as="elbowEdge">
+			<add as="shape" value="connector"/>
+			<add as="rounded" value="1"/>
+			<add as="edgeStyle" value="elbowEdgeStyle"/>
+			<add as="labelBackgroundColor" value="white"/>
+			<add as="endArrow" value="classic"/>
+			<add as="fontSize" value="14"/>
+			<add as="fontWeight" value="bold"/>
+			<add as="fontStyle" value="1"/>
+			<add as="align" value="center"/>
+			<add as="verticalAlign" value="middle"/>
+			<add as="strokeColor" value="black"/>
+		</add>
+		<add as="verticalEdge">
+			<add as="elbow" value="vertical"/>
+		</add>
+		<add as="straightEdge">
+			<add as="shape" value="connector"/>
+			<add as="endArrow" value="classic"/>
+		</add>
+		<add as="arrowEdge">
+			<add as="shape" value="arrow"/>
+			<add as="fillColor" value="red"/>
+		</add>
+		<add as="swimlane">
+			<add as="shape" value="swimlane"/>
+			<add as="fontSize" value="12"/>
+			<add as="startSize" value="23"/>
+			<add as="horizontal" value="0"/>
+			<add as="verticalAlign" value="top"/>
+			<add as="fontColor" value="white"/>
+			<add as="labelBackgroundColor" value="none"/>
+		</add>
+		<add as="group">
+			<add as="shape" value="rectangle"/>
+			<add as="rounded" value="1"/>
+			<add as="verticalAlign" value="top"/>
+			<add as="strokeColor" value="black"/>
+			<add as="dashed" value="1"/>
+			<add as="opacity" value="50"/>
+		</add>
+		<add as="rounded">
+			<add as="rounded" value="1"/>
+		</add>
+		<add as="ellipse">
+			<add as="shape" value="ellipse"/>
+			<add as="perimeter" value="ellipsePerimeter"/>
+		</add>
+		<add as="rhombus">
+			<add as="shape" value="rhombus"/>
+			<add as="perimeter" value="rhombusPerimeter"/>
+		</add>
+		<add as="actor">
+			<add as="shape" value="actor"/>
+		</add>
+		<add as="symbol">
+			<add as="shape" value="image"/>
+			<add as="perimeter" value="rectanglePerimeter"/>
+			<add as="labelBackgroundColor" value="white"/>
+			<add as="fontSize" value="10"/>
+			<add as="align" value="center"/>
+			<add as="verticalAlign" value="top"/>
+			<add as="verticalLabelPosition" value="bottom"/>
+		</add>
+		
+		<add as="start">
+			<add as="shape" value="image"/>
+			<add as="perimeter" value="rectanglePerimeter"/>
+			<add as="image" value="./static/lib/mxgraph/images/start.png"/>
+			<add as="align" value="center"/>
+			<add as="fontSize" value="14"/>
+			<add as="fontWeight" value="bold"/>
+			<add as="fontStyle" value="1"/>
+			<add as="verticalAlign" value="top"/>
+			<add as="verticalLabelPosition" value="bottom"/>
+		</add>
+		
+		<add as="end">
+			<add as="shape" value="image"/>
+			<add as="perimeter" value="rectanglePerimeter"/>
+			<add as="fontSize" value="14"/>
+			<add as="fontWeight" value="bold"/>
+			<add as="fontStyle" value="1"/>
+			<add as="image" value="./static/lib/mxgraph/images/end.png"/>
+			<add as="align" value="center"/>
+			<add as="verticalAlign" value="top"/>
+			<add as="verticalLabelPosition" value="bottom"/>
+		</add>
+		
+		<add as="error">
+			<add as="shape" value="image"/>
+			<add as="perimeter" value="rectanglePerimeter"/>
+			<add as="fontSize" value="14"/>
+			<add as="fontWeight" value="bold"/>
+			<add as="fontStyle" value="1"/>
+			<add as="image" value="./static/lib/mxgraph/images/error.png"/>
+			<add as="align" value="center"/>
+			<add as="verticalAlign" value="top"/>
+			<add as="verticalLabelPosition" value="bottom"/>
+		</add>
+		
+		<add as="task">
+			<add as="shape" value="label"/>
+			<add as="gradientColor" value="#7d85df"/>
+			<add as="strokeColor" value="#5d65df"/>
+			<add as="fillColor" value="#adc5ff"/>
+			<add as="fontStyle" value="1"/>
+			<add as="align" value="left"/>
+			<add as="verticalAlign" value="middle"/>
+			<add as="spacing" value="2"/>
+			<add as="image" value="./static/lib/mxgraph/images/task_24.png"/>
+			<add as="spacingLeft" value="32"/>
+			<add as="width" value="96"/>
+			<add as="height" value="48"/>
+			<add as="imageWidth" value="24"/>
+			<add as="imageHeight" value="24"/>
+			<add as="autosize" value="1"/>
+			<add as="rounded" value="1"/>
+			<add as="shadow" value="1"/>
+			<add as="glass" value="1"/>
+		</add>
+		
+		<add as="currentVertex">
+			<add as="shape" value="label"/>
+			<add as="gradientColor" value="#ff2222"/>
+			<add as="strokeColor" value="#ff2222"/>
+			<add as="fillColor" value="#ff2222"/>
+			<add as="fontStyle" value="1"/>
+			<add as="align" value="left"/>
+			<add as="verticalAlign" value="middle"/>
+			<add as="spacing" value="2"/>
+			<add as="image" value="./static/libs/mxgraph/images/task_24.png"/>
+			<add as="spacingLeft" value="32"/>
+			<add as="width" value="96"/>
+			<add as="height" value="48"/>
+			<add as="imageWidth" value="24"/>
+			<add as="imageHeight" value="24"/>
+			<add as="autosize" value="1"/>
+			<add as="rounded" value="1"/>
+			<add as="shadow" value="1"/>
+			<add as="glass" value="1"/>
+		</add>
+		
+		<add as="historyVertex">
+			<add as="shape" value="label"/>
+			<add as="gradientColor" value="#00d600"/>
+			<add as="strokeColor" value="#00d600"/>
+			<add as="fillColor" value="#00d600"/>
+			<add as="fontStyle" value="1"/>
+			<add as="align" value="left"/>
+			<add as="verticalAlign" value="middle"/>
+			<add as="spacing" value="2"/>
+			<add as="image" value="./static/lib/mxgraph/images/task_24.png"/>
+			<add as="spacingLeft" value="32"/>
+			<add as="width" value="96"/>
+			<add as="height" value="48"/>
+			<add as="imageWidth" value="24"/>
+			<add as="imageHeight" value="24"/>
+			<add as="autosize" value="1"/>
+			<add as="rounded" value="1"/>
+			<add as="shadow" value="1"/>
+			<add as="glass" value="1"/>
+		</add>
+		
+		<add as="historyEdge">
+			<add as="shape" value="connector"/>
+			<add as="rounded" value="1"/>
+			<add as="labelBackgroundColor" value="white"/>
+			<add as="endArrow" value="classic"/>
+			<add as="fontSize" value="14"/>
+			<add as="fontWeight" value="bold"/>
+			<add as="fontStyle" value="1"/>
+			<add as="fontColor" value="gray"/>
+			<add as="align" value="center"/>
+			<add as="verticalAlign" value="middle"/>
+			<add as="strokeColor" value="green"/>
+			<add as="strokeWidth" value="2"/>
+			<add as="dashed" value="1"/>
+		</add>
+	</mxStylesheet>
+</mxGraph>

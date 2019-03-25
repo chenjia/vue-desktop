@@ -11,7 +11,8 @@
       <Layout v-if="target.userId==item.userId" style="position:absolute;width:100%;height:100%;">
         <LayoutPanel region="center" :bodyStyle="{position:'relative'}" style="height:100%;" :border="false">
           <div class="chat-container pd-md">
-            <div :id="item.recordId" v-for="(item,index) in records[target.userId]" class="chat-box" :class="{'chat-receive':user.userId==item.receiveId,'chat-send':user.userId==item.sendId}">
+            <p class="center" @click="queryRecords()"><a href="#">{{more[target.userId]==false?'没有更多聊天记录':'加载更早聊天记录'}}</a></p>
+            <div :id="item.recordId" v-for="(item,index) in records[target.userId]" class="chat-box" :class="{'chat-receive':user.userId==item.receiveId && user.userId!=item.sendId,'chat-send':user.userId==item.sendId}">
               <img class="chat-head" :src="heads[item.sendId]">
               <div class="chat-msg" v-html="item.content"></div>
             </div>
@@ -46,7 +47,10 @@ export default {
         xiaoting:require('../../../static/img/head_bg.jpg')
       },
       targets:{},
-      records:{}
+      records:{},
+      more:{
+
+      }
     }
   },
   methods: {
@@ -72,6 +76,11 @@ export default {
         }
       }).then(response => {
         const data = response.data.body.data.data
+        if(data.length == 0){
+          this.more[this.target.userId] = false
+          this.more  = Object.assign({}, this.more)
+          return
+        }
         setTimeout(() => {
           this.pageNumber++
           let target = this.records[this.target.userId]
@@ -109,7 +118,9 @@ export default {
       if(!this.records[message.sendId]){
         this.records[message.sendId] = []
       }
-      this.records[message.sendId].push(message)
+      if(message.sendId != this.user.userId){
+        this.records[message.sendId].push(message)
+      }
       this.records  = Object.assign({}, this.records)
       setTimeout(function(){
         document.querySelector('.chat-container').scrollTop = 99999
