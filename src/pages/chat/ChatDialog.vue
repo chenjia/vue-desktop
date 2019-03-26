@@ -1,6 +1,6 @@
 <template>
   <Tabs ref="chatTab" @tabSelect="tabSelect" tabPosition="left" class="tabs-chat" style="width:100%;">
-    <TabPanel v-for="item in targets" :params="item" :title="item.realname" :closable="true" :bodyStyle="{flexDirection:'column'}">
+    <TabPanel v-for="item in targets" :key="item.userId" :params="item" :title="item.realname" :closable="true" :bodyStyle="{flexDirection:'column'}">
       <template slot="header">
         <div>
           <img class="head" src="../../../static/img/head.jpg">

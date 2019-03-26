@@ -2,14 +2,25 @@
   <div style="position:absolute;width:100%;height:100%;">
     <link rel="stylesheet" href="./static/css/icon.css">
     <Layout :style="{background:'url(./static/img/desktop/'+$store.state.common.ui.bg+')'}">
-      <LayoutPanel region="center" @contextmenu.prevent.native="$refs.desktopMenu.showContextMenu($event.pageX,$event.pageY)" :border="false" :bodyStyle="{background:'none'}" :style="{width:'100%',height:(screenHeight-42)+'px'}">
-        <a v-Draggable="{cursor:'default', dragStart: (d)=>{onDragStart(d, menu)}, drag: onDrag, dragEnd: (d)=>{onDragEnd(d, menu)}}" v-for="(menu, index) in desktopMenus" @click="clickMenu(menu)" class="desktop-menu" :style="{opacity:dragMenu==menu.name?.5:1,left:menu.left+'px', top:menu.top+'px', transition:sorting?'all .5s':''}">
+      <LayoutPanel region="center" @click.native="startDialog.closed=true; taskbar.showCalendar=false" @contextmenu.prevent.native="$refs.desktopMenu.showContextMenu($event.pageX,$event.pageY)" :border="false" :bodyStyle="{background:'none'}" :style="{width:'100%',height:(screenHeight-42)+'px'}">
+        <a v-Draggable="{cursor:'default', dragStart: (d)=>{onDragStart(d, menu)}, drag: onDrag, dragEnd: (d)=>{onDragEnd(d, menu)}}" v-for="(menu, index) in desktopMenus" :key="menu.name" @click="clickMenu(menu)" class="desktop-menu" :style="{opacity:dragMenu==menu.name?.5:1,left:menu.left+'px', top:menu.top+'px', transition:toggle.sorting?'all .5s':''}">
           <img :src="menu.icon" />
           <span>{{menu.text}}</span>
         </a>
 
-        <div ref="calendar" class="easyui-calendar" style="display:none;position:absolute;right:0;bottom:0;"></div>
-        <img ref="recycle" style="display:none;opacity:0.6;position:absolute;right:0;bottom:0;" src="../../../static/img/icon64/recycle_64.png"/>
+        <a v-Droppable="{drop:()=>{dropMenu()}}" v-show="toggle.showRecycle" class="desktop-menu" style="right:10px;bottom:10px;">
+          <img src="../../../static/img/icon32/bin_recycle.png" />
+          <span>回收站</span>
+        </a>
+
+        <DraggableProxy ref="proxy" style="position:absolute;" :proxyCls="dragStartMenu?'proxyCls':''">
+          <a class="desktop-menu">
+            <img :src="dragStartMenu.icon" />
+            <span>{{dragStartMenu.text}}</span>
+          </a>
+        </DraggableProxy>
+
+
         <Calendar v-show="taskbar.showCalendar" style="position:absolute;right:0;bottom:0;width:250px;height:250px"></Calendar>
 
         <Menu ref="desktopMenu" style="width:150px;" @itemClick="onContextMenu">
@@ -36,15 +47,15 @@
           <dynamic :component="task.name" :open="open" :close="close" :menu="task"/>
         </Dialog>
 
-        <Dialog ref="startDialog" :title="$store.state.common.user.username" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
+        <Dialog ref="startDialog" :title="'当前用户：'+$store.state.common.user.username" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
           <table cellspacing="0" cellpadding="0">
             <tr>
               <td>
                 <div style="width:158px;padding:10px;height:340px;">
                   <div style="height:320px;text-align:left;">
-                    <SplitButton v-for="(menu, menuIndex) in startDialog.startMenus" :key="menuIndex" :text="menu.group" :plain="true" iconCls="fa fa-book">
+                    <SplitButton v-for="(menu, menuIndex) in startDialog.startMenus" :key="menuIndex" :text="menu.group" :plain="true" :iconCls="menu.iconCls">
                       <Menu>
-                        <MenuItem v-for="(item, itemIndex) in menu.items" :key="itemIndex" :text="item.name"></MenuItem>
+                        <MenuItem v-Draggable="{cursor:'default', proxy: $refs.proxy, dragStart: (d)=>{onMenuDragStart(d, item)}, drag: onMenuDrag, dragEnd: (d)=>{onMenuDragEnd(d, item)}}" v-for="(item, itemIndex) in menu.items" :key="itemIndex" :text="item.text" :iconCls="item.iconCls"></MenuItem>
                       </Menu>
                     </SplitButton>
                   </div>
@@ -53,16 +64,15 @@
               <td>
                 <div class="panel-header" style="height:350px;border-top:0px;border-right:0px;border-bottom:0px;">
                   <div class="center" style="cursor:pointer;margin:15px auto 5px;">
-                    <i class="fa fa-user" style="font-size:48px;"></i>
+                    <img src="../../../static/img/head.jpg" style="width:60px;border-radius: 50%;">
                   </div>
-                  <div class="screen-name"></div>
-                  <div class="menu-seq"></div>
+                  <div class="center">{{user.realname}}</div>
                   <div style="width:100px;height:80px;">
 
                   </div>
                   <div style="position:absolute;bottom:3px;width:100px;">
                     <template v-for="(item, index) in startDialog.funcs">
-                      <LinkButton @click="funcs(item.url)" :plain="true" :iconCls="'fa '+item.icon">{{item.name}}</LinkButton>
+                      <LinkButton @click="funcs(item.url)" :plain="true" :iconCls="item.iconCls">{{item.name}}</LinkButton>
                       <div v-if="index != startDialog.funcs.length-1" class="menu-seq"></div>
                     </template>
                   </div>
@@ -121,8 +131,8 @@ function repair(v){
   return r;
 }
 function repairPosition(d){
-  let s = d.target.$el
-  let p = d.target.$el.parentNode
+  let s = d.target.proxy?d.target.proxy.$el:d.target.$el
+  let p = d.target.proxy?d.target.proxy.$el.parentNode:d.target.$el.parentNode
   if (d.left < 0){
     d.left = 0;
   }else if (d.left + s.offsetWidth > p.offsetWidth){
@@ -144,9 +154,14 @@ export default {
   },
   data() {
     return {
+      user:utils.cache.get('user')||{userId:'admin',realname:'admin'},
       dragMenu:null,
+      dragStartMenu:{},
       dragStatus:0,
-      sorting:false,
+      toggle:{
+        sorting:false,
+        showRecycle:false
+      },
       desktopMenus:desktopMenus,
       contextMenus:contextMenus,
       startDialog:{
@@ -172,6 +187,15 @@ export default {
       lock:'LOCK',
       loading:'TOGGLE_LOADING'
     }),
+    dropMenu(){
+      for(let i=0;i<this.desktopMenus.length;i++){
+        let menu = this.desktopMenus[i]
+        if(this.dragMenu == menu.name){
+          this.desktopMenus.splice(i,1)
+          break;
+        }
+      }
+    },
     moveToTop(task){
       this.$refs[task.name][0].moveToTop()
     },
@@ -198,9 +222,57 @@ export default {
         this.open(menu, {})
       }
     },
+    onMenuDragStart(d, menu){
+      d.left = d.startX
+      d.top = d.startY
+      d = repairPosition(d)
+      this.dragStartMenu = menu
+      this.startDialog.closed = true
+    },
+    onMenuDrag(d){
+      d = repairPosition(d)
+      console.log(d)
+      d.target.applyDrag()
+    },
+    onMenuDragEnd(d, menu){
+      this.dragStatus = 1
+      setTimeout(()=>{
+        this.dragStatus = 0
+      },10)
+      d.left = repair(d.left)
+      d.top = repair(d.top)
+      d = repairPosition(d)
+      d.target.$el.style.transition = 'all .1s'
+      let item = null
+      for(let i=0;i<this.desktopMenus.length;i++){
+        item = this.desktopMenus[i]
+        if(item.left == d.left && item.top == d.top){
+          d.left = menu.left
+          d.top = menu.top
+        }
+      }
+      menu.left = d.left
+      menu.top = d.top
+      d.target.applyDrag()
+      setTimeout(()=>{
+        d.target.$el.style.transition = ''
+      },110)
+      this.dragStartMenu = {}
+      for(let temp of this.desktopMenus){
+        if(menu.name == temp.name){
+          this.$messager.alert({
+            title: '重复操作',
+            msg: '菜单【'+ menu.text +'】已经添加过了！'
+          })
+          return
+        }
+      }
+      this.desktopMenus.push(menu)
+    },
     onDragStart(d, menu){
       d = repairPosition(d)
       this.dragMenu = menu.name
+      this.toggle.showRecycle = true
     },
     onDrag(d){
       d = repairPosition(d)
@@ -226,10 +298,12 @@ export default {
       menu.left = d.left
       menu.top = d.top
       d.target.applyDrag()
+      
+      this.dragMenu = null
+      this.toggle.showRecycle = false
       setTimeout(()=>{
         d.target.$el.style.transition = ''
       },110)
-      this.dragMenu = null
     },
     open(menu, params){
       if(this.taskbar.tasks[menu.name]){
@@ -277,7 +351,7 @@ export default {
       }
     },
     sortDesktopMenu(field, orderType){
-      this.sorting = true
+      this.toggle.sorting = true
       let menus = [].concat(this.desktopMenus)
       menus.sort((prev, next) => {
         if(field == 'time'){
@@ -313,7 +387,7 @@ export default {
       
       
       setTimeout(()=>{
-        this.sorting = false
+        this.toggle.sorting = false
       },600)
     },
     fullscreen(){

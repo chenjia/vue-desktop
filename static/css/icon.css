@@ -10,14 +10,23 @@
 .icon-basicinfo{
   background:url("../img/icons/basicinfo.png") no-repeat center center;
 }
+.icon-book{
+  background:url("../img/icons/book.png") no-repeat center center;
+}
 .icon-box{
   background:url('../img/icons/box.png') no-repeat center center;
 }
 .icon-briefcase{
   background:url('../img/icons/briefcase.png') no-repeat center center;
 }
+.icon-browser{
+  background:url('../img/icons/internet_explorer.png') no-repeat center center;
+}
 .icon-bug{
-  background:url('../img/icons/bug.png') no-repeat center center;
+  background:url('../img/icons/ladybird.png') no-repeat center center;
+}
+.icon-chat{
+  background:url('../img/icons/msn_messenger.png') no-repeat center center;
 }
 .icon-clear{
   background:url('../img/icons/clear.png') no-repeat center center;
@@ -46,8 +55,11 @@
 .icon-cut{
   background:url('../img/icons/cut.png') no-repeat center center;
 }
+.icon-database{
+  background:url("../img/icons/database_gear.png") no-repeat center center;
+}
 .icon-date{
-  background:url("../img/icons/date.png") no-repeat center center;
+  background:url("../img/icons/date_task.png") no-repeat center center;
 }
 .icon-delete{
   background:url('../img/icons/delete.png') no-repeat center center;
@@ -85,6 +97,9 @@
 .icon-fullscreen{
   background:url("../img/icons/fullscreen.png") no-repeat center center;
 }
+.icon-gear{
+  background:url("../img/icons/gear_in.png") no-repeat center center;
+}
 .icon-getback{
   background:url("../img/icons/getback.png") no-repeat center center;
 }
@@ -93,6 +108,9 @@
 }
 .icon-grid{
   background:url('../img/icons/grid.png') no-repeat center center;
+}
+.icon-permission{
+  background:url('../img/icons/group_gear.png') no-repeat center center;
 }
 .icon-help{
   background:url('../img/icons/help.png') no-repeat center center;
@@ -119,19 +137,22 @@
   background:url('../img/icons/lock.png') no-repeat center center;
 }
 .icon-logout{
-  background:url('../img/icons/logout.png') no-repeat center center;
+  background:url('../img/icons/aol_messenger.png') no-repeat center center;
 }
 .icon-male{
   background:url('../img/icons/male.png') no-repeat center center;
-}
-.icon-modify{
-  background:url('../img/icons/edit.png') no-repeat center center;
 }
 .icon-menu{
   background:url("../img/icons/menu.png") no-repeat center center;
 }
 .icon-message{
-  background:url('../img/icons/message.png') no-repeat center center;
+  background:url('../img/icons/mail_yellow.png') no-repeat center center;
+}
+.icon-modify{
+  background:url('../img/icons/edit.png') no-repeat center center;
+}
+.icon-monitor{
+  background:url('../img/icons/control_panel.png') no-repeat center center;
 }
 .icon-navigation{
   background:url('../img/icons/navigation.png') no-repeat center center;
@@ -151,9 +172,6 @@
 .icon-numbers{
   background:url("../img/icons/numbers.png") no-repeat center center;
 }
-.icon-other{
-  background:url("../img/icons/other.png") no-repeat center center;
-}
 .icon-organization{
   background:url("../img/icons/organization.png") no-repeat center center;
 }
@@ -168,6 +186,9 @@
 }
 .icon-print{
   background:url('../img/icons/print.png') no-repeat center center;
+}
+.icon-process{
+  background:url('../img/icons/table_gear.png') no-repeat center center;
 }
 .icon-property{
   background:url('../img/icons/property.png') no-repeat center center;
@@ -196,6 +217,9 @@
 .icon-required{
   padding:0 6px 0 0;
   color:red;
+}
+.icon-rule{
+  background:url('../img/icons/molecule.png') no-repeat center center;
 }
 .icon-straight{
   background:url('../img/icons/straight.png') no-repeat center center;
@@ -236,6 +260,9 @@
 .icon-sort-name-desc{
   background:url("../img/icons/sort_name_desc.png") no-repeat center center;
 }
+.icon-sound{
+  background:url('../img/icons/sound.png') no-repeat center center;
+}
 .icon-start{
   background:url("../img/icons/start.png") no-repeat center center;
 }
@@ -243,13 +270,16 @@
   background:url("../img/icons/submit.png") no-repeat center center;
 }
 .icon-system-config{
-  background:url("../img/icons/system_config.png") no-repeat center center;
+  background:url("../img/icons/setting_tools.png") no-repeat center center;
 }
 .icon-task{
   background:url("../img/icons/task.png") no-repeat center center;
 }
 .icon-text-edit{
   background:url("../img/icons/text_edit.png") no-repeat center center;
+}
+.icon-theme{
+  background:url("../img/icons/palette.png") no-repeat center center;
 }
 .icon-tool{
   background:url('../img/icons/tool.png') no-repeat center center;

@@ -16,7 +16,7 @@
   <Calendar v-else-if="component=='calendar'"/>
   <PageList v-else-if="component=='pageList'" :open="open"/>
   <PageEditor v-else-if="component=='pageEditor'" :processId="menu.params.id"/>
-  
+  <div class="pd-md" v-else>该菜单暂未实现，敬请期待！</div>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 export const desktopMenus = [{
   name:'browser',
   text:'浏览器',
-  icon:'./static/img/icon32/browser_32.png',
+  icon:'./static/img/icon32/internet_explorer.png',
   top:80*0,
   left:80*0,
   insertTime:'2019-01-01 00:00:00'
@@ -36,7 +36,7 @@ export const desktopMenus = [{
 },{
   name:'regexList',
   text:'校验规则',
-  icon:'./static/img/icon32/rule_32.png',
+  icon:'./static/img/icon32/spellcheck.png',
   top:80*0,
   left:80*5,
   insertTime:'2019-02-14 00:00:00'
@@ -249,90 +249,123 @@ export const contextMenus = [{
 }]
 
 export const startMenus = [{
-  group:'我的工作区',
+  group:'日常事务',
+  iconCls:'icon-work',
   items:[{
-    name:'我的门户',
-    icon:'',
-    url:''
+    name:'portal',
+    text:'系统门户',
+    icon:'./static/img/icon32/portal_32.png',
+    iconCls:'icon-portal'
   },{
-    name:'我的任务',
-    icon:'',
-    url:''
+    name:'taskList',
+    text:'我的任务',
+    icon:'./static/img/icon32/task_32.png',
+    iconCls:'icon-task'
   },{
-    name:'已办任务',
-    icon:'',
-    url:''
-  },{
-    name:'消息提醒',
-    icon:'',
-    url:''
+    name:'messageList',
+    text:'消息提醒',
+    icon:'./static/img/icon32/mail_yellow.png',
+    iconCls:'icon-message'
   },{
     name:'个人设置',
-    icon:'',
-    url:''
+    text:'个人设置',
+    icon:'./static/img/icon32/setting_tools.png',
+    iconCls:'icon-system-config'
   },{
     name:'日程计划',
-    icon:'',
-    url:''
-  },{
-    name:'意见箱',
-    icon:'',
-    url:''
+    text:'日程计划',
+    icon:'./static/img/icon32/date_task.png',
+    iconCls:'icon-date'
   },{
     name:'系统公告',
-    icon:'',
-    url:''
+    text:'系统公告',
+    icon:'./static/img/icon32/sound.png',
+    iconCls:'icon-sound'
   }]
 },{
   group:'系统设置',
+  iconCls:'icon-gear',
   items:[{
-    name:'流程列表',
-    icon:'',
-    url:''
+    name:'processList',
+    text:'流程管理',
+    icon:'./static/img/icon32/table_gear.png',
+    iconCls:'icon-process'
   },{
-    name:'表单列表',
-    icon:'',
-    url:''
+    name:'monitor',
+    text:'流程监控',
+    icon:'./static/img/icon32/control_panel.png',
+    iconCls:'icon-monitor'
   },{
-    name:'校验规则列表',
-    icon:'',
-    url:''
+    name:'ruleList',
+    text:'规则引擎',
+    icon:'./static/img/icon32/molecule.png',
+    iconCls:'icon-rule'
   },{
-    name:'用户列表',
-    icon:'',
-    url:''
+    name:'pageList',
+    text:'页面管理',
+    icon:'./static/img/icon32/page_32.png',
+    iconCls:'icon-layout'
   },{
-    name:'角色列表',
-    icon:'',
-    url:''
+    name:'database',
+    text:'数据库',
+    icon:'./static/img/icon32/database_gear.png',
+    iconCls:'icon-database'
   },{
-    name:'菜单列表',
-    icon:'',
-    url:''
-  },]
+    name:'regexList',
+    text:'校验规则',
+    icon:'./static/img/icon32/spellcheck.png',
+    iconCls:'icon-spellcheck'
+  },{
+    name:'permission',
+    text:'权限管理',
+    icon:'./static/img/icon32/group_gear.png',
+    iconCls:'icon-permission'
+  }]
 },{
-  group:'其他',
+  group:'其他功能',
+  iconCls:'icon-book',
   items:[{
-    name:'使用帮助',
-    icon:'',
-    url:''
+    name:'chat',
+    text:'聊天室',
+    icon:'./static/img/icon32/msn_messenger.png',
+    iconCls:'icon-chat'
+  },{
+    name:'browser',
+    text:'浏览器',
+    icon:'./static/img/icon32/internet_explorer.png',
+    iconCls:'icon-browser'
+  },{
+    name:'feedback',
+    text:'问题反馈',
+    icon:'./static/img/icon32/ladybird.png',
+    iconCls:'icon-bug'
+  },{
+    name:'theme',
+    text:'主题风格',
+    icon:'./static/img/icon32/palette.png',
+    iconCls:'icon-theme'
+  },{
+    name:'help',
+    text:'使用帮助',
+    icon:'./static/img/icon32/help.png',
+    iconCls:'icon-help'
   }]
 }]
 
 export const funcs = [{
-  name:'全屏',
-  icon:'fa-user',
+  name:'全屏展示',
+  iconCls:'icon-fullscreen',
   url:''
 },{
   name:'办公模式',
-  icon:'fa-user',
+  iconCls:'icon-work',
   url:''
 },{
   name:'个人设置',
-  icon:'fa-user',
+  iconCls:'icon-system-config',
   url:''
 },{
-  name:'注销',
-  icon:'fa-user',
+  name:'退出登录',
+  iconCls:'icon-logout',
   url:'logout'
 }]
