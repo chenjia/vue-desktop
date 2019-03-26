@@ -13,7 +13,7 @@
           <span>回收站</span>
         </a>
 
-        <DraggableProxy ref="proxy" style="position:absolute;" :proxyCls="dragStartMenu?'proxyCls':''">
+        <DraggableProxy ref="proxy">
           <a class="desktop-menu">
             <img :src="dragStartMenu.icon" />
             <span>{{dragStartMenu.text}}</span>
@@ -231,7 +231,6 @@ export default {
     },
     onMenuDrag(d){
       d = repairPosition(d)
-      console.log(d)
       d.target.applyDrag()
     },
     onMenuDragEnd(d, menu){
