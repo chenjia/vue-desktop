@@ -1,5 +1,5 @@
 <template>
-  <div ref="calendar"></div>
+  <div class="pd-sm" style="overflow-y:auto;" ref="calendar"></div>
 </template>
 
 <script>

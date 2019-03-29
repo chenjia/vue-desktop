@@ -6,6 +6,7 @@
       <LinkButton @click="toEditor(1)" iconCls="icon-edit" :plain="true">修改</LinkButton>
       <LinkButton @click="toSearch()" iconCls="icon-search" :plain="true" style="float:right;">搜索</LinkButton>
     </div>
+
     <DataGrid
       ref="pageDataGrid"
       style="height:100%;"

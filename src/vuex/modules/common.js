@@ -32,11 +32,17 @@ const state = {
       msg:''
     }
   },
-  user: cache.get('user'),
+  page:{
+    active: null
+  },
+  user: cache.get('user')||{},
   userSetting: cache.get('userSetting')
 }
 
 const getters = {
+  user(){
+    return state.user
+  },
   isLoading() {
     return state.ui.loading
   }

@@ -1,23 +1,37 @@
 <template>
   <div style="position:absolute;width:100%;height:100%;padding:2px;">
+    <DraggableProxy ref="componentProxy">
+      <div class="dynamic-node" style="position:absolute;z-index: 999999;">
+        <div><img class="component-img" :src="'static/img/icon32/'+dragComponent.img"/></div>
+        <div>{{dragComponent.label}}</div>
+      </div>
+    </DraggableProxy>
     <Layout>
-      <LayoutPanel title="组件列表" region="west" style="width:120px;" :bodyStyle="{position:'relative'}">
+      <LayoutPanel v-if="init" title="组件列表" region="west" style="width:120px;" :bodyStyle="{position:'relative'}">
         <Accordion style="position:absolute;width:100%;height:100%;" :animate="true" :border="false">
           <AccordionPanel :title="'布局类'">
-            <div class="dynamic-node" v-for="(item, index) in components.layout">
+            <!-- <div v-for="(item, index) in components.layout" :key="item.name" v-Draggable="{cursor:'default', proxy: $refs.componentProxy, dragStart: (d)=>{onDragStart(d, item)}, drag: onDrag, dragEnd: (d)=>{onDragEnd(d, item)}}" class="dynamic-node">
+              <div><img class="component-img" :src="'static/img/icon32/'+item.img"/></div>
+              <div>{{item.label}}</div>
+            </div> -->
+            <draggable :group="{ name: 'column', pull: 'clone', put: false }">
+              <div v-for="(item, index) in components.layout" :key="item.name" class="dynamic-node">
+                <div><img class="component-img" :src="'static/img/icon32/'+item.img"/></div>
+                <div>{{item.label}}</div>
+              </div>
+            </draggable>
+          </AccordionPanel>
+          <AccordionPanel :title="'表单类'">
+            <div class="dynamic-node" v-for="(item, index) in components.pc">
               <div><img class="component-img" :src="'static/img/icon32/'+item.img"/></div>
               <div>{{item.label}}</div>
             </div>
-            <!-- <component v-for="(item, index) in components.layout" :is="item.name"></component> -->
-          </AccordionPanel>
-          <AccordionPanel :title="'表单类'">
-            <p>Content2</p>
           </AccordionPanel>
           <AccordionPanel :title="'展示类'">
-            <p>Content3</p>
-          </AccordionPanel>
-          <AccordionPanel :title="'其他'">
-            <p>Content3</p>
+            <div class="dynamic-node" v-for="(item, index) in components.mobile">
+              <div><img class="component-img" :src="'static/img/icon32/'+item.img"/></div>
+              <div>{{item.label}}</div>
+            </div>
           </AccordionPanel>
         </Accordion>
       </LayoutPanel>
@@ -27,16 +41,30 @@
             <div class="dialog-toolbar graph-toolbar">
               <LinkButton @click="save()" iconCls="icon-save" :plain="true" title="保存"></LinkButton>
               <div class="datagrid-btn-separator"></div>
-              <LinkButton @click="save()" iconCls="fa fa-fw fa-desktop text-sm" :plain="true" title="电脑"></LinkButton>
-              <LinkButton @click="save()" iconCls="fa fa-fw fa-tablet text-md" :plain="true" title="平板"></LinkButton>
-              <LinkButton @click="save()" iconCls="fa fa-fw fa-mobile text-lg" :plain="true" title="手机"></LinkButton>
+              <LinkButton @click="device='pc'" iconCls="fa fa-fw fa-desktop text-sm" :plain="true" title="电脑"></LinkButton>
+              <LinkButton @click="device='pad'" iconCls="fa fa-fw fa-tablet text-md" :plain="true" title="平板"></LinkButton>
+              <LinkButton @click="device='mobile'" iconCls="fa fa-fw fa-mobile text-lg" :plain="true" title="手机"></LinkButton>
               <div class="datagrid-btn-separator"></div>
               <LinkButton @click="save()" iconCls="icon-graph" :plain="true" title="预览"></LinkButton>
             </div>
           </LayoutPanel>
 
           <LayoutPanel region="center" :border="false" style="width:100%;height:100%;" :bodyStyle="{position:'relative'}">
-            <div class="layout-panel" v-Droppable="{dragEnter:onDragEnter,dragLeave:onDragLeave}"></div>
+            <div :class="'mode-'+device">
+              <div>
+                <Nested :children="list"/>
+                <!-- <draggable style="min-height:50px;" tag="ul" :list="list" :group="{ name: 'g1' }">
+                  <li v-for="el in list" :key="el.name" style="padding:20px;border:1px solid red;">
+                    <p>{{ el.name }}</p>
+                    <draggable style="min-height:50px;" :list="el.children" :group="{ name: 'g1' }">
+                      <li v-for="el in el.children" :key="el.name" style="padding-left:20px">
+                        <p>{{ el.name }}</p>
+                      </li>
+                    </draggable>
+                  </li>
+                </draggable> -->
+              </div>
+            </div>
           </LayoutPanel>
         </Layout>
       </LayoutPanel>
@@ -54,42 +82,48 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+import Nested from "./layout/Nested"
 import LxtPanel from './layout/LxtPanel'
 import LxtFlex from './layout/LxtFlex'
-
+import {layout, pc, mobile} from './json.js'
 
 export default {
   name: 'DynamicEditor',
   components:{
+    Nested,
     LxtPanel,
     LxtFlex
   },
   props:['id'],
   data() {
     return {
+      init:false,
       curComponent:null,
+      dragComponent:{},
+      device:'pc',
       components:{
-        layout:[{
-          name:'LxtPanel',
-          label:'面板',
-          title:'',
-          width:'100%',
-          height:'100px',
-          img:'application.png'
-        },{
-          name:'LxtFlex',
-          label:'Flex布局',
-          column:'',
-          width:'100%',
-          height:'100px',
-          img:'column_double.png'
-        }],
-        form:[],
-        display:[]
+        layout:layout,
+        pc:pc,
+        mobile:mobile
       },
       toggle:{
         showEast: false
-      }
+      },
+      pageComponents:[],
+      list: [{
+        component:'LxtFlex',
+        name: "task 1",  
+        children: [{}]
+      },{
+        component:'LxtPanel',
+        name: "task 2",
+        children: []
+      },{
+        component:'LxtPanel',
+        name: "task 3",
+        children: []
+      }]
     }
   },
   computed:{
@@ -105,7 +139,21 @@ export default {
     updateConfig(key, value){
       
     },
+    onDragStart(d, component){
+      this.dragComponent = component
+    },
+    onDrag(d){
+    },
+    onDragEnd(d, menu){
+      d.target.$el.style.left = 0
+      d.target.$el.style.top = 0
+      d.target.$el.style.position = 'relative'
+      d.target.applyDrag()
+    },
     onDragEnter(scope){
+      if(this.dragComponent.type == 'container'){
+
+      }
       console.log('enter',scope)
     },
     onDragLeave(scope){
@@ -116,23 +164,76 @@ export default {
     
   },
   mounted(){
-    
+    setTimeout(()=>{
+      this.init = true
+    })
   }
 }
 </script>
 <style type="text/css" scoped>
-.layout-panel{
-  position:absolute;
-  width:100%;
-  height:100%;
-}
 .datagrid-btn-separator{
   float: none;
   display: inline-block;
   vertical-align: middle;
 }
 .dynamic-node{
-  margin: 20px auto;
+  width:118px;
+  margin-top:20px;
   text-align: center;
+}
+.mode-pc{
+  position: relative;
+  width:1226px;
+  height:854px;
+  background:url(../../../static/img/pad-h.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.mode-pc > div{
+  position: absolute;
+  top: 44px;
+  left: 80px;
+  width: 1024px;
+  height: 768px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: white;
+  border:1px solid #CCC;
+}
+.mode-pad{
+  position: relative;
+  height: 1226px;
+  width: 855px;
+  background:url(../../../static/img/pad-v.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.mode-pad>div{
+  position: absolute;
+  left: 43px;
+  top: 81px;
+  width: 768px;
+  height: 1024px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: white;
+  border:1px solid #CCC;
+}
+.mode-mobile{
+  width:428px;
+  height:898px;
+  background:url(../../../static/img/mobile.png);
+  background-size: cover;
+}
+.mode-mobile>div{
+  position: absolute;
+  left: 33px;
+  top: 118px;
+  width: 375px;
+  height: 667px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: white;
+  border:1px solid #CCC;
 }
 </style>

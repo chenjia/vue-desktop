@@ -12,7 +12,7 @@
       <table v-show="$store.state.common.ui.loading" :style="{opacity:$store.state.common.ui.loadend?1:0}" style="position:absolute;top:0px;left:0px;width:100%;height:100%;z-index:999999" class="loading-content">
         <tr>
           <td>
-            <div style="width:16%;height:16%;top:42%;left:42%;position:absolute;text-align:center;border:2px solid #95B8E7;background:white;display:table;">
+            <div style="width:16%;height:16.2%;top:42%;left:42%;position:absolute;text-align:center;border:2px solid #95B8E7;background:white;display:table;">
               <div style="display:table-cell;vertical-align: middle;">
                 <img src="../../static/img/loading.gif">
                 <br>
@@ -28,7 +28,7 @@
       <Dialog
         ref="loginDialog"
         :title="title"
-        :dialogStyle="{width:'400px',height:'300px'}"
+        :dialogStyle="{width:'400px',height:'301px'}"
         :modal="true"
         :closable="false"
         :draggable="true"
@@ -118,11 +118,10 @@ export default {
             this.loading(false)
           },1000)
         }else{
-          store.commit('TOGGLE_ERROR', {visible: true, text: response.data.head.msg, duration: 3000})
           this.getCaptcha()
         }
         setTimeout(()=>{
-          store.commit('TOGGLE_LOADING', false)
+          this.loading(false)
         },1000)
       }, error => {
         this.loading(false)

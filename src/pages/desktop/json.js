@@ -55,6 +55,13 @@ export const desktopMenus = [{
   left:80*6,
   insertTime:'2019-02-14 00:00:00'
 },{
+  name:'pageEditor',
+  text:'页面设计',
+  icon:'./static/img/icon32/pageEditor_32.png',
+  top:80*0,
+  left:80*7,
+  insertTime:'2019-02-14 00:00:00'
+},{
   name:'database',
   text:'数据库',
   icon:'./static/img/icon32/database_gear.png',
@@ -64,7 +71,7 @@ export const desktopMenus = [{
 },{
   name:'monitor',
   text:'流程监控',
-  icon:'./static/img/icon32/control_panel.png',
+  icon:'./static/img/icon32/system_monitor.png',
   top:80*1,
   left:80*5,
   insertTime:'2019-02-14 00:00:00'
@@ -293,7 +300,7 @@ export const startMenus = [{
   },{
     name:'monitor',
     text:'流程监控',
-    icon:'./static/img/icon32/control_panel.png',
+    icon:'./static/img/icon32/system_monitor.png',
     iconCls:'icon-monitor'
   },{
     name:'ruleList',
@@ -352,10 +359,10 @@ export const startMenus = [{
   }]
 }]
 
-export const funcs = [{
+export const handlers = [{
   name:'全屏展示',
   iconCls:'icon-fullscreen',
-  url:''
+  url:'fullscreen'
 },{
   name:'办公模式',
   iconCls:'icon-work',
@@ -363,7 +370,13 @@ export const funcs = [{
 },{
   name:'个人设置',
   iconCls:'icon-system-config',
-  url:''
+  url:'open',
+  params:{
+    name:'个人设置',
+    text:'个人设置',
+    icon:'./static/img/icon32/setting_tools.png',
+    iconCls:'icon-system-config'
+  }
 },{
   name:'退出登录',
   iconCls:'icon-logout',

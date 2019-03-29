@@ -5,16 +5,10 @@
     border-bottom: 1px solid #FFFFFF;
 }
 .start{
-  background:url('../../../static/img/win_gray.png') -4px 0 no-repeat;
-  display:inline-block;
-  width:40px;
-  height:40px;
-  position:relative;
-  top:-1px;
-  cursor: pointer;
+  opacity: .7;
 }
 .start-hover{
-  background:url('../../../static/img/win_blue.png') -4px 0 no-repeat;
+  opacity: 1;
 }
 .start-box{
   width:50px;
@@ -32,10 +26,11 @@
   box-shadow: none!important;
 }
 .time-box{
-  width:80px;
+  width:90px;
+  padding:0 10px;
   font-size:12px;
   font-family:'微软雅黑';
-  text-align:center;
+  text-align:right;
   cursor:default;
 }
 .time-box-week{
@@ -45,10 +40,10 @@
   width:10px;
 }
 .seq{
-  border-left: 1px solid #AAAAAA;
-    border-right: 1px solid #FFFFFF;
-    float:left;
-    height:44px;
+  border-left: 1px solid #CCC;
+  border-right: 1px solid #FFF;
+  float:left;
+  height:40px;
 }
 .desktop-menu{
   position:absolute;

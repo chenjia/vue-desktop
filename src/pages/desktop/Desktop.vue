@@ -20,9 +20,6 @@
           </a>
         </DraggableProxy>
 
-
-        <Calendar v-show="taskbar.showCalendar" style="position:absolute;right:0;bottom:0;width:250px;height:250px"></Calendar>
-
         <Menu ref="desktopMenu" style="width:150px;" @itemClick="onContextMenu">
           <MenuItem v-for="(item, index) in contextMenus" :key="index" :value="item.value" :text="item.text" :iconCls="item.iconCls">
             <SubMenu v-if="item.children">
@@ -31,8 +28,8 @@
           </MenuItem>
         </Menu>
 
-        <Dialog v-for="(task,key,index) in taskbar.tasks"
-          :key="key"
+        <Dialog v-for="(task,index) in taskbar.tasks"
+          :key="task.name+'Dialog'"
           :ref="task.name"
           :title="task.text"
           :dialogStyle="{width:(task.width||screenWidth)+'px',height:(task.height||(screenHeight-43))+'px',left:task.name=='chat'?(screenWidth-290)+'px':'auto'}"
@@ -47,7 +44,7 @@
           <dynamic :component="task.name" :open="open" :close="close" :menu="task"/>
         </Dialog>
 
-        <Dialog ref="startDialog" :title="'当前用户：'+$store.state.common.user.username" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
+        <Dialog ref="startDialog" :title="'当前用户：'+user.username" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
           <table cellspacing="0" cellpadding="0">
             <tr>
               <td>
@@ -71,9 +68,9 @@
 
                   </div>
                   <div style="position:absolute;bottom:3px;width:100px;">
-                    <template v-for="(item, index) in startDialog.funcs">
-                      <LinkButton @click="funcs(item.url)" :plain="true" :iconCls="item.iconCls">{{item.name}}</LinkButton>
-                      <div v-if="index != startDialog.funcs.length-1" class="menu-seq"></div>
+                    <template v-for="(item, index) in startDialog.handlers">
+                      <LinkButton @click="handler(item.url,item.params)" :plain="true" :iconCls="item.iconCls">{{item.name}}</LinkButton>
+                      <div v-if="index != startDialog.handlers.length-1" class="menu-seq"></div>
                     </template>
                   </div>
                 </div>
@@ -82,18 +79,21 @@
           </table>
         </Dialog>
       </LayoutPanel>
-      <LayoutPanel region="south" style="height:42px;">
-        <div ref="taskbar" data-options="region:'south'" style="height:42px;">
+      
+      <LayoutPanel region="south">
+        <div ref="taskbar" data-options="region:'south'">
           <div class="panel-header" style="height:40px;padding:0;border:0;overflow:hidden;">
             <table cellspacing="0" cellpadding="0" style="width:100%;height:40px;">
               <tr>
                 <td class="start-box">
-                  <div ref="start" class="start" :class="{'start-hover': !startDialog.closed}" @click="startDialog.closed=!startDialog.closed"></div>
+                  <LinkButton ref="start" :plain="true" class="start" :class="{'start-hover': !startDialog.closed}" @click="startDialog.closed=!startDialog.closed">
+                    <img style="vertical-align: middle;" src="../../../static/img/windows.png">
+                  </LinkButton>
                 </td>
                 <td width="15px">
                 </td>
                 <td>
-                  <div v-for="(task,key,index) in taskbar.tasks" :key="key" @click="open(task)" class="task-icon">
+                  <div v-for="(task,index) in taskbar.tasks" :key="task.name+'Bar'" @click="open(task)" class="task-icon">
                     <img :src="task.icon" :style="{opacity:taskbar.currentTask.name==task.name?1:.5}"/>
                   </div>
                 </td>
@@ -101,7 +101,7 @@
                   <span class="time-box-hour">{{taskbar.time}}</span><span class="time-box-week">{{taskbar.week}}</span><br/>
                   <span class="time-box-date">{{taskbar.date}}</span>
                 </td>
-                <td class="desktop-show" style="border:0">
+                <td @click="showDesktop()" class="desktop-show" style="border:0">
                   <span class="seq"></span>
                 </td>
               </tr>
@@ -110,6 +110,7 @@
         </div>
       </LayoutPanel>
     </Layout>
+    <Calendar v-show="taskbar.showCalendar" style="position:absolute;right:0;bottom:41px;width:250px;height:250px"></Calendar>
   </div>
   
 </template>
@@ -118,7 +119,7 @@
 import Vue from 'vue'
 import Dynamic from '../../components/Dynamic'
 import './desktop.css'
-import {desktopMenus, contextMenus, startMenus, funcs} from './json.js'
+import {desktopMenus, contextMenus, startMenus, handlers} from './json.js'
 import { mapGetters, mapMutations } from 'vuex'
 import store from '../../vuex/store'
 
@@ -154,7 +155,6 @@ export default {
   },
   data() {
     return {
-      user:utils.cache.get('user')||{userId:'admin',realname:'admin'},
       dragMenu:null,
       dragStartMenu:{},
       dragStatus:0,
@@ -167,7 +167,7 @@ export default {
       startDialog:{
         closed:true,
         startMenus:startMenus,
-        funcs:funcs
+        handlers:handlers
       },
       taskbar:{
         date:'',
@@ -180,7 +180,9 @@ export default {
     }
   },
   computed:{
-    
+    ...mapGetters([
+      'user'
+    ])
   },
   methods: {
     ...mapMutations({
@@ -198,6 +200,12 @@ export default {
     },
     moveToTop(task){
       this.$refs[task.name][0].moveToTop()
+      this.taskbar.currentTask = task
+    },
+    showDesktop(){
+      for(let key in this.taskbar.tasks){
+        this.$refs[this.taskbar.tasks[key].name][0].close()
+      }
     },
     windowDrag(d){
       let s = d.target.$el
@@ -457,20 +465,27 @@ export default {
         },1000)
       },1)
     },
-    funcs(code){
-      this[code]()
-    },
-    init(){
-      this.initTime(new Date().getTime())
+    handler(code, params){
+      this[code](params)
     }
   },
   watch:{
     
   },
   mounted(){
-    this.init()
-    let menu = this.desktopMenus[4]
-    // this.$set(this.taskbar.tasks, menu.name, menu)
+    this.initTime(new Date().getTime())
+    setInterval(()=>{
+      this.initTime(new Date().getTime())
+    }, 60*1000)
+
+    this.clickMenu({
+      name:'pageEditor',
+      text:'页面设计',
+      icon:'./static/img/icon32/pageEditor_32.png',
+      top:80*0,
+      left:80*7,
+      insertTime:'2019-02-14 00:00:00'
+    })
   }
 }
 </script>

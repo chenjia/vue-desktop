@@ -4,7 +4,7 @@
       <legend>背景色</legend>
       <ul v-for="i in backgrounds.length/5" style="padding-left:0;list-style:none;width:100%;display:flex;justify-content: space-around;align-items: flex-start;">
         <li v-if="index >= (i-1)*5 && index < i*5" v-for="(item, index) in backgrounds" style="text-align:center;">
-          <img @click="changeBg(item.text)" :src="'./static/img/desktop/'+item.text" style="width:100px;height:60px;flex:1 1 auto;" :style="{opacity:($store.state.common.ui.bg==item.text?1:.5)}">
+          <img @click="changeBg(item.text)" :src="'./static/img/desktop/'+item.text" style="width:100px;height:60px;flex:1 1 auto;" :style="{opacity:($store.state.common.ui.bg==item.text?1:.5)}"><br/>
           <LinkButton @click="changeBg(item.text)" iconCls="icon-color" :style="{opacity:($store.state.common.ui.bg==item.text?1:.5)}">背景-{{index+1}}</LinkButton>
         </li>
       </ul>
