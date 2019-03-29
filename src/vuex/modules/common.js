@@ -1,5 +1,6 @@
-import cache from '../../utils/cache'
 import Vue from 'vue'
+import cache from '../../utils/cache'
+import {desktopMenus, contextMenus, startMenus, handlers} from '../../pages/desktop/json.js'
 
 const typeArrays = [
   'LOGIN',
@@ -35,6 +36,23 @@ const state = {
   page:{
     active: null
   },
+  desktop:{
+    startDialog:{
+      closed:true,
+      startMenus:startMenus,
+      handlers:handlers
+    },
+    desktopMenus:desktopMenus,
+    contextMenus:contextMenus,
+    taskbar:{
+      date:'',
+      time:'',
+      week:'',
+      tasks:{},
+      currentTask:null,
+      showCalendar:false
+    }
+  },
   user: cache.get('user')||{},
   userSetting: cache.get('userSetting')
 }
@@ -45,6 +63,18 @@ const getters = {
   },
   isLoading() {
     return state.ui.loading
+  },
+  desktopMenus(){
+    return state.desktop.desktopMenus
+  },
+  contextMenus(){
+    return state.desktop.contextMenus
+  },
+  taskbar(){
+    return state.desktop.taskbar
+  },
+  startDialog(){
+    return state.desktop.startDialog
   }
 }
 

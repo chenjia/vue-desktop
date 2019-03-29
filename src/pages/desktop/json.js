@@ -366,7 +366,8 @@ export const handlers = [{
 },{
   name:'办公模式',
   iconCls:'icon-work',
-  url:''
+  url:'home',
+  params:'/page/home'
 },{
   name:'个人设置',
   iconCls:'icon-system-config',

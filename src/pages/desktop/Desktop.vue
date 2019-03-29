@@ -1,6 +1,5 @@
 <template>
   <div style="position:absolute;width:100%;height:100%;">
-    <link rel="stylesheet" href="./static/css/icon.css">
     <Layout :style="{background:'url(./static/img/desktop/'+$store.state.common.ui.bg+')'}">
       <LayoutPanel region="center" @click.native="startDialog.closed=true; taskbar.showCalendar=false" @contextmenu.prevent.native="$refs.desktopMenu.showContextMenu($event.pageX,$event.pageY)" :border="false" :bodyStyle="{background:'none'}" :style="{width:'100%',height:(screenHeight-42)+'px'}">
         <a v-Draggable="{cursor:'default', dragStart: (d)=>{onDragStart(d, menu)}, drag: onDrag, dragEnd: (d)=>{onDragEnd(d, menu)}}" v-for="(menu, index) in desktopMenus" :key="menu.name" @click="clickMenu(menu)" class="desktop-menu" :style="{opacity:dragMenu==menu.name?.5:1,left:menu.left+'px', top:menu.top+'px', transition:toggle.sorting?'all .5s':''}">
@@ -119,7 +118,6 @@
 import Vue from 'vue'
 import Dynamic from '../../components/Dynamic'
 import './desktop.css'
-import {desktopMenus, contextMenus, startMenus, handlers} from './json.js'
 import { mapGetters, mapMutations } from 'vuex'
 import store from '../../vuex/store'
 
@@ -161,27 +159,16 @@ export default {
       toggle:{
         sorting:false,
         showRecycle:false
-      },
-      desktopMenus:desktopMenus,
-      contextMenus:contextMenus,
-      startDialog:{
-        closed:true,
-        startMenus:startMenus,
-        handlers:handlers
-      },
-      taskbar:{
-        date:'',
-        time:'',
-        week:'',
-        tasks:{},
-        currentTask:null,
-        showCalendar:false
       }
     }
   },
   computed:{
     ...mapGetters([
-      'user'
+      'user',
+      'taskbar',
+      'startDialog',
+      'desktopMenus',
+      'contextMenus'
     ])
   },
   methods: {
@@ -465,6 +452,10 @@ export default {
         },1000)
       },1)
     },
+    home(url){
+      this.startDialog.closed = true
+      this.go(url)
+    },
     handler(code, params){
       this[code](params)
     }
@@ -478,14 +469,14 @@ export default {
       this.initTime(new Date().getTime())
     }, 60*1000)
 
-    this.clickMenu({
-      name:'pageEditor',
-      text:'页面设计',
-      icon:'./static/img/icon32/pageEditor_32.png',
-      top:80*0,
-      left:80*7,
-      insertTime:'2019-02-14 00:00:00'
-    })
+    // this.clickMenu({
+    //   name:'pageEditor',
+    //   text:'页面设计',
+    //   icon:'./static/img/icon32/pageEditor_32.png',
+    //   top:80*0,
+    //   left:80*7,
+    //   insertTime:'2019-02-14 00:00:00'
+    // })
   }
 }
 </script>
