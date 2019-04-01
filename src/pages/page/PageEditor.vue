@@ -113,8 +113,8 @@ export default {
       pageComponents:[],
       list: [{
         component:'LxtFlex',
-        name: "task 1",  
-        children: [{}]
+        name: "task 1",
+        children: []
       },{
         component:'LxtPanel',
         name: "task 2",

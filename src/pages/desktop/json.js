@@ -246,7 +246,7 @@ export const contextMenus = [{
   text:'个人设置',
   iconCls:'icon-config',
 },{
-  value:'办公模式',
+  value:'mode-work',
   text:'办公模式',
   iconCls:'icon-work',
 },{

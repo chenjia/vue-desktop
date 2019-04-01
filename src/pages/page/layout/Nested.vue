@@ -1,5 +1,5 @@
 <template>
-  <draggable tag="div" :list="children" :group="{name:'column'}">
+  <draggable tag="div" :list="children" :group="{name:'column'}"  :style="{minHeihgt:(50+level)+'px'}">
     <div
     v-for="sub in children" :key="sub.name" 
     @click.stop="$store.state.common.page.active = sub"
@@ -7,8 +7,8 @@
     :class="{'active': $store.state.common.page.active == sub}"
     :style="{border:level>0?'1px dashed #888':''}" 
     >
-      <component :is="sub.component" :el="sub"></component>
-      <nested :children="sub.children || []" :level="level+1"/>
+      <component :is="sub.component" :item="sub" :level="level+1"></component>
+      <Nested :children="sub.children" :level="level+1"/>
     </div>
   </draggable>
 </template>
@@ -19,7 +19,7 @@ import LxtPanel from './LxtPanel'
 import LxtFlex from './LxtFlex'
 
 export default {
-  name: "nested",
+  name:'Nested',
   components: {
     draggable,
     LxtPanel,

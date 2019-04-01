@@ -53,7 +53,7 @@ const state = {
       showCalendar:false
     }
   },
-  user: cache.get('user')||{},
+  user: cache.get('user'),
   userSetting: cache.get('userSetting')
 }
 

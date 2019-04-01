@@ -4,13 +4,13 @@
       <LinkButton @click="toEditor()" iconCls="icon-add" :plain="true">新建</LinkButton>
       <LinkButton @click="remove()" iconCls="icon-remove" :plain="true">删除</LinkButton>
       <LinkButton @click="toEditor(1)" iconCls="icon-edit" :plain="true">修改</LinkButton>
-      <LinkButton @click="toTest()" iconCls="icon-bug" :plain="true">测试</LinkButton>
+      <LinkButton @click="toTest()" iconCls="icon-bug" :plain="true">调试</LinkButton>
       <LinkButton @click="toSearch()" iconCls="icon-search" :plain="true" style="float:right;">搜索</LinkButton>
     </div>
     <DataGrid
       ref="ruleDataGrid"
       style="height:100%;"
-      groupField="ruleCategory"
+      groupField="category"
       pagePosition="bottom"
       selectionMode="single"
       @selectionChange="selectionChange($event)"
@@ -44,33 +44,46 @@
     <Dialog
       v-if="toggle.editor"
       ref="ruleEditor"
-      :bodyStyle="{padding:'50px'}"
+      :bodyStyle="{height:(screenHeight-40)+'px'}"
       :title="title"
       :modal="true"
       :resizable="true"
       @close="closeEditor()">
       
-      <Form :model="form" class="form-flex">
-        <div style="margin-bottom:20px">
-          <Label for="name">规则名称:</Label>
-          <TextBox v-model="form.name"></TextBox>
-        </div>
-        <div style="margin-bottom:20px">
-          <Label for="name">所属分类:</Label>
-          <TextBox v-model="form.ruleCategory"></TextBox>
-        </div>
-        <div style="margin-bottom:20px">
-          <Label for="name">正则表达式:</Label>
-          <TextBox v-model="form.regex"></TextBox>
-        </div>
-        <div style="margin-bottom:20px">
-          <Label for="name">描述:</Label>
-          <TextBox  v-model="form.memo"></TextBox>
-        </div>
-        <div style="margin-top:20px;text-align:center;">
-          <LinkButton @click="submitForm()" style="width:80px;">提交</LinkButton>
+      <Form :model="form" class="form-flex" style="padding:30px;">
+        <div class="flexable">
+          <div class="flex-item">
+            <Label for="name">规则名称:</Label>
+            <TextBox v-model="form.name"></TextBox>
+          </div>
+          <div class="flex-item">
+            <Label for="">所属分类:</Label>
+            <ComboBox inputId="category" v-model="form.category" :data="categoryData"></ComboBox>
+          </div>
+
+          <div class="flex-item" style="width:100%;">
+            <Label for="name">规则内容:</Label>
+            <TextBox v-model="form.content" :multiline="true" style="width:100%;height:240px;"></TextBox>
+          </div>
+          <div class="flex-item" style="width:100%;">
+            <Label for="name">入参:</Label>
+            <TextBox  v-model="form.inputParams" :multiline="true" style="width:100%;height:40px;line-height:40px;"></TextBox>
+          </div>
+          <div class="flex-item" style="width:100%;">
+            <Label for="name">出参:</Label>
+            <TextBox  v-model="form.outputParams" :multiline="true" style="width:100%;height:40px;line-height:40px;"></TextBox>
+          </div>
+          <div class="flex-item" style="width:100%;">
+            <Label for="name">描述:</Label>
+            <TextBox  v-model="form.memo" :multiline="true" style="width:100%;height:120px;"></TextBox>
+          </div>
         </div>
       </Form>
+
+      <div class="dialog-button">
+        <LinkButton @click="toTest()" iconCls="icon-bug" style="width:80px;">测试</LinkButton>
+        <LinkButton @click="submitForm()" iconCls="icon-submit" style="width:80px;">保存</LinkButton>
+      </div>
     </Dialog>
   </div>
 </template>
@@ -84,15 +97,25 @@ export default {
       title:'',
       data:[],
       selectedId:[],
-      form:{},
+      form:{
+        name:'test',
+        category:'rule',
+        inputParams:'[]',
+        outputParams:'',
+        content:'package com.company.system.module\n'
+      },
       toggle:{
         editor: false
       },
       category:{
-        C:'字符',
-        S:'场景',
-        N:'数字'
-      }
+        'system':'系统管理',
+        'rule':'规则管理'
+      },
+      categoryData:[{
+        value: 'system', text: '系统管理'
+      },{
+        value: 'rule', text: '规则管理' 
+      }]
     }
   },
   methods: {
@@ -146,8 +169,11 @@ export default {
       });
     },
     toTest(){
-      utils.http.post('/workflow/rule/test', {}).then(response => {
-        console.log(response)
+      let rule = Object.assign({}, this.form)
+      delete rule.insertTime
+      delete rule.updateTime
+      utils.http.post('/workflow/rule/test', {rule:rule, params:eval('('+this.form.inputParams+')')}).then(response => {
+        this.form.outputParams = JSON.stringify(response.data.body.data)
       }, error => {
         console.log(error)
       })
@@ -167,10 +193,10 @@ export default {
     },
     submitForm(){
       let _this = this
-      let params = Object.assign({}, this.form)
-      delete params.insertTime
-      delete params.updateTime
-      utils.http.post('/workflow/rule/save', {rule:params}).then(response => {
+      let rule = Object.assign({}, this.form)
+      delete rule.insertTime
+      delete rule.updateTime
+      utils.http.post('/workflow/rule/save', {rule:rule, params:[{name:'chenjia'}]}).then(response => {
         this.$messager.alert({
           title: '成功',
           icon:'info',

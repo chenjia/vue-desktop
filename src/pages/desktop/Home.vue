@@ -8,7 +8,7 @@
             </div>
           </td>
           <td>
-            您好，[{{user.userId}}]！系统时间：<span id="sysTime" style="font-size:13px;"></span>
+            当前用户：{{user.userId}}
           </td>
           <td align="right">
             <table>
@@ -61,7 +61,7 @@
 
     <LayoutPanel region="west" title="导航栏" style="width:200px;">
       <Accordion style="height:100%;" :animate="true" :border="false">
-        <AccordionPanel v-for="(item,index) in startDialog.startMenus" :title="item.group" >
+        <AccordionPanel v-for="(item,index) in startDialog.startMenus" :key="item.name" :title="item.group" >
           <Tree :data="treeMenus(item.items)" @selectionChange="open($event)"></Tree>
         </AccordionPanel>
       </Accordion>
@@ -69,14 +69,10 @@
 
     <LayoutPanel region="center" style="position:relative;height:100%;width:100%;">
       <Tabs ref="tabs" @tabClose="closeTab" :border="false">
-        <TabPanel :ref="task.name+'Tab'" v-for="(task,index) in taskbar.tasks" :menu="task" :title="task.text" :closable="true">
+        <TabPanel :ref="task.name+'Tab'" v-for="(task,index) in taskbar.tasks" :key="task.name" :menu="task" :title="task.text" :closable="true">
           <dynamic :component="task.name" :open="open" :close="close" :menu="task"/>
         </TabPanel>
       </Tabs>
-    </LayoutPanel>
-
-    <LayoutPanel region="south" style="height:40px;overflow: hidden;">
-      south
     </LayoutPanel>
   </Layout>
 </template>
@@ -119,6 +115,7 @@ export default {
           id:i.name,
           name:i.name,
           text:i.text,
+          icon:i.icon,
           iconCls:i.iconCls
         })
       }

@@ -334,6 +334,9 @@ export default {
       }else if(value.indexOf('sort-') != -1){
         const sortArray = value.substr(5).split('-')
         this.sortDesktopMenu(sortArray[0], sortArray[1])
+      }else if(value.indexOf('mode-work') != -1){
+        this.showDesktop()
+        this.go('/page/home')
       }else if(value.indexOf('fullscreen') != -1){
         this.fullscreen()
       }else if(value.indexOf('lock-') != -1){
@@ -454,6 +457,7 @@ export default {
     },
     home(url){
       this.startDialog.closed = true
+      this.showDesktop()
       this.go(url)
     },
     handler(code, params){

@@ -30,6 +30,8 @@ a{
 .flexable{
   display: flex;
   display: -webkit-flex;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
 }
 .flex-item{
   margin-bottom: 10px;
