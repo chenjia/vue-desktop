@@ -111,7 +111,6 @@ export default {
       this.msg = ''
       setTimeout(function(){
         document.querySelector('.chat-container').scrollTop = 99999
-        console.log(document.querySelector('.chat-container'))
       })
     },
     receiveMessage(message){
