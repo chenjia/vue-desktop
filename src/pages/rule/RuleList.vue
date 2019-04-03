@@ -100,9 +100,16 @@ export default {
       form:{
         name:'test',
         category:'rule',
-        inputParams:'[]',
+        inputParams:'[{name:"admin"}]',
         outputParams:'',
-        content:'package com.company.system.module\n'
+        content:'package com.lxt.ms\n\n'+
+        'import java.util.Map;\n\n'+
+        'rule "test"\n'+
+        'when\n'+
+        '$map:Map(this["name"] == "admin");\n'+
+        'then\n'+
+        '$map.put("name", "chenjia");\n'+
+        'end'
       },
       toggle:{
         editor: false
