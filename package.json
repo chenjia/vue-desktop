@@ -16,6 +16,7 @@
     "mxgraph": "^3.9.12",
     "particles.js": "^2.0.0",
     "vue": "^2.5.2",
+    "vue-qr": "^2.0.6",
     "vue-router": "^3.0.1",
     "vuedraggable": "^2.20.0",
     "vuex": "^3.0.1",

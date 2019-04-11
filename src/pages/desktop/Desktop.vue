@@ -43,7 +43,7 @@
           <dynamic :component="task.name" :open="open" :close="close" :menu="task"/>
         </Dialog>
 
-        <Dialog ref="startDialog" :title="'当前用户：'+user.username" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
+        <Dialog ref="startDialog" :title="'当前用户：'+(user||{}).username" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
           <table cellspacing="0" cellpadding="0">
             <tr>
               <td>
@@ -62,7 +62,7 @@
                   <div class="center" style="cursor:pointer;margin:15px auto 5px;">
                     <img src="../../../static/img/head.jpg" style="width:60px;border-radius: 50%;">
                   </div>
-                  <div class="center">{{user.realname}}</div>
+                  <div class="center">{{(user||{}).realname}}</div>
                   <div style="width:100px;height:80px;">
 
                   </div>
@@ -446,6 +446,7 @@ export default {
     },
     logout(){
       this.startDialog.closed = true
+      this.showDesktop()
       setTimeout(()=>{
         this.loading(true)
         store.commit('LOGOUT')

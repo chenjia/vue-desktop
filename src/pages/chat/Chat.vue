@@ -41,7 +41,7 @@
         </div>
       </template>
       <p>敬请期待</p>
-      <iframe style="display:none;" id="chatFrame" :src="server + '/chat/chatFrame.html?userId='+user.userId"></iframe>
+      <iframe style="display:none;" id="chatFrame" :src="server + '/push/pushFrame.html?userId='+user.userId"></iframe>
     </TabPanel>
   </Tabs>
 </template>

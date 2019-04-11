@@ -4,7 +4,7 @@
       <table style="width:100%;padding-top:0px;" cellpadding="0" cellspacing="0" border="0" class="panel-header">
         <tr>
           <td rowspan="2" align="center">
-            <div style="width:62px;height:60px;background:url('../../../static/img/logo.png')">
+            <div style="width:62px;height:60px;background:url('static/img/home.png')">
             </div>
           </td>
           <td>
