@@ -8,7 +8,7 @@ export const desktopMenus = [{
 },{
   name:'taskList',
   text:'我的任务',
-  icon:'./static/img/icon32/task_32.png',
+  icon:'./static/img/icon32/to_do_list.png',
   top:80*1,
   left:80*0,
   insertTime:'2019-01-02 00:00:00'

@@ -137,7 +137,9 @@ export default {
       }
        
       utils.http.post('/workflow/process/start', {pid:this.selectedProcessId[0]}).then(response => {
-        alert('流程启动成功：')
+        if(response.data.head.status == 200){
+          alert('流程启动成功')
+        }
       }, error => {
         console.log(error)
       })

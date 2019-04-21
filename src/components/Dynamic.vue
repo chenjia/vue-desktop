@@ -6,6 +6,7 @@
   <ProcessList v-else-if="component=='processList'" :open="open"/>
   <ProcessEditor v-else-if="component=='processEditor'" :processId="menu.params.processId"/>
   <TaskList v-else-if="component=='taskList'" :open="open"/>
+  <Task v-else-if="component=='task'" :open="open" :taskId="menu.params.taskId" :processInstanceId="menu.params.processInstanceId"/>
   <Chat v-else-if="component=='chat'" :open="open"/>
   <ChatDialog v-else-if="component=='chatDialog'" :open="open" :target="menu.params"/>
   <Permission v-else-if="component=='permission'" :open="open"/>
@@ -16,7 +17,7 @@
   <Calendar v-else-if="component=='calendar'"/>
   <PageList v-else-if="component=='pageList'" :open="open"/>
   <PageEditor v-else-if="component=='pageEditor'" :processId="menu.params.id"/>
-  <div class="pd-md" v-else>该菜单暂未实现，敬请期待！</div>
+  <div v-else class="pd-md" v-else>该菜单暂未实现，敬请期待！</div>
 </template>
 
 <script>
@@ -29,6 +30,7 @@ import ProcessEditor from '../pages/workflow/ProcessEditor.vue'
 import RegexList from '../pages/page/RegexList.vue'
 import RuleList from '../pages/rule/RuleList.vue'
 import TaskList from '../pages/workflow/TaskList.vue'
+import Task from '../pages/workflow/Task.vue'
 import Chat from '../pages/chat/Chat.vue'
 import ChatDialog from '../pages/chat/ChatDialog.vue'
 import Permission from '../pages/permission/Permission.vue'
@@ -49,6 +51,7 @@ export default {
     ProcessList,
     ProcessEditor,
     TaskList,
+    Task,
     Chat,
     ChatDialog,
     Permission,

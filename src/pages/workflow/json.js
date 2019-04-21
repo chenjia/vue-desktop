@@ -96,6 +96,25 @@ export const initGraph = function(){
   });
   
   new mxOutline(graph, document.getElementById('outline'));
+  if(this.taskId){
+    utils.http.post('/workflow/process/graph', {taskId:this.taskId}).then(response => {
+      let graphXml = response.data.body.data.graphXml.replace(/[\r\n]/g, '')
+      let doc = mxUtils.parseXml(graphXml);
+      let node = doc.documentElement;
+      editor.readGraphModel(node);
+      graph.setCellsLocked(true);
+    }, error => {
+      console.log(error)
+      alert('流程图加载失败！');
+    })
+  }
+  if(this.processInstanceId){
+    utils.http.post('/workflow/process/history', {processInstanceId:this.processInstanceId}).then(response => {
+      
+    }, error => {
+      console.log(error)
+    })
+  }
   if(this.processId){
     utils.http.post('/workflow/process/details', {pid:this.processId}).then(response => {
       let graphXml = response.data.body.data.graphXml.replace(/[\r\n]/g, '')
@@ -106,7 +125,7 @@ export const initGraph = function(){
       this.curCell = editor.graph.model.getCell(0)
     }, error => {
       console.log(error)
-      alert('流程图形化xml加载失败！');
+      alert('流程图加载失败！');
     })
   }else{
     this.curCell = editor.graph.model.getCell(0)
