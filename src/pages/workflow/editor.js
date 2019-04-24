@@ -109,7 +109,7 @@ export const initGraph = function(config){
       model.endUpdate();
     }
   });
-  // new mxOutline(graph, document.getElementById('outline'));
+  new mxOutline(graph, document.getElementById('outline'));
   if(this.taskId){
     utils.http.post('/workflow/process/graph', {taskId:this.taskId}).then(response => {
       let graphXml = response.data.body.data.graphXml.replace(/[\r\n]/g, '')
@@ -128,15 +128,19 @@ export const initGraph = function(config){
     graph.setAutoSizeCells(false)
     graph.graphHandler.guidesEnabled = false
 
-    const setHistoryEdge = cell => {
-      graph.model.setStyle(cell, 'historyEdge');
+    const setStyle = (cell, style) => {
+      graph.model.setStyle(cell, style);
       graph.model.endUpdate()
       graph.model.beginUpdate()
       var state = graph.view.getState(cell);
-      state.shape.node.getElementsByTagName('path')[0].removeAttribute('visibility');
-      state.shape.node.getElementsByTagName('path')[0].setAttribute('stroke-width', '6');
-      state.shape.node.getElementsByTagName('path')[0].setAttribute('stroke', 'white');
-      state.shape.node.getElementsByTagName('path')[1].setAttribute('class', 'flow');
+      if(cell.isEdge()){
+        state.shape.node.getElementsByTagName('path')[0].removeAttribute('visibility');
+        state.shape.node.getElementsByTagName('path')[0].setAttribute('stroke-width', '6');
+        state.shape.node.getElementsByTagName('path')[0].setAttribute('stroke', 'white');
+        state.shape.node.getElementsByTagName('path')[1].setAttribute('class', 'flow');
+      }else{
+        state.shape.node.getElementsByTagName('rect')[0].setAttribute('class', 'flow')
+      }
     }
     utils.http.post('/workflow/process/history', {processInstanceId:this.processInstanceId}).then(response => {
       let cells = graph.model.cells
@@ -146,13 +150,13 @@ export const initGraph = function(config){
       for(let c in cells){
         let cell = cells[c]
         if(cell.isEdge() && cell.source.getAttribute('nodeType')=='start'){
-          setHistoryEdge(cell)
+          setStyle(cell, 'historyEdge')
           continue
         }
         for(var i=0;i<history.length;i++){
           if(cell.isEdge()){
             if(history[i].activity==cell.source.getAttribute('label') && history[i].transition==cell.target.getAttribute("label")){
-              setHistoryEdge(cell)
+              setStyle(cell, 'historyEdge')
             }
           }else{
             if(history[i].activity==cell.getAttribute('label')){
@@ -164,14 +168,14 @@ export const initGraph = function(config){
               graph.model.setStyle(cell, 'historyVertex');
               var incomingEdges = graph.model.getIncomingEdges(cell);
               if(incomingEdges.length==1){
-                graph.model.setStyle(incomingEdges[0], 'historyEdge');
+                setStyle(incomingEdges[0], 'historyEdge')
               }
             }
           }
         }
         for(var i=0;i<current.length;i++){
           if(current[i].activity==cell.getAttribute('label')){
-            graph.model.setStyle(cell, 'currentVertex');
+            setStyle(cell, 'currentVertex')
             cell.setAttribute('current',true);
             cell.setAttribute('eid',current[i].eid);
             cell.setAttribute('assigner',current[i].assigner);

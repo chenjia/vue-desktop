@@ -36,13 +36,13 @@ export default {
 </script>
 <style type="text/css">
 .flow {
-  stroke-dasharray: 8;
+  stroke-dasharray: 5;
   animation: dash 0.5s linear;
   animation-iteration-count: infinite;
 }
 @keyframes dash {
   to {
-    stroke-dashoffset: -16;
+    stroke-dashoffset: -10;
   }
 }
 </style>
