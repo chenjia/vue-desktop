@@ -25,7 +25,7 @@
       <LinkButton @click="toSubmit" iconCls="icon-do" :plain="true">提交</LinkButton>
     </div>
 
-    <Dialog v-show="toggle.showNextDialog"
+    <Dialog :closed="true" v-show="toggle.showNextDialog"
       ref="nextDialog"
       :title="'提交任务'"
       :dialogStyle="{width:'400px',height:'300px'}"
@@ -55,9 +55,9 @@ export default {
   props:['open','close','menu','taskId','processInstanceId'],
   components:{
     TaskForm,
-    ProcessView,
     TaskAttachment,
-    TaskLog
+    TaskLog,
+    ProcessView
   },
   data() {
     return {

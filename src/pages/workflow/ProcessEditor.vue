@@ -56,7 +56,7 @@
         <component v-if="curCell != null" :is="configComponent" :attributes="configAttributes" :update="updateConfig"></component>
       </LayoutPanel>
     </Layout>
-    <remotescript src="static/lib/mxgraph/js/mxClient.js" @callback="initMxgraph"></remotescript>
+    <remotescript src="static/lib/mxgraph/mxClient.min.js" @callback="initMxgraph"></remotescript>
   </div>
 </template>
 
@@ -67,7 +67,7 @@ import WorkflowConfig from './config/WorkflowConfig'
 import StartConfig from './config/StartConfig'
 import EndConfig from './config/EndConfig'
 import UserTaskConfig from './config/UserTaskConfig'
-import {handler, graphNodes, initGraph, initToolbar} from './json.js'
+import {handler, graphNodes, initGraph, initToolbar} from './editor.js'
 export default {
   name: 'processEditor',
   components:{
@@ -141,11 +141,7 @@ export default {
       
     },
     initMxgraph(){
-      window.mxObjectCodec.allowEval = true
-      const node = window.mxUtils.load('static/lib/mxgraph/config/workflow-editor.xml').getDocumentElement()
-      window.editor = new window.mxEditor(node)
-      window.graph = editor.graph
-      initGraph.call(this)
+      initGraph.call(this, 'static/lib/mxgraph/src/config/workflow-editor.xml')
       initToolbar.call(this)
     }
   },
