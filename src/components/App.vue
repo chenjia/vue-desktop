@@ -27,6 +27,7 @@
 
     <div id="particles-js" v-show="$store.state.common.ui.lock" style="position:absolute;top:0px;left:0px;width:100%;height:100%;" :style="{background:'url(./static/img/desktop/'+$store.state.common.ui.bg+')'}">
       <Dialog
+        borderType="thin"
         ref="loginDialog"
         :dialogStyle="{width:'485px',height:'315px'}"
         :modal="true"
@@ -130,8 +131,10 @@ export default {
     }),
     getCaptcha(){
       utils.http.post('/manage/user/captcha').then(response => {
-        this.user.captchaToken = response.data.body.data.captchaToken
-        this.base64Img = 'data:image/png;base64, '+response.data.body.data.base64Img
+        if(response.data.head.status == 200){
+          this.user.captchaToken = response.data.body.data.captchaToken
+          this.base64Img = 'data:image/png;base64, '+response.data.body.data.base64Img
+        }
       })
     },
     login(){

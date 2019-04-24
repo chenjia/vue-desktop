@@ -109,8 +109,60 @@ export const initGraph = function(){
     })
   }
   if(this.processInstanceId){
+    //file monitor animation
+    graph.setConnectable(false)
+    graph.setAutoSizeCells(false)
+    graph.graphHandler.guidesEnabled = false
     utils.http.post('/workflow/process/history', {processInstanceId:this.processInstanceId}).then(response => {
-      
+      let cells = graph.model.cells
+      let current = response.data.body.data.current
+      let history = response.data.body.data.history
+      console.log(cells,current,history)
+      graph.model.beginUpdate()
+      for(let c in cells){
+        let cell = cells[c]
+        if(cell.isEdge() && cell.source.getAttribute('nodeType')=='start'){
+          graph.model.setStyle(cell, 'historyEdge')
+          continue
+        }
+        for(var i=0;i<history.length;i++){
+          if(cell.isEdge()){
+            if(history[i].activity==cell.source.getAttribute('label') && history[i].transition==cell.target.getAttribute("label")){
+              graph.model.setStyle(cell, 'historyEdge');
+
+              // var state = graph.view.getState(cell);
+              // state.shape.node.getElementsByTagName('path')[0].removeAttribute('visibility');
+              // state.shape.node.getElementsByTagName('path')[0].setAttribute('stroke-width', '6');
+              // state.shape.node.getElementsByTagName('path')[0].setAttribute('stroke', 'lightGray');
+              // state.shape.node.getElementsByTagName('path')[1].setAttribute('class', 'flow');
+              // console.log(state.shape.node.getElementsByTagName('path').length)
+            }
+          }else{
+            if(history[i].activity==cell.getAttribute('label')){
+              cell.setAttribute('eid',history[i].eid);
+              cell.setAttribute('assigner',history[i].assigner);
+              cell.setAttribute('createTime',history[i].createTime);
+              cell.setAttribute('endTime',history[i].endTime);
+              cell.setAttribute('userId',history[i].userId);
+              graph.model.setStyle(cell, 'historyVertex');
+              var incomingEdges = graph.model.getIncomingEdges(cell);
+              if(incomingEdges.length==1){
+                graph.model.setStyle(incomingEdges[0], 'historyEdge');
+              }
+            }
+          }
+        }
+        for(var i=0;i<current.length;i++){
+          if(current[i].activity==cell.getAttribute('label')){
+            graph.model.setStyle(cell, 'currentVertex');
+            cell.setAttribute('current',true);
+            cell.setAttribute('eid',current[i].eid);
+            cell.setAttribute('assigner',current[i].assigner);
+            cell.setAttribute('candidate',current[i].candidate);
+          }
+        }
+      }
+      graph.model.endUpdate();
     }, error => {
       console.log(error)
     })
@@ -222,6 +274,14 @@ export const handler = {
         title: '保存成功',
         msg: '流程【'+workflow.getAttribute('label')+'】保存成功！'
       })
+      this.close({
+        name:'processEditor',
+        text:'流程设计',
+        icon:'./static/img/icon32/molecule.png'
+      })
+      if(this.menu.onClose){
+        this.menu.onClose()
+      }
     })
 
     // $.ajax({

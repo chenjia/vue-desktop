@@ -53,6 +53,15 @@ export default {
   }
 }
 </script>
-<style type="text/css" scoped="">
-
+<style type="text/css">
+.flow {
+  stroke-dasharray: 8;
+  animation: dash 0.5s linear;
+  animation-iteration-count: infinite;
+}
+@keyframes dash {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
 </style>

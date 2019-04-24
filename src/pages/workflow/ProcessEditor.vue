@@ -65,15 +65,19 @@ window.mxBasePath = 'static/lib/mxgraph';
 import RemoteScript from '../../components/RemoteScript'
 import WorkflowConfig from './config/WorkflowConfig'
 import StartConfig from './config/StartConfig'
+import EndConfig from './config/EndConfig'
+import UserTaskConfig from './config/UserTaskConfig'
 import {handler, graphNodes, initGraph, initToolbar} from './json.js'
 export default {
   name: 'processEditor',
   components:{
     remotescript: RemoteScript,
     WorkflowConfig,
-    StartConfig
+    StartConfig,
+    EndConfig,
+    TaskConfig:UserTaskConfig
   },
-  props:['processId'],
+  props:['close','menu','processId'],
   data() {
     return {
       curCell:null,

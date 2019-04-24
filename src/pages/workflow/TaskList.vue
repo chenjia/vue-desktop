@@ -69,6 +69,7 @@ export default {
       this.processInstanceId = row.processInstanceId
     },
     doTask(){
+      let _this = this
       if(this.selectedTaskId.length == 0){
         alert('请选择要操作的记录！')
         return
@@ -77,11 +78,17 @@ export default {
       this.open({
         name:'task',
         text:'任务处理',
-        icon:'./static/img/icon32/task_32.png'
+        icon:'./static/img/icon32/task_32.png',
+        onClose(){
+          _this.list()
+        }
       },{
         taskId:this.selectedTaskId[0],
         processInstanceId:this.processInstanceId
       })
+
+      this.selectedTaskId = []
+      this.processInstanceId = ''
     },
     remark(){
       

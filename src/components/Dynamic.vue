@@ -1,22 +1,22 @@
 <template>
-  <Login v-if="component=='login'"/>
-  <Home v-else-if="component=='home'" />
-  <Portal v-else-if="component=='portal'" />
-  <Browser v-else-if="component=='browser'" :close="close" :menu="menu"/>
-  <ProcessList v-else-if="component=='processList'" :open="open"/>
-  <ProcessEditor v-else-if="component=='processEditor'" :processId="menu.params.processId"/>
-  <TaskList v-else-if="component=='taskList'" :open="open"/>
-  <Task v-else-if="component=='task'" :open="open" :taskId="menu.params.taskId" :processInstanceId="menu.params.processInstanceId"/>
-  <Chat v-else-if="component=='chat'" :open="open"/>
-  <ChatDialog v-else-if="component=='chatDialog'" :open="open" :target="menu.params"/>
-  <Permission v-else-if="component=='permission'" :open="open"/>
-  <Theme v-else-if="component=='theme'"/>
-  <Feedback v-else-if="component=='feedback'"/>
-  <RegexList v-else-if="component=='regexList'"/>
-  <RuleList v-else-if="component=='ruleList'"/>
-  <Calendar v-else-if="component=='calendar'"/>
-  <PageList v-else-if="component=='pageList'" :open="open"/>
-  <PageEditor v-else-if="component=='pageEditor'" :processId="menu.params.id"/>
+  <Login v-if="component=='login'" :open="open" :close="close" :menu="menu"/>
+  <Home v-else-if="component=='home'" :open="open" :close="close" :menu="menu"/>
+  <Portal v-else-if="component=='portal'" :open="open" :close="close" :menu="menu"/>
+  <Browser v-else-if="component=='browser'" :open="open" :close="close" :menu="menu"/>
+  <ProcessList v-else-if="component=='processList'" :open="open" :close="close" :menu="menu"/>
+  <ProcessEditor v-else-if="component=='processEditor'" :open="open" :close="close" :menu="menu" :processId="menu.params.processId"/>
+  <TaskList v-else-if="component=='taskList'" :open="open" :close="close" :menu="menu"/>
+  <Task v-else-if="component=='task'" :open="open" :close="close" :menu="menu" :taskId="menu.params.taskId" :processInstanceId="menu.params.processInstanceId"/>
+  <Chat v-else-if="component=='chat'" :open="open" :close="close" :menu="menu"/>
+  <ChatDialog v-else-if="component=='chatDialog'" :open="open" :close="close" :menu="menu" :target="menu.params"/>
+  <Permission v-else-if="component=='permission'" :open="open" :close="close" :menu="menu"/>
+  <Theme v-else-if="component=='theme'" :open="open" :close="close" :menu="menu"/>
+  <Feedback v-else-if="component=='feedback'" :open="open" :close="close" :menu="menu"/>
+  <RegexList v-else-if="component=='regexList'" :open="open" :close="close" :menu="menu"/>
+  <RuleList v-else-if="component=='ruleList'" :open="open" :close="close" :menu="menu"/>
+  <Calendar v-else-if="component=='calendar'" :open="open" :close="close" :menu="menu"/>
+  <PageList v-else-if="component=='pageList'" :open="open" :close="close" :menu="menu"/>
+  <PageEditor v-else-if="component=='pageEditor'" :open="open" :close="close" :menu="menu" :processId="menu.params.id"/>
   <div v-else class="pd-md" v-else>该菜单暂未实现，敬请期待！</div>
 </template>
 

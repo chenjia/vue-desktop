@@ -50,7 +50,7 @@
 		<add as="openHref" action="openHref" icon="images/link.gif"/>
 	</mxDefaultPopupMenu>
 	
-	<include name="./static/lib/mxgraph/config/keyhandler-commons.xml"/>
+	<!-- <include name="./static/lib/mxgraph/config/keyhandler-commons.xml"/> -->
 	<include name="./static/lib/mxgraph/config/graph-commons.xml"/>
 	<include name="./static/lib/mxgraph/config/wfeditor-commons.xml"/>
 	

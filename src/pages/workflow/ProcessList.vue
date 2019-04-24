@@ -80,10 +80,15 @@ export default {
         processId = this.selectedProcessId[0]
       }
 
+      let _this = this
+
       this.open({
         name:'processEditor',
         text:'流程设计',
-        icon:'./static/img/icon32/molecule.png'
+        icon:'./static/img/icon32/molecule.png',
+        onClose(){
+          _this.list()
+        }
       },{
         processId:processId
       })
