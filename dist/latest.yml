@@ -1,8 +1,8 @@
-version: 1.0.0
+version: 1.0.1
 files:
-  - url: 名称-1.0.0.exe
-    sha512: hdEj6ZGDRzv+uUuTs1FpsZEMisLSoSTIq/pZJZyAtmChoNxkzpniCk5beeTCbfjPJbVbVKEZ/hTjV6iaqXRyxw==
-    size: 63514899
-path: 名称-1.0.0.exe
-sha512: hdEj6ZGDRzv+uUuTs1FpsZEMisLSoSTIq/pZJZyAtmChoNxkzpniCk5beeTCbfjPJbVbVKEZ/hTjV6iaqXRyxw==
-releaseDate: '2019-04-28T08:06:44.239Z'
+  - url: 名称-1.0.1.exe
+    sha512: vyOcjKofDzQV+ljzjXmZRLepyK6vWozlLhSnEQQUckwpr2F8dUN8AirAfr+qYOXJgXhJAJcq1QrqgimRkkT9ww==
+    size: 63514826
+path: 名称-1.0.1.exe
+sha512: vyOcjKofDzQV+ljzjXmZRLepyK6vWozlLhSnEQQUckwpr2F8dUN8AirAfr+qYOXJgXhJAJcq1QrqgimRkkT9ww==
+releaseDate: '2019-04-28T08:13:45.500Z'
