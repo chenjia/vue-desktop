@@ -114,7 +114,6 @@ export default {
           }
         }
       })
-      
     },
     removeAll(){
       utils.http.post('/workflow/process/deleteAll').then(response => {
@@ -144,6 +143,11 @@ export default {
       utils.http.post('/workflow/process/start', {pid:this.selectedProcessId[0]}).then(response => {
         if(response.data.head.status == 200){
           alert('流程启动成功')
+          this.open({
+            name:'taskList',
+            text:'我的任务',
+            icon:'./static/img/icon32/to_do_list.png'
+          })
         }
       }, error => {
         console.log(error)

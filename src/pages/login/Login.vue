@@ -97,7 +97,7 @@ export default {
   },
   beforeRouteEnter(to, from, next){
     next(vm=>{
-      vm.doLogout()
+      // vm.doLogout()
       vm.getCaptcha()
       vm.model.captcha = ''
     })

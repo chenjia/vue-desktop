@@ -142,10 +142,9 @@ export const initGraph = function(config){
         state.shape.node.getElementsByTagName('rect')[0].setAttribute('class', 'flow')
       }
     }
-    utils.http.post('/workflow/process/history', {processInstanceId:this.processInstanceId}).then(response => {
+
+    const setHistory = (current, history) => {
       let cells = graph.model.cells
-      let current = response.data.body.data.current
-      let history = response.data.body.data.history
       graph.model.beginUpdate()
       for(let c in cells){
         let cell = cells[c]
@@ -184,6 +183,16 @@ export const initGraph = function(config){
         }
       }
       graph.model.endUpdate();
+    }
+    utils.http.post('/workflow/process/history', {processInstanceId:this.processInstanceId}).then(response => {
+      let current = response.data.body.data.current
+      let history = response.data.body.data.history
+
+      graph.addListener(mxEvent.SIZE, ()=>{
+        setHistory(current, history)
+      })
+      
+      setHistory(current, history)      
     }, error => {
       console.log(error)
     })

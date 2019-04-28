@@ -53,7 +53,7 @@
         <tr>
           <td></td>
           <td align="right">
-            <LinkButton @click="go('/page/desktop')" :plain="true" iconCls="icon-desktop">桌面模式</LinkButton>
+            <LinkButton @click="toDesktop" :plain="true" iconCls="icon-desktop">桌面模式</LinkButton>
           </td>
         </tr>
       </table>
@@ -121,6 +121,10 @@ export default {
       }
 
       return menus
+    },
+    toDesktop(){
+      location.href = './#/page/desktop'
+      location.reload()
     },
     open(menu, params){
       if(this.taskbar.tasks[menu.name]){

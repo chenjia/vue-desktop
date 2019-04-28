@@ -261,6 +261,22 @@ export default {
         this[event.data.type](event.data)
       }
     })
+
+    if (window.require) {
+      let ipc = window.require('electron').ipcRenderer;
+      ipc.send("checkForUpdate");
+      ipc.on("message", (event, text) => {
+        this.tips = text;
+        console.log('message1',this.tips)
+      });
+      ipc.on("downloadProgress", (event, progressObj)=> {
+        this.downloadPercent = progressObj.percent || 0;
+        console.log('message2',this.downloadPercent)
+      });
+      ipc.on("isUpdateNow", () => {
+        ipc.send("isUpdateNow");
+      });
+    }
   }
 }
 </script>

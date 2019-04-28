@@ -336,7 +336,8 @@ export default {
         this.sortDesktopMenu(sortArray[0], sortArray[1])
       }else if(value.indexOf('mode-work') != -1){
         this.showDesktop()
-        this.go('/page/home')
+        location.href = './#/page/home'
+        location.reload()
       }else if(value.indexOf('fullscreen') != -1){
         this.fullscreen()
       }else if(value.indexOf('lock-') != -1){
@@ -459,7 +460,8 @@ export default {
     home(url){
       this.startDialog.closed = true
       this.showDesktop()
-      this.go(url)
+      location.href = './#/page/home'
+      location.reload()
     },
     handler(code, params){
       this[code](params)

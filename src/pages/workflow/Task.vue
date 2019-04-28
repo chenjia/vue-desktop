@@ -21,7 +21,7 @@
       </TabPanel>
     </Tabs>
     <div class="dialog-toolbar panel-footer" style="position:absolute!important;top:auto;bottom:0;width:100%;text-align:right;padding:5px;">
-      <LinkButton @click="rollback" iconCls="icon-do" :plain="true">退回</LinkButton>
+      <LinkButton @click="rollback" iconCls="icon-sendback" :plain="true">退回</LinkButton>
       <LinkButton @click="toSubmit" iconCls="icon-do" :plain="true">提交</LinkButton>
     </div>
 
@@ -93,7 +93,29 @@ export default {
       }
     },
     rollback(){
-
+      let _this = this
+      
+      this.$messager.confirm({
+        title: "退回任务",
+        msg: "确定要退回到上一任务吗?",
+        result(r){
+          if(r) {
+            utils.http.post('/workflow/task/rollback', {taskId:_this.taskId}).then(response => {
+              _this.toggle.showNextDialog = true
+              _this.closeNextDialog()
+              _this.$nextTick(()=>{
+                _this.toggle.showNextDialog = false
+                _this.close(_this.menu)
+                if(_this.menu.onClose){
+                  _this.menu.onClose()
+                }
+              })
+            }, error => {
+              console.log(error)
+            })
+          }
+        }
+      })
     },
     toSubmit(){
       utils.http.post('/workflow/task/nextStep', {taskId:this.taskId}).then(response => {

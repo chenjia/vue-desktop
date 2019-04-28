@@ -1,6 +1,6 @@
 export const desktopMenus = [{
   name:'browser',
-  text:'浏览器',
+  text:'浏览器1',
   icon:'./static/img/icon32/internet_explorer.png',
   top:80*0,
   left:80*0,
