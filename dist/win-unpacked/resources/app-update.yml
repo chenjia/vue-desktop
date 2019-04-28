@@ -1,3 +1,0 @@
-provider: generic
-url: 'https://chenjia.github.io/vue-desktop/dist'
-updaterCacheDirName: electron-quick-start-updater
