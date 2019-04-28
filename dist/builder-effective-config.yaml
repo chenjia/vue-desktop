@@ -1,0 +1,17 @@
+directories:
+  output: dist
+  buildResources: build
+electronVersion: 5.0.0
+win:
+  requestedExecutionLevel: highestAvailable
+  target:
+    - target: nsis
+      arch:
+        - x64
+appId: '项目的id,唯一id'
+artifactName: '名称-${version}-${arch}.${ext}'
+nsis:
+  artifactName: '名称-${version}-${arch}.${ext}'
+publish:
+  - provider: generic
+    url: 'https://chenjia.github.io/vue-desktop/dist'
