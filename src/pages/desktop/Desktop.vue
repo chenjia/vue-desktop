@@ -43,7 +43,7 @@
           <dynamic :component="task.name" :open="open" :close="close" :menu="task"/>
         </Dialog>
 
-        <Dialog ref="startDialog" :title="'当前用户：'+(user||{}).username" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
+        <Dialog ref="startDialog" :title="'当前账号：'+(user||{}).username" :closable="false" :closed="startDialog.closed" :open="startDialogOpen()" panelCls="startDialog">
           <table cellspacing="0" cellpadding="0">
             <tr>
               <td>
