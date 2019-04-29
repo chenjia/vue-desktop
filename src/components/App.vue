@@ -84,14 +84,16 @@
           </TabPanel>
         </Tabs>
       </Dialog>
-
     </div>
+
+    <Update v-if="updating" :downloadPercent="downloadPercent" :show="updating"></Update>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import VueQr from 'vue-qr'
+import Update from './Update'
 import { mapGetters, mapMutations } from 'vuex'
 import store from '../vuex/store'
 import 'particles.js/particles'
@@ -114,11 +116,14 @@ export default {
       qrcode:'',
       scanned:false,
       logoSrc:'static/img/logo.png',
-      gifBgSrc:'static/img/qrcode.gif'
+      gifBgSrc:'static/img/qrcode.gif',
+      downloadPercent:0,
+      updating: false
     }
   },
   components:{
-    VueQr
+    VueQr,
+    Update
   },
   computed:{
 
@@ -266,12 +271,18 @@ export default {
       let ipc = window.require('electron').ipcRenderer;
       ipc.send("checkForUpdate");
       ipc.on("message", (event, text) => {
-        this.tips = text;
-        console.log('message1',this.tips)
+        if(text == '检测到新版本，正在下载'){
+          this.updating = true
+        }
+        console.log('message1',event,text)
       });
       ipc.on("downloadProgress", (event, progressObj)=> {
-        this.downloadPercent = progressObj.percent || 0;
+        this.downloadPercent = parseInt(progressObj.percent || 0);
         console.log('message2',this.downloadPercent)
+        if(this.downloadPercent > 100){
+          this.downloadPercent = 100
+          this.updating = false
+        }
       });
       ipc.on("isUpdateNow", () => {
         ipc.send("isUpdateNow");
