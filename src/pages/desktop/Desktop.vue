@@ -9,7 +9,7 @@
 
         <a v-Droppable="{drop:()=>{dropMenu()}}" v-show="toggle.showRecycle" class="desktop-menu" style="right:10px;bottom:10px;">
           <img src="../../../static/img/icon32/bin_recycle.png" />
-          <span>回收站</span>
+          <span>垃圾箱</span>
         </a>
 
         <DraggableProxy ref="proxy">
