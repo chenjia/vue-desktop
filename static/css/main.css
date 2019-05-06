@@ -101,3 +101,6 @@ a{
 .overflow-hidden .f-full{
   overflow-x: hidden!important;
 }
+.l-btn-icon{
+  font-size:12px!important;
+}

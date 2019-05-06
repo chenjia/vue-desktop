@@ -1,8 +1,8 @@
-version: 1.0.1
+version: 1.0.2
 files:
-  - url: electron-desktop-1.0.1.exe
-    sha512: FV7YVHl7jk8j/VXlR3+IYe07044YY86zSw/38YOeWozdAfdTYvXas3aQZ6LbCKcz8upqzNrQS0ftfP54wK7Sbw==
-    size: 63465233
-path: electron-desktop-1.0.1.exe
-sha512: FV7YVHl7jk8j/VXlR3+IYe07044YY86zSw/38YOeWozdAfdTYvXas3aQZ6LbCKcz8upqzNrQS0ftfP54wK7Sbw==
-releaseDate: '2019-05-06T07:00:51.425Z'
+  - url: electron-desktop-1.0.2.exe
+    sha512: 2HqJKl7y6ad3L7bYXb4y2Nvc9W0aOIktLK0qpizcljGZFlLF4ITrfPzEd8/7phA6EYpvY3+hrn9APk95WYZOsw==
+    size: 63465322
+path: electron-desktop-1.0.2.exe
+sha512: 2HqJKl7y6ad3L7bYXb4y2Nvc9W0aOIktLK0qpizcljGZFlLF4ITrfPzEd8/7phA6EYpvY3+hrn9APk95WYZOsw==
+releaseDate: '2019-05-06T07:21:53.188Z'
