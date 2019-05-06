@@ -454,6 +454,7 @@ export default {
         setTimeout(()=>{
           this.loading(false)
           this.lock(true)
+          this.go('/login')
         },1000)
       },1)
     },
@@ -469,6 +470,14 @@ export default {
   },
   watch:{
     
+  },
+  beforeRouteEnter(to, from, next){
+    next(vm=>{
+      console.log(store.state.common)
+      if(!store.state.common.user || !store.state.common.user.userId){
+        vm.go('/login')
+      }
+    })
   },
   mounted(){
     this.initTime(new Date().getTime())

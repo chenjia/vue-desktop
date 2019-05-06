@@ -14,7 +14,7 @@ Router.prototype.goBack = function() {
 const router = new Router({
   routes:[{
     path:'/',
-    redirect:'/page/desktop'
+    redirect:'/login'
   },
   ...login,
   {
@@ -44,17 +44,11 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  next()
-  // if(to.meta.login != false && !store.state.common.user) {
-  //   store.commit('TOGGLE_POPUP', {
-  //     visible: true,
-  //     text: '请先登录！',
-  //     duration: 3000
-  //   })
-  //   next('/page/login')
-  // } else {
-  //   next()
-  // }
+  if(to.meta.login != false && !store.state.common.user.userId) {
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 router.afterEach((to, from) => {
