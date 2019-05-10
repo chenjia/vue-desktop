@@ -23,7 +23,7 @@
             <div style="margin-bottom:20px">
               <Label for="captcha">验证码：</Label>
               <TextBox inputId="captcha" style="width:80px;" v-model="user.captcha" @keyup.enter.native="login()"></TextBox>
-              <img :src="base64Img" @click="getCaptcha()" style="width:85px;height:30px;border:1px solid #eee;vertical-align: middle;"/>
+              <img :src="base64Img" @click="getCaptcha()" class="border-animation" style="width:85px;height:30px;vertical-align: middle;"/>
             </div>
             <div>
               <CheckBox inputId="remember" v-model="user.remember"></CheckBox>
@@ -81,7 +81,8 @@ export default {
       transitionName: 'animate-in',
       user:{
         username:'chenjia',
-        password:'chenjia'
+        password:'chenjia',
+        captcha:''
       },
       title:'',
       base64Img:'',
@@ -112,6 +113,10 @@ export default {
       })
     },
     login(){
+      if(this.user.captcha == ''){
+        alert('验证码不能为空')
+        return
+      }
       this.loading(true)
 
       utils.http.post('/manage/user/login', this.user).then(response => {
@@ -226,39 +231,30 @@ export default {
         this[event.data.type](event.data)
       }
     })
-
-    if (window.require) {
-      let ipc = window.require('electron').ipcRenderer;
-      ipc.send("checkForUpdate");
-      ipc.on("message", (event, text) => {
-        if(text == '检测到新版本，正在下载'){
-          this.updating = true
-        }
-        console.log('message1',event,text)
-      });
-      ipc.on("downloadProgress", (event, progressObj)=> {
-        this.downloadPercent = parseInt(progressObj.percent || 0);
-        console.log('message2',this.downloadPercent)
-        if(this.downloadPercent > 100){
-          this.downloadPercent = 100
-          this.updating = false
-        }
-      });
-      ipc.on("isUpdateNow", () => {
-        ipc.send("isUpdateNow");
-      });
-    }
   }
 }
 </script>
 <style type="text/css" scoped>
-  .form{
-    max-width:300px;
-    width:300px;
-    height:300px;
-    padding:35px 100px;
+.form{
+  max-width:300px;
+  width:300px;
+  height:300px;
+  padding:35px 100px;
+}
+.form-item{
+  margin-top:20px;
+}
+.border-animation{
+  padding:1px;
+  background: linear-gradient(0deg, transparent 6px, #ccc 6px) repeat-y, linear-gradient(0deg, transparent 50%, #ccc 0) repeat-y, linear-gradient(90deg, transparent 50%, #ccc 0) repeat-x, linear-gradient(90deg, transparent 50%, #ccc 0) repeat-x;
+  background-size: 1px 12px, 1px 12px, 12px 1px, 12px 1px;
+  background-position: 0 0, 100% 0, 0 0, 0 100%;
+  animation: border-move 1s infinite linear;
+}
+@keyframes border-move {
+  from {}
+  to {
+    background-position: 0 -12px, 100% 12px, 12px 0, -12px 100%;
   }
-  .form-item{
-    margin-top:20px;
-  }
+}
 </style>

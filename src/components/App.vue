@@ -25,7 +25,7 @@
       </table>
     </div>
 
-    <Update v-if="updating" :downloadPercent="downloadPercent" :show="updating"></Update>
+    <Update v-if="updating" :downloadPercent="downloadPercent" :version="version" :updateMessage="updateMessage"></Update>
   </div>
 </template>
 
@@ -55,7 +55,9 @@ export default {
       logoSrc:'static/img/logo.png',
       gifBgSrc:'static/img/qrcode.gif',
       downloadPercent:0,
-      updating: false
+      updating: false,
+      version:'',
+      updateMessage: []
     }
   },
   components:{
@@ -74,31 +76,43 @@ export default {
           title: "Error",
           icon: "error",
           msg: store.state.common.ui.error.text
-        });
+        })
       }
     }
   },
   mounted(){
+    const _this = this
     if (window.require) {
-      let ipc = window.require('electron').ipcRenderer;
-      ipc.send("checkForUpdate");
+      let ipc = window.require('electron').ipcRenderer
+      ipc.send("checkForUpdate")
       ipc.on("message", (event, text) => {
-        if(text == '检测到新版本，正在下载'){
-          this.updating = true
+        const message = JSON.parse(text)
+        if(message.status == 'updateAva'){
+          this.$messager.confirm({
+            title: '版本更新( '+message.currentVersion.version+' -> '+message.info.version+' )',
+            msg: '发现新版本，确认要更新到新版本吗?',
+            result(r){
+              if(r) {
+                _this.updating = true
+                _this.version = message.info.version
+                if(message.info.updateMessage){
+                  _this.updateMessage = message.info.updateMessage
+                }
+                ipc.send("downloadUpdate")
+              }
+            }
+          })
         }
-        console.log('message1',event,text)
-      });
+        console.log(event,text)
+      })
       ipc.on("downloadProgress", (event, progressObj)=> {
         this.downloadPercent = parseInt(progressObj.percent || 0);
-        console.log('message2',this.downloadPercent)
+        console.log(this.downloadPercent)
         if(this.downloadPercent > 100){
           this.downloadPercent = 100
           this.updating = false
         }
-      });
-      ipc.on("isUpdateNow", () => {
-        ipc.send("isUpdateNow");
-      });
+      })
     }
   }
 }
