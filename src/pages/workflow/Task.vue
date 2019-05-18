@@ -1,14 +1,14 @@
 <template>
   <div style="position:relative;width:100%;">
     <Tabs @tabSelect="tabSelect" style="width:100%;height:100%;padding-bottom:42px;" :border="false">
+      <TabPanel :title="'流程图'">
+        <ProcessView :taskId="taskId" :processInstanceId="processInstanceId" :open="open" v-if="toggle.tab=='graph'"></ProcessView>
+      </TabPanel>
       <TabPanel :title="'表单'">
         <TaskForm :open="open" v-if="toggle.tab=='form'"></TaskForm>
       </TabPanel>
       <TabPanel :title="'附件'">
         <TaskAttachment :open="open" v-if="toggle.tab=='attachment'"></TaskAttachment>
-      </TabPanel>
-      <TabPanel :title="'流程图'">
-        <ProcessView :taskId="taskId" :processInstanceId="processInstanceId" :open="open" v-if="toggle.tab=='graph'"></ProcessView>
       </TabPanel>
       <TabPanel :title="'日志'">
         <TaskLog :open="open" v-if="toggle.tab=='log'"></TaskLog>
