@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       toggle:{
-        tab:'form',
+        tab:'graph',
         showNextDialog:false
       },
       activityTreeData:[],
