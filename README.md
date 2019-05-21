@@ -9,7 +9,7 @@ vue-desktop 是采用vue+vx-easyui开发的仿桌面应用，里面集成了很�
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8888
+# serve with hot reload at localhost:8880
 npm run dev
 
 # build for production with minification
