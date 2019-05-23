@@ -493,6 +493,14 @@ export default {
     //   left:80*7,
     //   insertTime:'2019-02-14 00:00:00'
     // })
+
+    utils.http.post('/manage/log/list', {example:{}, pageData:{pageNum: 1, pageSize: 10}}).then(response => {
+      console.log(response.data.body.data)
+      // this.data = response.data.body.data.data
+      // this.total = response.data.body.data.total
+    }, error => {
+
+    })
   }
 }
 </script>

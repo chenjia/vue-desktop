@@ -105,6 +105,13 @@ export const desktopMenus = [{
   top:80*3,
   left:80*1,
   insertTime:'2019-02-15 00:00:00'
+},{
+  name:'userLog',
+  text:'错误日志',
+  icon:'./static/img/icon32/scripts.png',
+  top:80*4,
+  left:80*1,
+  insertTime:'2019-02-15 00:00:00'
 }]
 
 export const contextMenus = [{

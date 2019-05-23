@@ -12,6 +12,7 @@
   <Permission v-else-if="component=='permission'" :open="open" :close="close" :menu="menu"/>
   <Theme v-else-if="component=='theme'" :open="open" :close="close" :menu="menu"/>
   <Feedback v-else-if="component=='feedback'" :open="open" :close="close" :menu="menu"/>
+  <UserLog v-else-if="component=='userLog'" :open="open" :close="close" :menu="menu"/>
   <RegexList v-else-if="component=='regexList'" :open="open" :close="close" :menu="menu"/>
   <RuleList v-else-if="component=='ruleList'" :open="open" :close="close" :menu="menu"/>
   <Calendar v-else-if="component=='calendar'" :open="open" :close="close" :menu="menu"/>
@@ -36,6 +37,7 @@ import ChatDialog from '../pages/chat/ChatDialog.vue'
 import Permission from '../pages/permission/Permission.vue'
 import Theme from '../pages/theme/Theme.vue'
 import Feedback from '../pages/feedback/Feedback.vue'
+import UserLog from '../pages/feedback/UserLog.vue'
 import Calendar from '../pages/calendar/Calendar.vue'
 import PageList from '../pages/page/PageList.vue'
 import PageEditor from '../pages/page/PageEditor.vue'
@@ -57,6 +59,7 @@ export default {
     Permission,
     Theme,
     Feedback,
+    UserLog,
     RegexList,
     RuleList,
     Calendar,
