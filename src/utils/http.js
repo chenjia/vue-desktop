@@ -1,9 +1,8 @@
 import axios from 'axios'
 import cache from './cache'
 import store from '../vuex/store'
-import {encryptByDES,decryptByDES,encryptKey,decryptKey} from './security'
-require('../../static/lib/security/tripledes')
-require('../../static/lib/security/mode-ecb-min')
+import {encryptByAES,decryptByAES,encryptKey,decryptKey} from './security'
+var CryptoJS = require("crypto-js");
 window.axios = axios
 
 let instance = axios.create({
@@ -31,7 +30,8 @@ instance.interceptors.request.use(function(config) {
       url: config.url,
       debug: true,
       userId: user ? user.userId : null,
-      token: cache.get('token')
+      token: cache.get('token'),
+      timestamp:new Date().getTime()
     },
     body: {
       data: config.data
@@ -39,8 +39,9 @@ instance.interceptors.request.use(function(config) {
   }
   console.log('\n【request:'+config.url+'】', data, '\n\n')
   config.url = window.Config.server + config.url
+
   config.data = {
-    request: encryptByDES(JSON.stringify(data), decryptKey(Config.key))
+    request: encryptByAES(JSON.stringify(data), decryptKey(Config.key))
   }
   return config
 }, function(error) {
@@ -49,11 +50,11 @@ instance.interceptors.request.use(function(config) {
 })
 
 instance.interceptors.response.use(function(response) {
-  let resp = decryptByDES(response.data.response, decryptKey(Config.key))
+  let resp = decryptByAES(response.data.response, decryptKey(Config.key))
   response.data = JSON.parse(resp)
-  console.log('\n【response:'+response.config.url+'】', response, '\n\n')
+  console.log('\n【response:'+response.config.url+'】',response, '\n\n')
   if(response.data.head.status != 200){
-    store.commit('TOGGLE_ERROR', {visible: true, text: response.data.head.msg, duration: 3000})
+    store.commit('TOGGLE_POPUP', {visible: true, text: response.data.head.msg, duration: 3000})
   }
   let token = response.data.head.token
   cache.set('token', token || cache.get('token'))
