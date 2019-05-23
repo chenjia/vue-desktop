@@ -100,7 +100,7 @@ export default {
       form:{
         name:'test',
         category:'rule',
-        inputParams:'[{name:"admin"}]',
+        inputParams:'[{name:"admin", age: 20}]',
         outputParams:'',
         content:'package com.lxt.ms\n\n'+
         'import java.util.Map;\n\n'+
@@ -109,7 +109,7 @@ export default {
         '$map:Map(this["name"] == "admin");\n'+
         'then\n'+
         '$map.put("name", "chenjia");\n'+
-        'end'+
+        'end\n'+
         'rule "test2"\n'+
         'when\n'+
         '$map:Map(this["age"] > 18);\n'+
