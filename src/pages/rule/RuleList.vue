@@ -109,6 +109,12 @@ export default {
         '$map:Map(this["name"] == "admin");\n'+
         'then\n'+
         '$map.put("name", "chenjia");\n'+
+        'end'+
+        'rule "test2"\n'+
+        'when\n'+
+        '$map:Map(this["age"] > 18);\n'+
+        'then\n'+
+        '$map.put("age", 99);\n'+
         'end'
       },
       toggle:{
