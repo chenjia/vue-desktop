@@ -1,29 +1,77 @@
 export const layout = [{
   type:'container',
   name:'LxtFlex',
-  label:'flex布局',
+  label:'栅格布局',
   column:[12,12],
   width:'100%',
   height:'100px',
-  img:'column_double.png'
-}]
-
-export const pc = [{
+  icon:'fa-columns'
+},{
   type:'container',
   name:'LxtPanel',
   label:'面板',
   title:'标题',
   width:'100%',
   height:'50px',
-  img:'application.png'
+  icon:'fa-window-maximize'
 }]
 
-export const mobile = [{
+export const form = [{
+  type:'field',
+  name:'LxtInput',
+  label:'文本框',
+  title:'字段',
+  width:'100%',
+  height:'50px',
+  icon:'fa-edit'
+},{
+  type:'field',
+  name:'LxtInput',
+  label:'下拉框',
+  title:'字段',
+  width:'100%',
+  height:'50px',
+  icon:'fa-toggle-down'
+},{
+  type:'field',
+  name:'LxtInput',
+  label:'日期',
+  title:'字段',
+  width:'100%',
+  height:'50px',
+  icon:'fa-calendar-o'
+},{
+  type:'field',
+  name:'LxtInput',
+  label:'复选框',
+  title:'字段',
+  width:'100%',
+  height:'50px',
+  icon:'fa-check-square-o'
+},{
+  type:'field',
+  name:'LxtInput',
+  label:'单选框',
+  title:'字段',
+  width:'100%',
+  height:'50px',
+  icon:'fa-dot-circle-o'
+},{
+  type:'field',
+  name:'LxtInput',
+  label:'开关',
+  title:'字段',
+  width:'100%',
+  height:'50px',
+  icon:'fa-toggle-on'
+}]
+
+export const display = [{
   type:'block',
-  name:'LxtHeader',
-  label:'Header',
+  name:'LxtImage',
+  label:'图片',
   title:'标题',
   width:'100%',
   height:'50px',
-  img:'application.png'
+  icon:'fa-image'
 }]

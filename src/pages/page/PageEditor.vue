@@ -7,30 +7,36 @@
       </div>
     </DraggableProxy>
     <Layout>
-      <LayoutPanel v-if="init" title="组件列表" region="west" style="width:120px;" :bodyStyle="{position:'relative'}">
+      <LayoutPanel v-if="init" title="组件列表" region="west" style="width:150px;" :bodyStyle="{position:'relative'}">
         <Accordion style="position:absolute;width:100%;height:100%;" :animate="true" :border="false">
-          <AccordionPanel :title="'布局类'">
-            <!-- <div v-for="(item, index) in components.layout" :key="item.name" v-Draggable="{cursor:'default', proxy: $refs.componentProxy, dragStart: (d)=>{onDragStart(d, item)}, drag: onDrag, dragEnd: (d)=>{onDragEnd(d, item)}}" class="dynamic-node">
-              <div><img class="component-img" :src="'static/img/icon32/'+item.img"/></div>
-              <div>{{item.label}}</div>
-            </div> -->
-            <draggable :group="{ name: 'column', pull: 'clone', put: false }">
-              <div v-for="(item, index) in components.layout" :key="item.name" class="dynamic-node">
-                <div><img class="component-img" :src="'static/img/icon32/'+item.img"/></div>
-                <div>{{item.label}}</div>
-              </div>
-            </draggable>
-          </AccordionPanel>
-          <AccordionPanel :title="'表单类'">
-            <div class="dynamic-node" v-for="(item, index) in components.pc">
-              <div><img class="component-img" :src="'static/img/icon32/'+item.img"/></div>
-              <div>{{item.label}}</div>
+          <AccordionPanel :title="'布局'">
+            <div class="pd-md">
+              <draggable :group="{ name: 'column', pull: 'clone', put: false }">
+                <div v-for="(item, index) in components.layout" :key="item.name" class="dynamic-node">
+                  <i class="fa fa-fw component-img" :class="item.icon"></i>
+                  <span>{{item.label}}</span>
+                </div>
+              </draggable>
             </div>
           </AccordionPanel>
-          <AccordionPanel :title="'展示类'">
-            <div class="dynamic-node" v-for="(item, index) in components.mobile">
-              <div><img class="component-img" :src="'static/img/icon32/'+item.img"/></div>
-              <div>{{item.label}}</div>
+          <AccordionPanel :title="'表单'">
+            <div class="pd-md">
+              <draggable :group="{ name: 'column', pull: 'clone', put: false }">
+                <div v-for="(item, index) in components.form" :key="item.name" class="dynamic-node">
+                  <i class="fa fa-fw component-img" :class="item.icon"></i>
+                  <span>{{item.label}}</span>
+                </div>
+              </draggable>
+            </div>
+          </AccordionPanel>
+          <AccordionPanel :title="'展示'">
+            <div class="pd-md">
+              <draggable :group="{ name: 'column', pull: 'clone', put: false }">
+                <div v-for="(item, index) in components.display" :key="item.name" class="dynamic-node">
+                  <i class="fa fa-fw component-img" :class="item.icon"></i>
+                  <span>{{item.label}}</span>
+                </div>
+              </draggable>
             </div>
           </AccordionPanel>
         </Accordion>
@@ -86,7 +92,7 @@ import draggable from 'vuedraggable'
 import Nested from "./layout/Nested"
 import LxtPanel from './layout/LxtPanel'
 import LxtFlex from './layout/LxtFlex'
-import {layout, pc, mobile} from './json.js'
+import {layout, form, display} from './json.js'
 
 export default {
   name: 'DynamicEditor',
@@ -104,8 +110,8 @@ export default {
       device:'pc',
       components:{
         layout:layout,
-        pc:pc,
-        mobile:mobile
+        form:form,
+        display:display
       },
       toggle:{
         showEast: false
@@ -177,9 +183,9 @@ export default {
   vertical-align: middle;
 }
 .dynamic-node{
-  width:118px;
-  margin-top:20px;
-  text-align: center;
+  padding:10px;
+  margin-bottom:10px;
+  border:1px dashed #95B8E7;
 }
 .mode-pc{
   position: relative;
