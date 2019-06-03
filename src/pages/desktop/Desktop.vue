@@ -473,7 +473,6 @@ export default {
   },
   beforeRouteEnter(to, from, next){
     next(vm=>{
-      console.log(store.state.common)
       if(!store.state.common.user || !store.state.common.user.userId){
         vm.go('/login')
       }

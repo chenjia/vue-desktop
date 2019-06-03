@@ -8,7 +8,7 @@ export const desktopMenus = [{
 },{
   name:'taskList',
   text:'我的任务',
-  icon:'./static/img/icon32/to_do_list.png',
+  icon:'./static/img/icon32/client_account_template.png',
   top:80*1,
   left:80*0,
   insertTime:'2019-01-02 00:00:00'
@@ -22,7 +22,7 @@ export const desktopMenus = [{
 },{
   name:'processList',
   text:'流程管理',
-  icon:'./static/img/icon32/table_gear.png',
+  icon:'./static/img/icon32/bricks.png',
   top:80*0,
   left:80*1,
   insertTime:'2019-01-23 00:00:00'
@@ -53,13 +53,6 @@ export const desktopMenus = [{
   icon:'./static/img/icon32/page_32.png',
   top:80*0,
   left:80*6,
-  insertTime:'2019-02-14 00:00:00'
-},{
-  name:'pageEditor',
-  text:'页面设计',
-  icon:'./static/img/icon32/pageEditor_32.png',
-  top:80*0,
-  left:80*7,
   insertTime:'2019-02-14 00:00:00'
 },{
   name:'database',
@@ -273,7 +266,7 @@ export const startMenus = [{
   },{
     name:'taskList',
     text:'我的任务',
-    icon:'./static/img/icon32/task_32.png',
+    icon:'./static/img/icon32/client_account_template.png',
     iconCls:'icon-task'
   },{
     name:'messageList',
@@ -302,7 +295,7 @@ export const startMenus = [{
   items:[{
     name:'processList',
     text:'流程管理',
-    icon:'./static/img/icon32/table_gear.png',
+    icon:'./static/img/icon32/bricks.png',
     iconCls:'icon-process'
   },{
     name:'monitor',

@@ -12,7 +12,7 @@
           <AccordionPanel :title="'布局'">
             <div class="pd-md">
               <draggable :group="{ name: 'column', pull: 'clone', put: false }">
-                <div v-for="(item, index) in components.layout" :key="item.name" class="dynamic-node">
+                <div v-for="(item, index) in components.layout" :key="index" class="dynamic-node">
                   <i class="fa fa-fw component-img" :class="item.icon"></i>
                   <span>{{item.label}}</span>
                 </div>
@@ -22,7 +22,7 @@
           <AccordionPanel :title="'表单'">
             <div class="pd-md">
               <draggable :group="{ name: 'column', pull: 'clone', put: false }">
-                <div v-for="(item, index) in components.form" :key="item.name" class="dynamic-node">
+                <div v-for="(item, index) in components.form" :key="index" class="dynamic-node">
                   <i class="fa fa-fw component-img" :class="item.icon"></i>
                   <span>{{item.label}}</span>
                 </div>
@@ -32,7 +32,7 @@
           <AccordionPanel :title="'展示'">
             <div class="pd-md">
               <draggable :group="{ name: 'column', pull: 'clone', put: false }">
-                <div v-for="(item, index) in components.display" :key="item.name" class="dynamic-node">
+                <div v-for="(item, index) in components.display" :key="index" class="dynamic-node">
                   <i class="fa fa-fw component-img" :class="item.icon"></i>
                   <span>{{item.label}}</span>
                 </div>
