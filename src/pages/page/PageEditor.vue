@@ -92,7 +92,7 @@ import draggable from 'vuedraggable'
 import Nested from "./layout/Nested"
 import LxtPanel from './layout/LxtPanel'
 import LxtFlex from './layout/LxtFlex'
-import {layout, form, display} from './json.js'
+import {layout, form, display} from './config.js'
 
 export default {
   name: 'DynamicEditor',
@@ -186,6 +186,7 @@ export default {
   padding:10px;
   margin-bottom:10px;
   border:1px dashed #95B8E7;
+  background: #f8f8f8;
 }
 .mode-pc{
   position: relative;

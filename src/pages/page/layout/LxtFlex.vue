@@ -64,6 +64,6 @@ export default {
   position:relative;
   flex: 1 1 auto;
   min-height:50px;
-  border:1px dashed #888;
+  border:1px dashed #95B8E7;
 }
 </style>

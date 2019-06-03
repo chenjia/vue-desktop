@@ -74,4 +74,28 @@ export const display = [{
   width:'100%',
   height:'50px',
   icon:'fa-image'
+},{
+  type:'block',
+  name:'LxtImage',
+  label:'轮播图',
+  title:'标题',
+  width:'100%',
+  height:'50px',
+  icon:'fa-image'
+},{
+  type:'block',
+  name:'LxtImage',
+  label:'按钮',
+  title:'标题',
+  width:'100%',
+  height:'50px',
+  icon:'fa-image'
+},{
+  type:'block',
+  name:'LxtImage',
+  label:'选项卡',
+  title:'标题',
+  width:'100%',
+  height:'50px',
+  icon:'fa-image'
 }]

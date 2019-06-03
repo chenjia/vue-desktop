@@ -80,8 +80,8 @@ export default {
       server: Config.server,
       transitionName: 'animate-in',
       user:{
-        username:'chenjia',
-        password:'chenjia',
+        username:'',
+        password:'',
         captcha:''
       },
       title:'',
@@ -119,8 +119,22 @@ export default {
       }
       this.loading(true)
 
+      if(this.user.username == '' && this.user.password == ''){
+        this.user.username = 'chenjia'
+        this.user.password = 'chenjia'
+      }
+
       utils.http.post('/manage/user/login', this.user).then(response => {
         if(response.data.head.status == 200) {
+          if(this.user.remember){
+            utils.cache.set('rememberUser',{
+              username: this.user.username,
+              password: this.user.password
+            })
+          }else{
+            utils.cache.removeItem('rememberUser')
+          }
+          
           this.doLogin({
             user:response.data.body.data.user,
             userSetting:response.data.body.data.userSetting
@@ -225,6 +239,12 @@ export default {
     this.doLogout()
     this.lock(false)
     this.loading(false)
+    const rememberUser = utils.cache.get('rememberUser')
+    if(rememberUser){
+      this.user.username = rememberUser.username
+      this.user.password = rememberUser.password
+      this.user.remember = true
+    }
 
     window.addEventListener('message', event => {
       if(['qrcodeScan','qrcodeLogin'].indexOf(event.data.type) != -1){

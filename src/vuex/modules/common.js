@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import cache from '../../utils/cache'
-import {desktopMenus, contextMenus, startMenus, handlers} from '../../pages/desktop/json.js'
+import {desktopMenus, contextMenus, startMenus, handlers} from '../../pages/desktop/config.js'
 
 const typeArrays = [
   'LOGIN',
@@ -106,9 +106,15 @@ const mutations = {
     state.userSetting = data.userSetting
   },
   [types.LOGOUT](state) {
+    const rememberUser = cache.get('rememberUser')
+
     cache.clear()
     state.user = {}
     state.userSetting = {}
+
+    if(rememberUser){
+      cache.set('rememberUser', rememberUser)
+    }
   },
   [types.TOGGLE_LOADING](state, flag) {
     if(flag){

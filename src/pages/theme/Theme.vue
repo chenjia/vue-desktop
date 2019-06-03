@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import {contextMenus} from '../desktop/json.js'
+import {contextMenus} from '../desktop/config.js'
 import store from '../../vuex/store'
 
 export default {
