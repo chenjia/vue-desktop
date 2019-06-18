@@ -17,7 +17,9 @@
   <RuleList v-else-if="component=='ruleList'" :open="open" :close="close" :menu="menu"/>
   <Calendar v-else-if="component=='calendar'" :open="open" :close="close" :menu="menu"/>
   <PageList v-else-if="component=='pageList'" :open="open" :close="close" :menu="menu"/>
-  <PageEditor v-else-if="component=='pageEditor'" :open="open" :close="close" :menu="menu" :processId="menu.params.id"/>
+  <PageEditor v-else-if="component=='pageEditor'" :open="open" :close="close" :menu="menu"/>
+  <Publisher v-else-if="component=='publisher'" :open="open" :close="close" :menu="menu"/>
+  <Observer v-else-if="component=='observer'" :open="open" :close="close" :menu="menu"/>
   <div v-else class="pd-md" v-else>该菜单暂未实现，敬请期待！</div>
 </template>
 
@@ -41,6 +43,8 @@ import UserLog from '../pages/feedback/UserLog.vue'
 import Calendar from '../pages/calendar/Calendar.vue'
 import PageList from '../pages/page/PageList.vue'
 import PageEditor from '../pages/page/PageEditor.vue'
+import Publisher from '../pages/video/Publisher.vue'
+import Observer from '../pages/video/Observer.vue'
 
 export default {
   name: 'Dynamic',
@@ -64,7 +68,9 @@ export default {
     RuleList,
     Calendar,
     PageList,
-    PageEditor
+    PageEditor,
+    Publisher,
+    Observer
   },
   data(){
     return {

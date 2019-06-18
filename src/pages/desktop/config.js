@@ -105,6 +105,20 @@ export const desktopMenus = [{
   top:80*4,
   left:80*1,
   insertTime:'2019-02-15 00:00:00'
+},{
+  name:'publisher',
+  text:'开设直播',
+  icon:'./static/img/icon32/webcam.png',
+  top:80*3,
+  left:80*3,
+  insertTime:'2019-02-15 00:00:00'
+},{
+  name:'observer',
+  text:'观看直播',
+  icon:'./static/img/icon32/viddler.png',
+  top:80*4,
+  left:80*3,
+  insertTime:'2019-02-15 00:00:00'
 }]
 
 export const contextMenus = [{

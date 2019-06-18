@@ -80,8 +80,8 @@ export default {
       server: Config.server,
       transitionName: 'animate-in',
       user:{
-        username:'',
-        password:'',
+        username:'chenjia',
+        password:'chenjia',
         captcha:''
       },
       title:'',
