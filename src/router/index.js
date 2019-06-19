@@ -44,9 +44,11 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  if(store.state.common.user == null || to.meta.login != false && !store.state.common.user.userId) {
+  if(to.meta.login != false && !store.state.common.user.userId) {
+    console.log('to login')
     next('/login')
   } else {
+    console.log('next')
     next()
   }
 })
