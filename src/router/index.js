@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  if(to.meta.login != false && !store.state.common.user.userId) {
+  if(store.state.common.user === undefined || to.meta.login != false && !store.state.common.user.userId) {
     next('/login')
   } else {
     next()
