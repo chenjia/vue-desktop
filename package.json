@@ -13,7 +13,7 @@
     "axios": "^0.18.0",
     "crypto-js": "^3.1.9-1",
     "fullcalendar": "^3.10.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "mxgraph": "^3.9.12",
     "particles.js": "^2.0.0",
