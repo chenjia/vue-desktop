@@ -111,7 +111,6 @@
     </Layout>
     <Calendar v-show="taskbar.showCalendar" style="position:absolute;right:0;bottom:41px;width:250px;height:250px"></Calendar>
   </div>
-  
 </template>
 
 <script>
